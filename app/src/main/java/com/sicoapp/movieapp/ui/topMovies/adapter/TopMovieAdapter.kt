@@ -1,12 +1,10 @@
-package com.sicoapp.movieapp.ui.adapter
+package com.sicoapp.movieapp.ui.topMovies.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
-import com.sicoapp.movieapp.data.response.fightClub.MoviesResponse
-import com.sicoapp.movieapp.data.response.topRated.AboveTopRated
 import com.sicoapp.movieapp.data.response.topRated.TopRated
 
 /**

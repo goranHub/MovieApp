@@ -1,3 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/app_navigation" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/fightClubFragment">
+    <fragment
+        android:id="@+id/fightClubFragment"
+        android:name="com.sicoapp.movieapp.ui.fightClub.FightClubFragment"
+        android:label="fragment_fight_club"
+        tools:layout="@layout/fragment_fight_club" >
+        <action
+            android:id="@+id/action_fightClubFragment_to_topMoviesFragment"
+            app:destination="@id/topMoviesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/topMoviesFragment"
+        android:name="com.sicoapp.movieapp.ui.topMovies.TopMoviesFragment"
+        android:label="TopMoviesFragment" />
+</navigation>

@@ -5,5 +5,6 @@ package com.sicoapp.movieapp.utils
  * @date 12/6/2020
  */
 
-    const val BASE_URL = "https://api.themoviedb.org/3/"
-    const val API_KEY = "846c7e81abe66630e50ec975e045b52e"
+const val BASE_URL = "https://api.themoviedb.org/3/"
+const val API_KEY = "846c7e81abe66630e50ec975e045b52e"
+const val ITEM_ID = "itemID"
