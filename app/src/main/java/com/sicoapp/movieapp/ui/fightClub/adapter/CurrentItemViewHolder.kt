@@ -7,6 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
  * @author ll4
  * @date 12/6/2020
  */
-class FightClubViewHolder(val view: View):RecyclerView.ViewHolder(view)  {
+class CurrentItemViewHolder(val view: View):RecyclerView.ViewHolder(view)  {
 
 }

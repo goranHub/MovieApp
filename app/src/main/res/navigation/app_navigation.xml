@@ -6,7 +6,7 @@
     app:startDestination="@id/topMoviesFragment">
     <fragment
         android:id="@+id/fightClubFragment"
-        android:name="com.sicoapp.movieapp.ui.fightClub.FightClubFragment"
+        android:name="com.sicoapp.movieapp.ui.fightClub.CurrentItemFragment"
         android:label="fragment_fight_club"
         tools:layout="@layout/fragment_fight_club" />
     <fragment

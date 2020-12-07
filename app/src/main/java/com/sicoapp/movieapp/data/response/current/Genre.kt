@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.data.response.fightClub
+package com.sicoapp.movieapp.data.response.current
 
 data class Genre(
     val id: Int,
