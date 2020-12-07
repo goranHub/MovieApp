@@ -5,17 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
+import com.sicoapp.movieapp.databinding.FragmentFightClubBinding
 import com.sicoapp.movieapp.utils.CallbackFragmentViewModelAdapter
 import com.sicoapp.movieapp.utils.ITEM_ID
 
 
 class FightClubFragment : Fragment() {
 
+
+    private lateinit var binging: FragmentFightClubBinding
 
     private val callbackFragmentViewModel = object : CallbackFragmentViewModelAdapter {
         override fun onItemClicked(postID: Int) {}
@@ -30,10 +33,10 @@ class FightClubFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_fight_club, container, false)
-        val recylerView = view.findViewById<RecyclerView>(R.id.recylerViewFragmentFightClub)
+        binging = DataBindingUtil.inflate(inflater, R.layout.fragment_fight_club, container, false)
+        val recylerView = binging.recylerViewFragmentFightClub
         recylerView.layoutManager = LinearLayoutManager(context)
         FightClubViewModel(recylerView, callbackFragmentViewModel).retrofitCall()
-        return view
+        return binging.root
     }
 }
