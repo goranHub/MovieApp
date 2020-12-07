@@ -20,6 +20,7 @@ class CurrentItemViewModel(itemId: Int, callback: CallbackList) : ViewModel() {
 
     val fightClubApiService = ApiClient().getClient()!!.create(MovieApiService::class.java)
     val currentCall = fightClubApiService.getAllMyMovies(itemId, API_KEY)
+    lateinit var responseTopRated: TopRated
 
     init {
         currentCall.enqueue(object : Callback<TopRated> {
@@ -27,8 +28,29 @@ class CurrentItemViewModel(itemId: Int, callback: CallbackList) : ViewModel() {
                 call: Call<TopRated>,
                 response: Response<TopRated>
             ) {
-                val lista = response.body() ?: return
-                callback.listToFragment(lista)
+
+
+                responseTopRated = response.body() ?: return
+
+
+
+                responseTopRated = TopRated(
+                    adult = responseTopRated.adult,
+                    backdrop_path = responseTopRated.original_language,
+                    belongs_to_collection = responseTopRated.belongs_to_collection,
+                    budget = responseTopRated.budget,
+                    genres = responseTopRated.genres,
+                    homepage = responseTopRated.homepage,
+                    id = responseTopRated.id,
+                    imdb_id = responseTopRated.imdb_id,
+                    original_language = responseTopRated.original_language,
+                    original_title = responseTopRated.original_title,
+                    overview = responseTopRated.overview,
+                    popularity = responseTopRated.popularity,
+                    poster_path = responseTopRated.poster_path,
+                    production_companies = responseTopRated.production_companies
+                )
+                callback.listToFragment(responseTopRated)
             }
 
             override fun onFailure(call: Call<TopRated>, t: Throwable) {

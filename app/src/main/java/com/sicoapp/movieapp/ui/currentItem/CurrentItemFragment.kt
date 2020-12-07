@@ -22,7 +22,6 @@ class CurrentItemFragment : Fragment() {
 
 
 
-
     val viewModel by lazy { CurrentItemViewModel(itemId, callback) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,23 +39,28 @@ class CurrentItemFragment : Fragment() {
         binging = DataBindingUtil.inflate(inflater, R.layout.fragment_current, container, false)
 
 
-        //databinding imageView u xml
+        //databinding K u xml
         //ubaciti jos u currentfrag
         //pposloziti data layer
         //movie od kuma
         //sortiranje button listu
         callback = object : CallbackList {
-            override fun listToFragment(lista: TopRated) {
+            override fun listToFragment(responseTopRated: TopRated) {
+                binging.data = viewModel
+                binging.movie = responseTopRated
+
 
                 context?.let {
                     Glide.with(it)
-                        .load("https://image.tmdb.org/t/p/w185/" + lista.poster_path)
+                        .load("https://image.tmdb.org/t/p/w185/" + responseTopRated.poster_path)
                         .into(binging.ivImage)
                 }
 
             }
         }
-        binging.data = viewModel
+
+
+
         return binging.root
     }
 }

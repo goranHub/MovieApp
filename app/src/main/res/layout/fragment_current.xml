@@ -5,16 +5,14 @@
 
     <data>
 
-        <import type="com.sicoapp.movieapp.ui.currentItem.ImageBindingAdapter" />
-
-        <variable
-            name="data"
-            type="com.sicoapp.movieapp.ui.currentItem.CurrentItemViewModel" />
 
         <variable
             name="movie"
             type="com.sicoapp.movieapp.data.response.topRated.TopRated" />
 
+        <variable
+            name="data"
+            type="com.sicoapp.movieapp.ui.currentItem.CurrentItemViewModel" />
     </data>
 
 
@@ -28,6 +26,7 @@
             android:id="@+id/ivImage"
             android:layout_width="0dp"
             android:layout_height="0dp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
