@@ -2,7 +2,6 @@ package com.sicoapp.movieapp.ui.fightClub
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.data.api.ApiClient
 import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.data.response.fightClub.MoviesResponse
@@ -17,7 +16,7 @@ import retrofit2.Response
  * @author ll4
  * @date 12/6/2020
  */
-class FightClubViewModel(recyclerView: RecyclerView,fightCallback: CallbackFragmentViewModelAdapter): ViewModel() {
+class FightClubViewModel(fightCallback: CallbackFragmentViewModelAdapter) : ViewModel() {
 
     private val callbackViewModelAdapter = object : CallbackFragmentViewModelAdapter {
         override fun onItemClicked(postID: Int) {
@@ -27,16 +26,14 @@ class FightClubViewModel(recyclerView: RecyclerView,fightCallback: CallbackFragm
         }
     }
 
+    val fightClubAdapter = FightClubAdapter(callbackViewModelAdapter)
+    val fightClubApiService =ApiClient().getClient()!!.create(MovieApiService::class.java)
+    val callFightClub = fightClubApiService.getAllMyMovies(550, API_KEY)
 
-    val recyclerView = recyclerView
-    fun retrofitCall() {
+    init {
 
-        val fightClubApiService =
-            ApiClient().getClient()?.create(MovieApiService::class.java) ?: return
-        val callFightClub = fightClubApiService.getAllMyMovies(550, API_KEY)
-
-        val fightClubAdapter = FightClubAdapter(callbackViewModelAdapter)
-        recyclerView.adapter = fightClubAdapter
+        //set in xml
+        //recyclerView.adapter = fightClubAdapter
 
         callFightClub.enqueue(object : Callback<MoviesResponse> {
             override fun onResponse(
@@ -52,5 +49,5 @@ class FightClubViewModel(recyclerView: RecyclerView,fightCallback: CallbackFragm
             }
         })
     }
-
 }
+

@@ -17,6 +17,7 @@ import com.sicoapp.movieapp.utils.ITEM_ID
 class TopMoviesFragment : Fragment() {
 
     private lateinit var binding : FragmentTopMovieBinding
+    private  val viewModel by lazy {  TopMoviesViewModel() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,9 +31,7 @@ class TopMoviesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_top_movie, container, false)
-        val recyclerView = binding.recylerViewFragmentTopMovie
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        TopMoviesViewModel().retrofitCall(recyclerView);
+        binding.data = viewModel
         return binding.root
     }
 }
