@@ -3,18 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_navigation"
-    app:startDestination="@id/fightClubFragment">
+    app:startDestination="@id/topMoviesFragment">
     <fragment
         android:id="@+id/fightClubFragment"
         android:name="com.sicoapp.movieapp.ui.fightClub.FightClubFragment"
         android:label="fragment_fight_club"
-        tools:layout="@layout/fragment_fight_club" >
-        <action
-            android:id="@+id/action_fightClubFragment_to_topMoviesFragment"
-            app:destination="@id/topMoviesFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_fight_club" />
     <fragment
         android:id="@+id/topMoviesFragment"
         android:name="com.sicoapp.movieapp.ui.topMovies.TopMoviesFragment"
-        android:label="TopMoviesFragment" />
+        android:label="TopMoviesFragment" >
+        <action
+            android:id="@+id/action_topMoviesFragment_to_fightClubFragment"
+            app:destination="@id/fightClubFragment" />
+    </fragment>
 </navigation>

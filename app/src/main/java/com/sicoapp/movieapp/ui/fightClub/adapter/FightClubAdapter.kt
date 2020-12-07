@@ -8,10 +8,8 @@ import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.response.fightClub.MoviesResponse
 import com.sicoapp.movieapp.utils.CallbackFragmentViewModelAdapter
 
-class FightClubAdapter(val callbackViewModelAdapter: CallbackFragmentViewModelAdapter) :
-
+class FightClubAdapter() :
     RecyclerView.Adapter<FightClubViewHolder>() {
-
 
     var list = mutableListOf<MoviesResponse>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FightClubViewHolder {
@@ -22,13 +20,9 @@ class FightClubAdapter(val callbackViewModelAdapter: CallbackFragmentViewModelAd
 
     override fun onBindViewHolder(holder: FightClubViewHolder, position: Int) {
         val movie = list[position]
-
         holder.view.findViewById<TextView>(R.id.original_title).text = movie.poster_path
         holder.view.findViewById<TextView>(R.id.overview).text = movie.overview
 
-        holder.view.setOnClickListener {
-            callbackViewModelAdapter.onItemClicked(movie.id)
-        }
     }
 
     override fun getItemCount() = list.size

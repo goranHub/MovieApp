@@ -1,6 +1,7 @@
 package com.sicoapp.movieapp.ui.fightClub
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,17 +17,15 @@ import com.sicoapp.movieapp.utils.ITEM_ID
 
 class FightClubFragment : Fragment() {
 
-
     private lateinit var binging: FragmentFightClubBinding
 
-    private val viewModel by lazy { FightClubViewModel(callbackFragmentViewModel) }
+    private val viewModel by lazy { FightClubViewModel() }
 
 
-    private val callbackFragmentViewModel = object : CallbackFragmentViewModelAdapter {
-        override fun onItemClicked(postID: Int) {}
-        override fun navigateToNextScren(postID: Int) {
-            val bundle = bundleOf(ITEM_ID to postID)
-            findNavController().navigate(R.id.action_fightClubFragment_to_topMoviesFragment, bundle)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.getInt(ITEM_ID, -1)?.let {
+            Log.d("mojArgumentizFighta", "je $it")
         }
     }
 
@@ -37,10 +36,6 @@ class FightClubFragment : Fragment() {
     ): View? {
         binging = DataBindingUtil.inflate(inflater, R.layout.fragment_fight_club, container, false)
         binging.data = viewModel
-
-        //val recylerView = binging.recylerViewFragmentFightClub
-        //recylerView.layoutManager = LinearLayoutManager(context)
-        // FightClubViewModel(callbackFragmentViewModel).retrofitCall(recylerView)
         return binging.root
     }
 }
