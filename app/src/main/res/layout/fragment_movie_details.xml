@@ -1,6 +1,5 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -18,14 +17,101 @@
 
         <ImageView
             android:id="@+id/ivImage"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="1800dp"
+            android:layout_height="154dp"
+            android:layout_marginTop="28dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:profileImage="@{data.imageUrl}"
             tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/textOverview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/overview"
+            android:background="@color/design_dark_default_color_primary"
+            android:text="@string/overview"
+            app:layout_constraintBottom_toTopOf="@+id/overviewTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivImage" />
+
+        <TextView
+            android:id="@+id/overviewTextView"
+            android:layout_width="375dp"
+            android:layout_height="wrap_content"
+            android:text="@{data.overview}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.388"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivImage"
+            app:layout_constraintVertical_bias="0.09"
+            tools:text="abcdefgh" />
+
+
+        <TextView
+            android:id="@+id/popularity_Text"
+            style="@style/popularity_text"
+            android:text="@string/popularity_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@color/design_default_color_secondary_variant"
+            app:layout_constraintEnd_toStartOf="@+id/release_date_Text"
+            app:layout_constraintHorizontal_bias="0.056"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/overviewTextView"
+            tools:text="popularity" />
+
+        <TextView
+            android:id="@+id/release_date_Text"
+            style="@style/release_date_Text"
+            android:text="@string/release_date_Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@color/design_default_color_secondary_variant"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.913"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/popularity"
+            app:layout_constraintTop_toBottomOf="@+id/overviewTextView"
+            tools:text="release_date" />
+
+        <TextView
+            android:id="@+id/popularity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@{data.popularity}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.054"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/popularity_Text"
+            style="@style/popularity"
+            tools:text="abcdefgh"
+            />
+
+        <TextView
+            android:id="@+id/release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@{data.releaseDate}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.894"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/popularity"
+            app:layout_constraintTop_toBottomOf="@+id/release_date_Text"
+            style="@style/releaseDate"
+            tools:text="abcdefgh" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -19,13 +19,22 @@ import kotlin.properties.Delegates
  */
 class DetailsViewModel(itemId: Int) : BaseObservable() {
 
-    //kod lambde ako ti parametri ne trbaju stavi se doljna crta
+
     @get:Bindable
-    var imageUrl by Delegates.observable("") { _, _, _ -> notifyPropertyChanged(BR.imageUrl) }
+    var imageUrl by Delegates.observable("TEST imageUrl") { _, _, _ -> notifyPropertyChanged(BR.imageUrl) }
+
+    @get:Bindable
+    var overview by Delegates.observable("TEST overview") { _, _, _ -> notifyPropertyChanged(BR.overview) }
+
+    @get:Bindable
+    var popularity by Delegates.observable("TEST popularity") { _, _, _ -> notifyPropertyChanged(BR.popularity) }
+
+    @get:Bindable
+    var releaseDate by Delegates.observable("TEST releaseDate") { _, _, _ -> notifyPropertyChanged(BR.releaseDate) }
 
 
-    val fightClubApiService = ApiClient().getClient()?.create(MovieApiService::class.java)
-    val currentCall = fightClubApiService?.getAllMyMovies(itemId, API_KEY)
+    val movieDetailsApiServis = ApiClient().getClient()?.create(MovieApiService::class.java)
+    val currentCall = movieDetailsApiServis?.getAllMyMovies(itemId, API_KEY)
 
     lateinit var responseMovie: Movie
 
@@ -37,6 +46,10 @@ class DetailsViewModel(itemId: Int) : BaseObservable() {
             ) {
                 responseMovie = response.body() ?: return
                 imageUrl = "https://image.tmdb.org/t/p/w185/" + responseMovie.poster_path
+                overview =  responseMovie.overview
+                popularity =  responseMovie.popularity
+                releaseDate =  responseMovie.release_date
+
             }
 
             override fun onFailure(call: Call<Movie>, t: Throwable) {

@@ -13,4 +13,37 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+
+
+    <style name="overview">
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="popularity">
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/background_dark</item>
+    </style>
+
+    <style name="popularity_text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="release_date_Text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="releaseDate">
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/background_dark</item>
+    </style>
+
 </resources>
