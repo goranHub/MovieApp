@@ -5,22 +5,16 @@
 
     <data>
 
-
-        <variable
-            name="movie"
-            type="com.sicoapp.movieapp.data.response.topRated.TopRated" />
-
         <variable
             name="data"
-            type="com.sicoapp.movieapp.ui.currentItem.CurrentItemViewModel" />
+            type="com.sicoapp.movieapp.ui.movie.detail.DetailsViewModel" />
     </data>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.currentItem.CurrentItemFragment">
-
+        tools:context=".ui.movie.detail.DetailsMovieFragment">
 
         <ImageView
             android:id="@+id/ivImage"
@@ -30,11 +24,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:profileImage="@{movie.url}"
-
+            app:profileImage="@{data.imageUrl}"
             tools:src="@tools:sample/avatars" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

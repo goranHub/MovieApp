@@ -8,12 +8,12 @@
     <data>
         <variable
             name="data"
-            type="com.sicoapp.movieapp.ui.topMovies.TopMoviesViewModel" />
+            type="com.sicoapp.movieapp.ui.movie.list.ListMovieViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.topMovies.TopMoviesFragment">
+        tools:context=".ui.movie.list.ListMovieFragment">
 
 
         <androidx.recyclerview.widget.RecyclerView

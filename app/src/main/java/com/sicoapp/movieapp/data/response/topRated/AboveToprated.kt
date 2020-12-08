@@ -6,7 +6,7 @@ package com.sicoapp.movieapp.data.response.topRated
  */
 data class AboveTopRated (
     val page: Int,
-    val results: List<TopRated>,
+    val results: List<Movie>,
     val totalResults: Int,
     val totalPages :Int
 )

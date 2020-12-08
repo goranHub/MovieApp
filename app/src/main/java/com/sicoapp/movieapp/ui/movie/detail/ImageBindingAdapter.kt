@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.ui.currentItem
+package com.sicoapp.movieapp.ui.movie.detail
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
