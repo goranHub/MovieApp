@@ -10,18 +10,14 @@ import com.bumptech.glide.Glide
  * @date 12/7/2020
  */
 
-object ImageBindingAdapter {
-    @JvmStatic
-    @BindingAdapter("android:src")
-    fun setImageUrl(view: ImageView, url: String) {
-        Glide.with(view.context).load(url).into(view)
+interface ImageBindingAdapter {
+    companion object {
+        @JvmStatic
+        @BindingAdapter("profileImage")
+        fun loadImage(view: ImageView, profileImage: String) {
+            Glide.with(view.context)
+                .load(profileImage)
+                .into(view)
+        }
     }
 }
-
-/*
-  context?.let {
-        Glide.with(it)
-            .load("https://image.tmdb.org/t/p/w185/" + poster_path)
-            .into(imageView)
-    }
- */

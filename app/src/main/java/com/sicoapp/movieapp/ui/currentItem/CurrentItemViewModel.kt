@@ -29,27 +29,7 @@ class CurrentItemViewModel(itemId: Int, callback: CallbackList) : ViewModel() {
                 response: Response<TopRated>
             ) {
 
-
                 responseTopRated = response.body() ?: return
-
-
-
-                responseTopRated = TopRated(
-                    adult = responseTopRated.adult,
-                    backdrop_path = responseTopRated.original_language,
-                    belongs_to_collection = responseTopRated.belongs_to_collection,
-                    budget = responseTopRated.budget,
-                    genres = responseTopRated.genres,
-                    homepage = responseTopRated.homepage,
-                    id = responseTopRated.id,
-                    imdb_id = responseTopRated.imdb_id,
-                    original_language = responseTopRated.original_language,
-                    original_title = responseTopRated.original_title,
-                    overview = responseTopRated.overview,
-                    popularity = responseTopRated.popularity,
-                    poster_path = responseTopRated.poster_path,
-                    production_companies = responseTopRated.production_companies
-                )
                 callback.listToFragment(responseTopRated)
             }
 

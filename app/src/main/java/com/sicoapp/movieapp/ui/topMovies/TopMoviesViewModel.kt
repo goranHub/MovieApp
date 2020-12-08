@@ -27,7 +27,6 @@ class TopMoviesViewModel(callback: CallbackFragmentViewModelAdapter) : ViewModel
         override fun navigateToNextScren(postID: Int) {
         }
     }
-
     val topMovieAdapter = TopMovieAdapter(callbackViewModelAdapter)
 
     init {
@@ -37,9 +36,8 @@ class TopMoviesViewModel(callback: CallbackFragmentViewModelAdapter) : ViewModel
                 response: Response<AboveTopRated>
             ) {
                 val lista = response.body()?.results ?: return
-
                 lista.forEach {
-                    Log.v("mojkum", it.original_title)
+                   // Log.v("mojkum", it.original_title)
                 }
                 topMovieAdapter.addMovies(lista)
             }
