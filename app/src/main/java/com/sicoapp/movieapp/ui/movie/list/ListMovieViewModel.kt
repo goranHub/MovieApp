@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.sicoapp.movieapp.data.api.ApiClient
 import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.data.response.topRated.AboveTopRated
-import com.sicoapp.movieapp.ui.movie.list.adapter.ListMovieAdapter
+import com.sicoapp.movieapp.data.response.topRated.Movie
 import com.sicoapp.movieapp.utils.API_KEY
 import com.sicoapp.movieapp.utils.CallbackFragmentViewModelAdapter
 import retrofit2.Call
@@ -20,6 +20,7 @@ class ListMovieViewModel(callback: CallbackFragmentViewModelAdapter) : ViewModel
     private val topMoviesApiService: MovieApiService = ApiClient().getClient()!!.create(MovieApiService::class.java)
     private val callAllTopMovies = topMoviesApiService.getTopRatedMovies(API_KEY)
 
+
     private val callbackViewModelAdapter = object : CallbackFragmentViewModelAdapter {
         override fun onItemClicked(postID: Int) {
             callback.navigateToNextScren(postID)
@@ -27,7 +28,8 @@ class ListMovieViewModel(callback: CallbackFragmentViewModelAdapter) : ViewModel
         override fun navigateToNextScren(postID: Int) {
         }
     }
-    val topMovieAdapter = ListMovieAdapter(callbackViewModelAdapter)
+
+    lateinit var _response :List<Movie>
 
     init {
         callAllTopMovies.enqueue(object : Callback<AboveTopRated> {
@@ -35,11 +37,8 @@ class ListMovieViewModel(callback: CallbackFragmentViewModelAdapter) : ViewModel
                 call: Call<AboveTopRated>,
                 response: Response<AboveTopRated>
             ) {
-                val lista = response.body()?.results ?: return
-                lista.forEach {
-                   // Log.v("mojkum", it.original_title)
-                }
-                topMovieAdapter.addMovies(lista)
+                 _response = response.body()?.results ?: return
+                //topMovieAdapter.addMovies(response)
             }
 
             override fun onFailure(call: Call<AboveTopRated>, t: Throwable) {
@@ -47,5 +46,6 @@ class ListMovieViewModel(callback: CallbackFragmentViewModelAdapter) : ViewModel
             }
         })
     }
+    val topMovieAdapter = MovieAdapter(callback,_response)
 }
 
