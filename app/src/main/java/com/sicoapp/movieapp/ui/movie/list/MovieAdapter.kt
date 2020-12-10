@@ -6,47 +6,42 @@ package com.sicoapp.movieapp.ui.movie.list
  */
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.response.topRated.Movie
-import com.sicoapp.movieapp.databinding.ItemMovieBinding
-import com.sicoapp.movieapp.utils.CallbackFragmentViewModelAdapter
-import kotlinx.android.synthetic.main.item_movie.view.*
 
 
-class MovieAdapter(private val callback : CallbackFragmentViewModelAdapter, movieList : List<Movie>) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter(private val postID : (Int)-> Unit) : RecyclerView.Adapter<MovieAdapter.ListMovieViewHolder>() {
 
-    var movieList = mutableListOf<Movie>()
-
-    class MovieViewHolder(itemView: ItemMovieBinding) :
-        RecyclerView.ViewHolder(itemView.imageView) {
-
-        private var binding: ItemMovieBinding? = null
+    var list = mutableListOf<Movie>()
 
 
-        fun bind(movie: Movie?) {
-            binding!!.movie = movie
-            binding!!.executePendingBindings()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListMovieViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val view = layoutInflater.inflate(R.layout.item_movie, parent, false)
+        return ListMovieViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ListMovieViewHolder, position: Int) {
+        val movie = list[position]
+        holder.view.findViewById<TextView>(R.id.original_title).text = movie.original_title
+        holder.view.findViewById<TextView>(R.id.overview).text = movie.overview
+        holder.view.setOnClickListener {
+            postID(movie.id)
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, position: Int): MovieViewHolder {
-        val layotInflater = LayoutInflater.from(parent.context)
-        val itemBinding = ItemMovieBinding.inflate(layotInflater, parent, false)
+    override fun getItemCount() = list.size
 
-        val movie = movieList[position]
-        parent.imageView.setOnClickListener {
-            callback.onItemClicked(movie.id)
-        }
-
-        return MovieViewHolder(itemBinding)
+    fun addMovies(moviesResponse: List<Movie>){
+        list.clear()
+        list.addAll(moviesResponse)
+        notifyDataSetChanged()
     }
-
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val movie = movieList.get(position)
-        holder.bind(movie)
-    }
-
-    override fun getItemCount() = movieList.size
+    class ListMovieViewHolder(val view: View) : RecyclerView.ViewHolder(view){}
 }
 
