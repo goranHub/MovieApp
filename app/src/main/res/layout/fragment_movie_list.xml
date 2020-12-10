@@ -1,6 +1,4 @@
 <layout
-
-
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -10,11 +8,11 @@
             name="data"
             type="com.sicoapp.movieapp.ui.movie.list.ListMovieViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.movie.list.ListMovieFragment">
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recylerViewFragmentTopMovie"
@@ -24,7 +22,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:setAdapter="@{data.myRecyclerViewAdapter}"
+            app:setAdapter="@{data.adapter}"
             tools:itemCount="20"
             tools:listitem="@layout/item_movie" />
 

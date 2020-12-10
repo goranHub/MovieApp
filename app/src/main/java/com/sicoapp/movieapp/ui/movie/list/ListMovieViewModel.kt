@@ -1,53 +1,51 @@
 package com.sicoapp.movieapp.ui.movie.list
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.sicoapp.movieapp.data.api.ApiClient
 import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.data.response.topRated.AboveTopRated
-import com.sicoapp.movieapp.data.response.topRated.Movie
-import com.sicoapp.movieapp.ui.movie.list.newadapter.MyRecyclerViewAdapter
+import com.sicoapp.movieapp.ui.movie.list.newadapter.MovieItemViewModel
+import com.sicoapp.movieapp.ui.movie.list.newadapter.ListMovieAdapter
 import com.sicoapp.movieapp.utils.API_KEY
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.Collections.addAll
 
 /**
  * @author ll4
  * @date 12/6/2020
  */
-class ListMovieViewModel(val postId: (Int) -> Unit, context: Context) : ViewModel() {
-    private val topMoviesApiService: MovieApiService = ApiClient().getClient()!!.create(MovieApiService::class.java)
-    private val callAllTopMovies = topMoviesApiService.getTopRatedMovies(API_KEY)
+class ListMovieViewModel(val postId: (Int) -> Unit) : ViewModel() {
 
-/*
-  val topMovieAdapter = MovieAdapter{it ->
-        postId(it)
+    // iz adaptera id stavljamo u postId od ListMovieViewModel
+    val adapter = ListMovieAdapter { it -> postId(it) }
+
+    init {
+        loadMovies()
     }
 
- */
+    private fun loadMovies() {
+        val topMoviesApiService =
+            ApiClient().getClient()?.create(MovieApiService::class.java) ?: return
+        val callAllTopMovies = topMoviesApiService.getTopRatedMovies(API_KEY)
 
 
-    val myRecyclerViewAdapter = MyRecyclerViewAdapter({ it ->
-        postId(it) }, context)
+        callAllTopMovies.enqueue(object : Callback<AboveTopRated> {
+            override fun onResponse(
+                call: Call<AboveTopRated>,
+                response: Response<AboveTopRated>
+            ) {
+                val moviesList = response.body()?.results ?: return
+                val movieItemsList = moviesList.map { MovieItemViewModel(it) }
+                adapter.addMovies(movieItemsList)
+            }
 
-
-   init {
-       callAllTopMovies.enqueue(object : Callback<AboveTopRated> {
-           override fun onResponse(call: Call<AboveTopRated>,response: Response<AboveTopRated>) {
-               val listData = response.body()?.results
-               if (listData != null) {
-                   myRecyclerViewAdapter.addMovies(listData)
-               }
-           }
-
-           override fun onFailure(call: Call<AboveTopRated>, t: Throwable) {
-               Log.d("mojkum", "onFailure ${t.localizedMessage}")
-           }
-       })
-   }
+            override fun onFailure(call: Call<AboveTopRated>, t: Throwable) {
+                Log.d("mojkum", "onFailure ${t.localizedMessage}")
+            }
+        })
+    }
 }
 
 

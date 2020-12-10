@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.ui.movie.detail
+package com.sicoapp.movieapp.utils
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide
 interface ImageBindingAdapter {
     companion object {
         @JvmStatic
-        @BindingAdapter("profileImage")
+        @BindingAdapter("loadImageUrl")
         fun loadImage(view: ImageView, profileImage: String) {
             Glide.with(view.context)
                 .load(profileImage)

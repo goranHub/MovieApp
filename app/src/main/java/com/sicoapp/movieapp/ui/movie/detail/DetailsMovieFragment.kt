@@ -9,17 +9,11 @@ import androidx.fragment.app.Fragment
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.FragmentMovieDetailsBinding
 import com.sicoapp.movieapp.utils.ITEM_ID
-//databinding K u xml
-//ubaciti jos u currentfrag
-//pposloziti data layer
-//movie od kuma
-//sortiranje button listu
 
 class DetailsMovieFragment : Fragment() {
 
     private lateinit var binging: FragmentMovieDetailsBinding
     var itemId = 0
-
 
     val viewModel by lazy { DetailsViewModel(itemId) }
 
@@ -36,7 +30,6 @@ class DetailsMovieFragment : Fragment() {
     ): View? {
         binging = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_details, container, false)
         binging.data = viewModel
-
         return binging.root
     }
 }
