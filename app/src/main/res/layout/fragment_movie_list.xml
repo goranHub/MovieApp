@@ -24,7 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:setAdapter="@{data.topMovieAdapter}"
+            app:setAdapter="@{data.myRecyclerViewAdapter}"
             tools:itemCount="20"
             tools:listitem="@layout/item_movie" />
 
