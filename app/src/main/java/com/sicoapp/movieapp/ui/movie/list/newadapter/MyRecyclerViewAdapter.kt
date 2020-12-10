@@ -17,58 +17,47 @@ import com.sicoapp.movieapp.data.response.topRated.Movie
 import com.sicoapp.movieapp.databinding.ItemMovieBinding
 
 
-class MyRecyclerViewAdapter(
-    private val postID: (Int) -> Unit, val dataModelList: List<Movie>,
-    private val ctx: Context
-) :
-    RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>(), CustomClickListener {
+class MyRecyclerViewAdapter(private val postID: (Int) -> Unit,private val ctx: Context) : RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>(), CustomClickListener {
 
     private var context: Context? = null
-
+    var list = mutableListOf<Movie>()
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ViewHolder {
-        val binding: ItemMovieBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
-            R.layout.item_movie, parent, false
-        )
+    ): ViewHolder {val binding: ItemMovieBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),R.layout.item_movie, parent, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val dataModel: Movie = dataModelList[position]
+        val dataModel: Movie = list[position]
         holder.bind(dataModel)
-        holder.itemRowBinding.setItemClickListener(this)
+        holder.itemRowBinding.itemClickListener = this
     }
 
     override fun getItemCount(): Int {
-        return dataModelList.size
+        return list.size
     }
 
     inner class ViewHolder(itemRowBinding: ItemMovieBinding) :
-        RecyclerView.ViewHolder(itemRowBinding.getRoot()) {
-        var itemRowBinding: ItemMovieBinding
+        RecyclerView.ViewHolder(itemRowBinding.root) {
+        var itemRowBinding: ItemMovieBinding = itemRowBinding
         fun bind(obj: Any?) {
             itemRowBinding.setVariable(BR.movie, obj)
             itemRowBinding.executePendingBindings()
         }
-
-        init {
-            this.itemRowBinding = itemRowBinding
-        }
     }
 
-
+    fun addMovies(moviesResponse: List<Movie>){
+        list.clear()
+        list.addAll(moviesResponse)
+        notifyDataSetChanged()
+    }
 
     init {
         context = ctx
     }
 
     override fun cardClicked(movie: Movie?) {
-        Toast.makeText(
-            context, "You clicked " + movie?.original_title,
-            Toast.LENGTH_LONG
-        ).show()
+        movie?.let { postID(it.id) }
     }
 }

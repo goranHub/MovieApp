@@ -17,14 +17,13 @@ import com.sicoapp.movieapp.utils.ITEM_ID
 class ListMovieFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieListBinding
-    var listData : List<Movie> = ArrayList()
     private val viewModel by lazy (){
         context?.let {
             ListMovieViewModel ({ postID ->
                 val bundle = bundleOf(ITEM_ID to postID)
                 findNavController().navigate(R.id.action_movieListFragment_to_movieDetailsFragment, bundle)
             },
-                it, listData )
+                it )
         }
     }
 

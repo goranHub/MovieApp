@@ -4,7 +4,6 @@ package com.sicoapp.movieapp.ui.movie.list
  * @author ll4
  * @date 12/8/2020
  */
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.response.topRated.Movie
 
-
+/*
 class MovieAdapter(private val postID : (Int)-> Unit) : RecyclerView.Adapter<MovieAdapter.ListMovieViewHolder>() {
 
     var list = mutableListOf<Movie>()
@@ -45,3 +44,4 @@ class MovieAdapter(private val postID : (Int)-> Unit) : RecyclerView.Adapter<Mov
     class ListMovieViewHolder(val view: View) : RecyclerView.ViewHolder(view){}
 }
 
+*/

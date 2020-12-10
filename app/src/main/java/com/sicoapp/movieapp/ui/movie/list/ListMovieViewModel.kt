@@ -12,44 +12,42 @@ import com.sicoapp.movieapp.utils.API_KEY
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Collections.addAll
 
 /**
  * @author ll4
  * @date 12/6/2020
  */
-class ListMovieViewModel(val postId: (Int) -> Unit, context: Context, var listData: List<Movie>) : ViewModel() {
+class ListMovieViewModel(val postId: (Int) -> Unit, context: Context) : ViewModel() {
     private val topMoviesApiService: MovieApiService = ApiClient().getClient()!!.create(MovieApiService::class.java)
     private val callAllTopMovies = topMoviesApiService.getTopRatedMovies(API_KEY)
 
-
-    val topMovieAdapter = MovieAdapter{it ->
+/*
+  val topMovieAdapter = MovieAdapter{it ->
         postId(it)
     }
 
+ */
+
 
     val myRecyclerViewAdapter = MyRecyclerViewAdapter({ it ->
-        postId(it) }, fetchMovies(listData), context)
+        postId(it) }, context)
 
 
-    private fun fetchMovies(listData : List<Movie>) : List<Movie>{
-       // lateinit var lista : List<Movie>
-        callAllTopMovies.enqueue(object : Callback<AboveTopRated> {
-            override fun onResponse(
-                call: Call<AboveTopRated>,
-                response: Response<AboveTopRated>
-            ) {
-                this@ListMovieViewModel.listData = response.body()?.results ?: return
-                listData.forEach {
-                   // Log.v("mojkum", it.original_title)
-                }
-                //topMovieAdapter.addMovies(lista)
-            }
+   init {
+       callAllTopMovies.enqueue(object : Callback<AboveTopRated> {
+           override fun onResponse(call: Call<AboveTopRated>,response: Response<AboveTopRated>) {
+               val listData = response.body()?.results
+               if (listData != null) {
+                   myRecyclerViewAdapter.addMovies(listData)
+               }
+           }
 
-            override fun onFailure(call: Call<AboveTopRated>, t: Throwable) {
-                Log.d("mojkum", "onFailure ${t.localizedMessage}")
-            }
-        })
-        return listData
-    }
+           override fun onFailure(call: Call<AboveTopRated>, t: Throwable) {
+               Log.d("mojkum", "onFailure ${t.localizedMessage}")
+           }
+       })
+   }
 }
+
 
