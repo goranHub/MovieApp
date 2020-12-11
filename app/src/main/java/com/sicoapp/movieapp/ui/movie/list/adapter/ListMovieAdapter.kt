@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.ui.movie.list.newadapter
+package com.sicoapp.movieapp.ui.movie.list.adapter
 
 /**
  * @author ll4
@@ -11,8 +11,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.ItemMovieBinding
+import com.sicoapp.movieapp.ui.movie.crew.adapter.CrewClickListener
+import com.sicoapp.movieapp.ui.movie.list.MovieItemViewModel
 
-class ListMovieAdapter(private val postID: (Int) -> Unit) :
+class ListMovieAdapter(private val postID: (Int) -> Unit, private val crewID: (Int) -> Unit) :
     RecyclerView.Adapter<ViewHolder>(){
 
     var list = mutableListOf<MovieItemViewModel>()
@@ -22,6 +24,13 @@ class ListMovieAdapter(private val postID: (Int) -> Unit) :
         // movie id predajemo postId lambdi
         override fun cardClicked(id: Int?) {
             id?.let { postID(it) }
+        }
+    }
+
+
+    private val crewListener = object : CrewClickListener {
+        override fun crewClicked(id: Int?) {
+            id?.let { crewID(it) }
         }
     }
 
@@ -40,11 +49,10 @@ class ListMovieAdapter(private val postID: (Int) -> Unit) :
         val dataModel = list[position]
         holder.bind(dataModel)
         holder.itemRowBinding.itemClickListener = clickListener
+        holder.itemRowBinding.itemCrewClickListener = crewListener
     }
 
-    override fun getItemCount(): Int {
-        return list.size
-    }
+    override fun getItemCount() = list.size
 
     fun addMovies(movieItems: List<MovieItemViewModel>) {
         list.clear()

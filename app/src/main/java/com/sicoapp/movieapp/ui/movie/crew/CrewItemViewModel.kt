@@ -13,9 +13,9 @@ import kotlin.properties.Delegates
 class CrewItemViewModel(val crew: Crew) : BaseObservable() {
 
     @get:Bindable
-    var imageUrl by Delegates.observable("") { _, _, _ -> notifyPropertyChanged(BR.imageUrl) }
+    var imageActorUrl by Delegates.observable("") { _, _, _ -> notifyPropertyChanged(BR.imageActorUrl) }
 
     init {
-        imageUrl = "https://image.tmdb.org/t/p/w185/" + crew.profile_path
+        imageActorUrl = "https://image.tmdb.org/t/p/w185/" + crew.profile_path
     }
 }

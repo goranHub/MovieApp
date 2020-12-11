@@ -16,5 +16,18 @@
         tools:context=".ui.movie.crew.CrewMovieFragment">
 
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recylerViewFragmentTopMovie"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:setAdapter="@{data.adapter}"
+            tools:itemCount="20"
+            tools:listitem="@layout/item_movie" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

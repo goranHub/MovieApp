@@ -8,15 +8,17 @@
 
         <variable
             name="data"
-            type="com.sicoapp.movieapp.ui.movie.list.newadapter.MovieItemViewModel" />
+            type="com.sicoapp.movieapp.ui.movie.list.MovieItemViewModel" />
 
         <variable
             name="itemClickListener"
-            type="com.sicoapp.movieapp.ui.movie.list.newadapter.CustomClickListener" />
+            type="com.sicoapp.movieapp.ui.movie.list.adapter.CustomClickListener" />
 
         <variable
-            name="dataForCrew"
-            type="com.sicoapp.movieapp.ui.movie.crew.CrewItemViewModel" />
+            name="itemCrewClickListener"
+            type="com.sicoapp.movieapp.ui.movie.crew.adapter.CrewClickListener" />
+
+
 
     </data>
 
@@ -59,11 +61,11 @@
             tools:text="ORGINAL_TITLE" />
 
         <Button
-            android:id="@+id/overview"
+            android:id="@+id/buttonExpoloreTheCrew"
             android:layout_width="161dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:onClick="@{() -> itemClickListener.cardClicked(data.movie.id)}"
+            android:onClick="@{() -> itemCrewClickListener.crewClicked(data.movie.id)}"
             android:text="@string/explore_the_crew"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

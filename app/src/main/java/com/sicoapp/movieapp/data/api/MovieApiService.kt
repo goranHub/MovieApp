@@ -22,5 +22,8 @@ interface MovieApiService {
     @GET("movie/{id}")
     fun getAllMyMovies(@Path("id") id:Int, @Query("api_key") apiKey: String) : Call<Movie>
 
+    @GET("movie/{id}?&append_to_response=credits")
+    fun getCrew(@Path("id") id:Int, @Query("api_key") apiKey: String) : Call<Movie>
+
 
 }

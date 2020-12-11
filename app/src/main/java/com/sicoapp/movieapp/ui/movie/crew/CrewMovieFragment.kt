@@ -8,19 +8,20 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.FragmentMovieCrewBinding
-import com.sicoapp.movieapp.utils.ITEM_ID
+import com.sicoapp.movieapp.utils.CREW_ID
 
 
 class CrewMovieFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieCrewBinding
-    var itemId = 0
-    private val viewModel by lazy { CrewViewModel(itemId) }
+    var crewId = 0
+    //id is bundla
+    private val viewModel by lazy { CrewViewModel(crewId) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.getInt(ITEM_ID, -1)?.let {
-            itemId = it
+        arguments?.getInt(CREW_ID, -1)?.let {
+            crewId = it
         }
 
     }

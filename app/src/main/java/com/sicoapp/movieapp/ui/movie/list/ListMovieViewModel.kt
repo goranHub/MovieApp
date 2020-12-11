@@ -5,8 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.sicoapp.movieapp.data.api.ApiClient
 import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.data.response.topRated.AboveTopRated
-import com.sicoapp.movieapp.ui.movie.list.newadapter.MovieItemViewModel
-import com.sicoapp.movieapp.ui.movie.list.newadapter.ListMovieAdapter
+import com.sicoapp.movieapp.ui.movie.list.adapter.ListMovieAdapter
 import com.sicoapp.movieapp.utils.API_KEY
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,10 +15,10 @@ import retrofit2.Response
  * @author ll4
  * @date 12/6/2020
  */
-class ListMovieViewModel(val postId: (Int) -> Unit) : ViewModel() {
+class ListMovieViewModel(val postId: (Int) -> Unit, val crewID: (Int) -> Unit ) : ViewModel() {
 
     // iz adaptera id stavljamo u postId od ListMovieViewModel
-    val adapter = ListMovieAdapter { it -> postId(it) }
+    val adapter = ListMovieAdapter ({ it -> postId(it) },{ it -> crewID(it) } )
 
     init {
         loadMovies()
