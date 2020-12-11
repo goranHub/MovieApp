@@ -1,10 +1,17 @@
 package com.sicoapp.movieapp.data.response.topRated
 
+import com.google.gson.annotations.SerializedName
+
 data class Movie(
     var id: Int,
-    var original_title: String,
+    @SerializedName("original_title")
+    var originalTitle: String,
+    val genres: List<Genre>,
+    val credits: Credits,
     var overview: String,
-    var poster_path: String,
+    @SerializedName("poster_path")
+    var posterPath: String,
     var popularity: String,
-    var release_date: String
+    @SerializedName("release_date")
+    var releaseDate: String
     )

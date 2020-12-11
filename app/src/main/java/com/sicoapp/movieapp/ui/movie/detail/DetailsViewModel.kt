@@ -33,22 +33,22 @@ class DetailsViewModel(itemId: Int) : BaseObservable() {
     var releaseDate by Delegates.observable("TEST releaseDate") { _, _, _ -> notifyPropertyChanged(BR.releaseDate) }
 
 
-    val movieDetailsApiServis = ApiClient().getClient()?.create(MovieApiService::class.java)
-    val currentCall = movieDetailsApiServis?.getAllMyMovies(itemId, API_KEY)
+    private val movieDetailsApiServis = ApiClient().getClient()?.create(MovieApiService::class.java)
+    private val currentCall = movieDetailsApiServis?.getAllMyMovies(itemId, API_KEY)
 
     lateinit var responseMovie: Movie
 
     init {
-        currentCall?.enqueue(object : Callback<Movie> {
+        val enqueue = currentCall?.enqueue(object : Callback<Movie> {
             override fun onResponse(
                 call: Call<Movie>,
                 response: Response<Movie>
             ) {
                 responseMovie = response.body() ?: return
-                imageUrl = "https://image.tmdb.org/t/p/w185/" + responseMovie.poster_path
-                overview =  responseMovie.overview
-                popularity =  responseMovie.popularity
-                releaseDate =  responseMovie.release_date
+                imageUrl = "https://image.tmdb.org/t/p/w185/" + responseMovie.posterPath
+                overview = responseMovie.overview
+                popularity = responseMovie.popularity
+                releaseDate = responseMovie.releaseDate
 
             }
 

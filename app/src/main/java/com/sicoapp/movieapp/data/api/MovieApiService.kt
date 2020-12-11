@@ -1,6 +1,7 @@
 package com.sicoapp.movieapp.data.api
 
 import com.sicoapp.movieapp.data.response.topRated.AboveTopRated
+import com.sicoapp.movieapp.data.response.topRated.Credits
 import com.sicoapp.movieapp.data.response.topRated.Movie
 import retrofit2.Call
 import retrofit2.http.GET
@@ -20,5 +21,6 @@ interface MovieApiService {
 
     @GET("movie/{id}")
     fun getAllMyMovies(@Path("id") id:Int, @Query("api_key") apiKey: String) : Call<Movie>
+
 
 }

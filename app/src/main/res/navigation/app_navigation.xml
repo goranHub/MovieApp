@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_movieListFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
+        <action
+            android:id="@+id/action_movieListFragment_to_crewMovieFragment"
+            app:destination="@id/crewMovieFragment" />
     </fragment>
 
     <fragment
@@ -19,5 +22,9 @@
             android:name="com.sicoapp.movieapp.ui.movie.detail.DetailsMovieFragment"
             android:label="fragment_fight_club"
             tools:layout="@layout/fragment_movie_details" />
+    <fragment
+        android:id="@+id/crewMovieFragment"
+        android:name="com.sicoapp.movieapp.ui.movie.crew.CrewMovieFragment"
+        android:label="CrewMovieFragment" />
 
 </navigation>

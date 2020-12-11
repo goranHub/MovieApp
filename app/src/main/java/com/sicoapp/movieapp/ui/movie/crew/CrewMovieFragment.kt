@@ -1,37 +1,36 @@
-package com.sicoapp.movieapp.ui.movie.detail
+package com.sicoapp.movieapp.ui.movie.crew
 
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.sicoapp.movieapp.R
-import com.sicoapp.movieapp.databinding.FragmentMovieDetailsBinding
+import com.sicoapp.movieapp.databinding.FragmentMovieCrewBinding
 import com.sicoapp.movieapp.utils.ITEM_ID
 
-class DetailsMovieFragment() : Fragment() {
 
-    private lateinit var binging: FragmentMovieDetailsBinding
+class CrewMovieFragment : Fragment() {
+
+    private lateinit var binding: FragmentMovieCrewBinding
     var itemId = 0
-
-    private val viewModel by lazy { DetailsViewModel(itemId) }
+    private val viewModel by lazy { CrewViewModel(itemId) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.getInt(ITEM_ID, -1)?.let {
             itemId = it
         }
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binging = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_details, container, false)
-        binging.data = viewModel
-        return binging.root
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_crew, container, false)
+        binding.data = viewModel
+        return binding.root
     }
 }
