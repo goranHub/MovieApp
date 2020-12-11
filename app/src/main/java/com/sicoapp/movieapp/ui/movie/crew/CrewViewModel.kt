@@ -27,9 +27,7 @@ class CrewViewModel(crewId: Int) : BaseObservable() {
                 call: Call<Movie>,
                 response: Response<Movie>
             ) {
-                Log.v("error4", "jjjjjjjjjjjjj ")
                 val creditsList = response.body()?.credits?.crew ?: return
-                Log.v("error4", "dddddddd ")
                 val crewItemViewModel = creditsList.map {
                     CrewItemViewModel(it)
                 }
