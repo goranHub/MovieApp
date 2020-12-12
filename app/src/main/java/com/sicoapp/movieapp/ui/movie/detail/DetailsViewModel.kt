@@ -19,7 +19,6 @@ import kotlin.properties.Delegates
  */
 class DetailsViewModel(itemId: Int) : BaseObservable() {
 
-
     @get:Bindable
     var imageUrl by Delegates.observable("TEST imageUrl") { _, _, _ -> notifyPropertyChanged(BR.imageUrl) }
 
@@ -32,14 +31,12 @@ class DetailsViewModel(itemId: Int) : BaseObservable() {
     @get:Bindable
     var releaseDate by Delegates.observable("TEST releaseDate") { _, _, _ -> notifyPropertyChanged(BR.releaseDate) }
 
-
     private val movieDetailsApiServis = ApiClient().getClient()?.create(MovieApiService::class.java)
     private val currentCall = movieDetailsApiServis?.getAllMyMovies(itemId, API_KEY)
-
     lateinit var responseMovie: Movie
 
     init {
-        val enqueue = currentCall?.enqueue(object : Callback<Movie> {
+        currentCall?.enqueue(object : Callback<Movie> {
             override fun onResponse(
                 call: Call<Movie>,
                 response: Response<Movie>

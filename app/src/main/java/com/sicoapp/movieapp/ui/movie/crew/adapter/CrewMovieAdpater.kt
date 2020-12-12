@@ -17,8 +17,6 @@ class CrewMovieAdpater() :
 
     var list = mutableListOf<CrewItemViewModel>()
 
- //id is bundla
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
        val binding :ItemCrewBinding = DataBindingUtil.inflate(
            LayoutInflater.from(parent.context),
@@ -41,5 +39,4 @@ class CrewMovieAdpater() :
         list.addAll(crewItems)
         notifyDataSetChanged()
     }
-
 }

@@ -31,7 +31,6 @@ class CrewViewModel(crewId: Int) : BaseObservable() {
                 val crewItemViewModel = creditsList.map {
                     CrewItemViewModel(it)
                 }
-                //adapteru dajemo viewmodel
                 adapter.addCrew(crewItemViewModel)
             }
 

@@ -4,6 +4,7 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
 import com.sicoapp.movieapp.data.response.topRated.Crew
+import com.sicoapp.movieapp.utils.URL_IMAGE
 import kotlin.properties.Delegates
 
 /**
@@ -16,6 +17,6 @@ class CrewItemViewModel(val crew: Crew) : BaseObservable() {
     var imageActorUrl by Delegates.observable("") { _, _, _ -> notifyPropertyChanged(BR.imageActorUrl) }
 
     init {
-        imageActorUrl = "https://image.tmdb.org/t/p/w185/" + crew.profile_path
+        imageActorUrl = URL_IMAGE + crew.profile_path
     }
 }

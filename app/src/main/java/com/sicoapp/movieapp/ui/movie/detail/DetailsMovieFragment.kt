@@ -1,8 +1,6 @@
 package com.sicoapp.movieapp.ui.movie.detail
 
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +27,7 @@ class DetailsMovieFragment() : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binging = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_details, container, false)
         binging.data = viewModel
         return binging.root

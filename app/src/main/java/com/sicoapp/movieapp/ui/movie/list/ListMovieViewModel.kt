@@ -29,7 +29,6 @@ class ListMovieViewModel(val postId: (Int) -> Unit, val crewID: (Int) -> Unit ) 
             ApiClient().getClient()?.create(MovieApiService::class.java) ?: return
         val callAllTopMovies = topMoviesApiService.getTopRatedMovies(API_KEY)
 
-
         callAllTopMovies.enqueue(object : Callback<AboveTopRated> {
             override fun onResponse(
                 call: Call<AboveTopRated>,

@@ -4,6 +4,7 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
 import com.sicoapp.movieapp.data.response.topRated.Movie
+import com.sicoapp.movieapp.utils.URL_IMAGE
 import kotlin.properties.Delegates
 
 /**
@@ -16,6 +17,6 @@ class MovieItemViewModel(val movie: Movie) : BaseObservable() {
     var imageUrl by Delegates.observable("") { _, _, _ -> notifyPropertyChanged(BR.imageUrl) }
 
     init {
-        imageUrl = "https://image.tmdb.org/t/p/w185/" + movie.posterPath
+        imageUrl = URL_IMAGE + movie.posterPath
     }
 }

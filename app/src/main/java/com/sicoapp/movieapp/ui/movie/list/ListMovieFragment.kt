@@ -18,7 +18,6 @@ class ListMovieFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieListBinding
 
-
     private val viewModel by lazy {
         //dolazi id iz ListMovieViewModel stavljamo ga u bundle i pokrecemo detailsFragment
         ListMovieViewModel({ postID ->

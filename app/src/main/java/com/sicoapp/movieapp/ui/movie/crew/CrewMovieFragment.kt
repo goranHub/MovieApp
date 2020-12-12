@@ -10,12 +10,11 @@ import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.FragmentMovieCrewBinding
 import com.sicoapp.movieapp.utils.CREW_ID
 
-
 class CrewMovieFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieCrewBinding
     var crewId = 0
-    //id is bundla
+
     private val viewModel by lazy { CrewViewModel(crewId) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +22,6 @@ class CrewMovieFragment : Fragment() {
         arguments?.getInt(CREW_ID, -1)?.let {
             crewId = it
         }
-
     }
 
     override fun onCreateView(
