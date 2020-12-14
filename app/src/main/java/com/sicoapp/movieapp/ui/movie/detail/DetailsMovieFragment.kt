@@ -39,9 +39,10 @@ class DetailsMovieFragment : Fragment() {
             false
         )
 
-        binging.smiley?.setSmileySelectedListener(OnSmileySelectedListener { type ->
+        binging.smiley.setSmileySelectedListener { type ->
             status.text = type.toString()
-        })
+        }
+
         binging.data = viewModel
         return binging.root
     }
