@@ -5,10 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="data"
-            type="com.sicoapp.movieapp.ui.movie.list.MovieItemViewModel" />
+            type="com.sicoapp.movieapp.ui.movie.list.ListItemViewModel" />
 
         <variable
             name="itemClickListener"
@@ -17,9 +16,6 @@
         <variable
             name="itemCrewClickListener"
             type="com.sicoapp.movieapp.ui.movie.crew.adapter.CrewClickListener" />
-
-
-
     </data>
 
 

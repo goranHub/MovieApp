@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/movieListFragment"
         android:name="com.sicoapp.movieapp.ui.movie.list.ListMovieFragment"
-        android:label="TopMoviesFragment">
+        android:label="fragment_movie_list">
         <action
             android:id="@+id/action_movieListFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
@@ -25,6 +25,6 @@
     <fragment
         android:id="@+id/crewMovieFragment"
         android:name="com.sicoapp.movieapp.ui.movie.crew.CrewMovieFragment"
-        android:label="CrewMovieFragment" />
+        android:label="fragment_crew_movie" />
 
 </navigation>

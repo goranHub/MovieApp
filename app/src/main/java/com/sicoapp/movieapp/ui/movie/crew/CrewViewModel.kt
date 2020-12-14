@@ -12,17 +12,18 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class CrewViewModel(crewId: Int) : BaseObservable() {
-
     val adapter = CrewMovieAdpater()
-    private val movieDetailsApiServis = ApiClient().getClient()?.create(MovieApiService::class.java)
-    private val currentCall = movieDetailsApiServis?.getCrew(crewId, API_KEY)
 
     init {
-        loadCrew()
+        loadCrew(crewId)
     }
 
-    private fun loadCrew() {
-         currentCall?.enqueue(object : Callback<Movie> {
+    private fun loadCrew(crewId: Int) {
+
+        val movieDetailsApiServis = ApiClient().getClient()?.create(MovieApiService::class.java)
+        val currentCall = movieDetailsApiServis?.getCrew(crewId, API_KEY)
+
+        currentCall?.enqueue(object : Callback<Movie> {
             override fun onResponse(
                 call: Call<Movie>,
                 response: Response<Movie>
@@ -33,7 +34,6 @@ class CrewViewModel(crewId: Int) : BaseObservable() {
                 }
                 adapter.addCrew(crewItemViewModel)
             }
-
             override fun onFailure(call: Call<Movie>, t: Throwable) {
                 Log.d("error5", "onFailure ${t.localizedMessage}")
             }

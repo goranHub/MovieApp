@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.hsalf.smileyrating.SmileyRating
+import com.hsalf.smileyrating.SmileyRating.OnSmileySelectedListener
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.FragmentMovieDetailsBinding
 import com.sicoapp.movieapp.utils.ITEM_ID
+import kotlinx.android.synthetic.main.fragment_movie_details.*
 
-class DetailsMovieFragment() : Fragment() {
+class DetailsMovieFragment : Fragment() {
 
     private lateinit var binging: FragmentMovieDetailsBinding
     var itemId = 0
@@ -28,7 +31,17 @@ class DetailsMovieFragment() : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binging = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_details, container, false)
+
+        binging = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_movie_details,
+            container,
+            false
+        )
+
+        binging.smiley?.setSmileySelectedListener(OnSmileySelectedListener { type ->
+            status.text = type.toString()
+        })
         binging.data = viewModel
         return binging.root
     }

@@ -35,10 +35,9 @@ class ListMovieViewModel(val postId: (Int) -> Unit, val crewID: (Int) -> Unit ) 
                 response: Response<AboveTopRated>
             ) {
                 val moviesList = response.body()?.results ?: return
-                val movieItemsList = moviesList.map { MovieItemViewModel(it) }
+                val movieItemsList = moviesList.map { ListItemViewModel(it) }
                 adapter.addMovies(movieItemsList)
             }
-
             override fun onFailure(call: Call<AboveTopRated>, t: Throwable) {
                 Log.d("mojkum", "onFailure ${t.localizedMessage}")
             }

@@ -75,5 +75,6 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
     kapt "com.android.databinding:compiler:3.4.0"
+    implementation 'com.github.sujithkanna:smileyrating:2.0.0'
 
 }

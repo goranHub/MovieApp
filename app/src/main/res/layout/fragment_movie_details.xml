@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="data"
             type="com.sicoapp.movieapp.ui.movie.detail.DetailsViewModel" />
@@ -14,12 +13,27 @@
         android:layout_height="match_parent"
         tools:context=".ui.movie.detail.DetailsMovieFragment">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="20dp" />
+
         <ImageView
             android:id="@+id/ivImage"
             android:layout_width="363dp"
             android:layout_height="258dp"
             android:layout_marginTop="28dp"
             android:contentDescription="@null"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toTopOf="@+id/textOverview"
             app:layout_constraintDimensionRatio="16:9"
             app:layout_constraintEnd_toEndOf="parent"
@@ -27,6 +41,31 @@
             app:layout_constraintTop_toTopOf="parent"
             app:loadImageUrl="@{data.imageUrl}"
             tools:src="@tools:sample/avatars" />
+
+        <com.hsalf.smileyrating.SmileyRating
+            android:id="@+id/smiley"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/popularity"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/smiley" />
 
         <TextView
             android:id="@+id/textOverview"
@@ -54,7 +93,6 @@
             app:layout_constraintTop_toBottomOf="@+id/ivImage"
             app:layout_constraintVertical_bias="0.09"
             tools:text="abcdefgh" />
-
 
         <TextView
             android:id="@+id/popularity_Text"

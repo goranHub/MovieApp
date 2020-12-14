@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.ItemMovieBinding
 import com.sicoapp.movieapp.ui.movie.crew.adapter.CrewClickListener
-import com.sicoapp.movieapp.ui.movie.list.MovieItemViewModel
+import com.sicoapp.movieapp.ui.movie.list.ListItemViewModel
 
 class ListMovieAdapter(private val postID: (Int) -> Unit, private val crewID: (Int) -> Unit) :
     RecyclerView.Adapter<ViewHolder>(){
 
-    var list = mutableListOf<MovieItemViewModel>()
+    var list = mutableListOf<ListItemViewModel>()
 
     private val clickListener = object : CustomClickListener {
 
@@ -26,7 +26,6 @@ class ListMovieAdapter(private val postID: (Int) -> Unit, private val crewID: (I
             id?.let { postID(it) }
         }
     }
-
 
     private val crewListener = object : CrewClickListener {
         override fun crewClicked(id: Int?) {
@@ -54,9 +53,9 @@ class ListMovieAdapter(private val postID: (Int) -> Unit, private val crewID: (I
 
     override fun getItemCount() = list.size
 
-    fun addMovies(movieItems: List<MovieItemViewModel>) {
+    fun addMovies(listItems: List<ListItemViewModel>) {
         list.clear()
-        list.addAll(movieItems)
+        list.addAll(listItems)
         notifyDataSetChanged()
     }
 }
