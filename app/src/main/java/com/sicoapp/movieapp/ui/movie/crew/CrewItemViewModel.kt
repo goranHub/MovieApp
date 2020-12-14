@@ -17,6 +17,6 @@ class CrewItemViewModel(val crew: Crew) : BaseObservable() {
     var imageActorUrl by Delegates.observable("") { _, _, _ -> notifyPropertyChanged(BR.imageActorUrl) }
 
     init {
-        imageActorUrl = URL_IMAGE + crew.profile_path
+        imageActorUrl = URL_IMAGE + crew.profilePath
     }
 }

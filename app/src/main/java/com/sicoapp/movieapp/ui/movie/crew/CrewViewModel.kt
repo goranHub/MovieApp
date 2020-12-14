@@ -34,8 +34,8 @@ class CrewViewModel(crewId: Int) : BaseObservable() {
                 crewList = response.body()?.credits?.crew ?: return
 
                 val list = crewList
-                    .filter { !it.profile_path.isNullOrBlank() }
-                    .distinctBy { it.profile_path }
+                    .filter { !it.profilePath.isNullOrBlank() }
+                    .distinctBy { it.profilePath }
                     .map { CrewItemViewModel(it) }
 
                 adapter.addCrew(list)
