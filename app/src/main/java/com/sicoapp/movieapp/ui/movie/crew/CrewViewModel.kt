@@ -14,7 +14,7 @@ import retrofit2.Response
 
 class CrewViewModel(crewId: Int) : BaseObservable() {
     val adapter = CrewMovieAdpater()
-    lateinit var creditsList: List<Crew>
+    lateinit var crewList: List<Crew>
 
     init {
         loadCrew(crewId)
@@ -31,15 +31,12 @@ class CrewViewModel(crewId: Int) : BaseObservable() {
                 call: Call<Movie>,
                 response: Response<Movie>
             ) {
-                creditsList = response.body()?.credits?.crew ?: return
+                crewList = response.body()?.credits?.crew ?: return
 
-                creditsList= creditsList.distinctBy {
-                    it.profile_path
-                }
-
-                val list = creditsList
-                    .filter {(!it.profile_path.isNullOrBlank()) }
-                    .map {CrewItemViewModel(it)}
+                val list = crewList
+                    .filter { !it.profile_path.isNullOrBlank() }
+                    .distinctBy { it.profile_path }
+                    .map { CrewItemViewModel(it) }
 
                 adapter.addCrew(list)
             }
