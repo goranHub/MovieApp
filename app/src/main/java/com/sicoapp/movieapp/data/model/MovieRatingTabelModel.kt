@@ -12,10 +12,10 @@ import com.hsalf.smileyrating.SmileyRating
  */
 @Entity(tableName = "MovieRating")
 class MovieRatingTabelModel(
-    @ColumnInfo(name = "originalTitle")
-    var originalTitle: String?,
+    @ColumnInfo(name = "itemId")
+    var itemId: Int?,
     @ColumnInfo(name = "rating")
-    var rating: String?
+    var rating: Int?
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

@@ -1,6 +1,7 @@
 package com.sicoapp.movieapp.repository
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.hsalf.smileyrating.SmileyRating
 import com.sicoapp.movieapp.data.database.MovieDatabase
@@ -24,18 +25,21 @@ class MovieRepository {
             return MovieDatabase.getDataClient(context)
         }
 
-        fun insertData(context: Context, originalTitle: String, rating: String) {
+        fun insertData(context: Context, itemId: Int, rating: Int) {
+
             movieDatabase = initDB(context)
 
+            Log.i("instancaee", movieDatabase.toString())
+
             CoroutineScope(IO).launch {
-                val movieRatingDetails = MovieRatingTabelModel(originalTitle, rating)
+                val movieRatingDetails = MovieRatingTabelModel(itemId, rating)
                 movieDatabase!!.movieDao().InsertData(movieRatingDetails)
             }
         }
 
-        fun getMovieRatingDetails(context: Context, originalTitle: String) : LiveData<MovieRatingTabelModel> {
+        fun getMovieRatingDetails(context: Context, itemId: Int) : LiveData<MovieRatingTabelModel> {
             movieDatabase = initDB(context)
-            movieRatingTabelModel = movieDatabase!!.movieDao().getMovieDetails(originalTitle)
+            movieRatingTabelModel = movieDatabase!!.movieDao().getMovieDetails(itemId)
             return movieRatingTabelModel as LiveData<MovieRatingTabelModel>
 
         }

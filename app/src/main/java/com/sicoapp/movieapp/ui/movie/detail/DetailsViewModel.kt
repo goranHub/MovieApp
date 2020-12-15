@@ -6,7 +6,6 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.LiveData
-import com.hsalf.smileyrating.SmileyRating
 import com.sicoapp.movieapp.data.api.ApiClient
 import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.data.model.MovieRatingTabelModel
@@ -45,43 +44,46 @@ class DetailsViewModel(itemId: Int) : BaseObservable() {
 
     init {
         loadDetailsMovies(itemId)
-        loadDb()
+
     }
 
-        private fun loadDetailsMovies(itemId: Int) {
-            val movieDetailsApiServis =
-                ApiClient().getClient()?.create(MovieApiService::class.java) ?: return
-            val currentCall = movieDetailsApiServis.getAllMyMovies(itemId, API_KEY)
-            lateinit var responseMovie: Movie
+    private fun loadDetailsMovies(itemId: Int) {
+        val movieDetailsApiServis =
+            ApiClient().getClient()?.create(MovieApiService::class.java) ?: return
+        val currentCall = movieDetailsApiServis.getAllMyMovies(itemId, API_KEY)
+        lateinit var responseMovie: Movie
 
-            currentCall.enqueue(object : Callback<Movie> {
-                override fun onResponse(
-                    call: Call<Movie>,
-                    response: Response<Movie>
-                ) {
-                    responseMovie = response.body() ?: return
-                    imageUrl = URL_IMAGE + responseMovie.posterPath
-                    overview = responseMovie.overview
-                    popularity = responseMovie.popularity
-                    releaseDate = responseMovie.releaseDate
-                }
+        currentCall.enqueue(object : Callback<Movie> {
+            override fun onResponse(
+                call: Call<Movie>,
+                response: Response<Movie>
+            ) {
+                responseMovie = response.body() ?: return
+                imageUrl = URL_IMAGE + responseMovie.posterPath
+                overview = responseMovie.overview
+                popularity = responseMovie.popularity
+                releaseDate = responseMovie.releaseDate
+            }
 
-                override fun onFailure(call: Call<Movie>, t: Throwable) {
-                    Log.d("error", "onFailure ${t.localizedMessage}")
-                }
-            })
+            override fun onFailure(call: Call<Movie>, t: Throwable) {
+                Log.d("error", "onFailure ${t.localizedMessage}")
+            }
+        })
+    }
+
+
+
+        fun insertData(context: Context, itemID: Int, rating: Int) {
+            MovieRepository.insertData(context, itemID, rating)
         }
 
-   fun loadDb(){
-
-        fun insertData(context: Context, originalTitle :String, rating: String) {
-            MovieRepository.insertData(context, originalTitle, rating)
-        }
-
-        fun getMovieRatingDetails(context: Context, originalTitle: String) : LiveData<MovieRatingTabelModel>? {
-            liveDataMovieRating = MovieRepository.getMovieRatingDetails(context, originalTitle)
+        fun getMovieRatingDetails(
+            context: Context,
+            itemId: Int
+        ): LiveData<MovieRatingTabelModel>? {
+            liveDataMovieRating = MovieRepository.getMovieRatingDetails(context, itemId)
             return liveDataMovieRating
         }
-    }
+
 }
 

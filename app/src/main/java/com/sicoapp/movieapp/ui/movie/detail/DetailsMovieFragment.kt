@@ -6,16 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.hsalf.smileyrating.SmileyRating
-import com.hsalf.smileyrating.SmileyRating.OnSmileySelectedListener
+import androidx.lifecycle.Observer
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.FragmentMovieDetailsBinding
 import com.sicoapp.movieapp.utils.ITEM_ID
 import kotlinx.android.synthetic.main.fragment_movie_details.*
+import kotlin.properties.Delegates
 
 class DetailsMovieFragment : Fragment() {
 
     private lateinit var binging: FragmentMovieDetailsBinding
+    var currentType by Delegates.notNull<Int>()
     var itemId = 0
 
     private val viewModel by lazy { DetailsViewModel(itemId) }
@@ -41,11 +42,31 @@ class DetailsMovieFragment : Fragment() {
             false
         )
 
+
+        val viewModelInstance = viewModel
+
+        binging.data = viewModelInstance
+
+        var currentType = binging.smiley.selectedSmiley.rating
+
         binging.smiley.setSmileySelectedListener { type ->
             status.text = type.toString()
+            currentType = type.rating
+
         }
 
-        binging.data = viewModel
+        context?.let { context ->
+            viewModelInstance.getMovieRatingDetails(context, itemId)
+                ?.observe(viewLifecycleOwner, Observer {
+                    currentType = it.rating!!
+                })
+        }
+
+        if (currentType in 0..5) {
+            context?.let {
+                viewModelInstance.insertData(it, itemId, currentType)
+            }
+        }
         return binging.root
     }
 }

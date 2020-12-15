@@ -11,9 +11,9 @@ import com.sicoapp.movieapp.data.model.MovieRatingTabelModel
 interface DAOAccess {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun InsertData(movieRatingTabelModel: MovieRatingTabelModel)
+    suspend fun InsertData(movieRatingTabelModel: MovieRatingTabelModel)
 
-    @Query("SELECT * FROM MovieRating WHERE OriginalTitle =:originalTitle")
-    fun getMovieDetails(originalTitle: String?) : LiveData<MovieRatingTabelModel>
+    @Query("SELECT * FROM MovieRating WHERE itemId =:itemId")
+    fun getMovieDetails(itemId: Int?) : LiveData<MovieRatingTabelModel>
 
 }
