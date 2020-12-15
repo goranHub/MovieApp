@@ -2,6 +2,7 @@ package com.sicoapp.movieapp.data.response.topRated
 
 import com.google.gson.annotations.SerializedName
 
+
 data class Movie(
     var id: Int,
     @SerializedName("original_title")

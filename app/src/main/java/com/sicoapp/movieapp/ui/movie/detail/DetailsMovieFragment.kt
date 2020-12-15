@@ -27,6 +27,8 @@ class DetailsMovieFragment : Fragment() {
         }
     }
 
+    //Spremis koji je film i koji je rating i kad otvoris taj film da vidi imal za njeg rating
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

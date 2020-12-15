@@ -5,10 +5,13 @@ import android.util.Log
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
+import androidx.lifecycle.LiveData
 import com.hsalf.smileyrating.SmileyRating
 import com.sicoapp.movieapp.data.api.ApiClient
 import com.sicoapp.movieapp.data.api.MovieApiService
+import com.sicoapp.movieapp.data.model.MovieRatingTabelModel
 import com.sicoapp.movieapp.data.response.topRated.Movie
+import com.sicoapp.movieapp.repository.MovieRepository
 import com.sicoapp.movieapp.utils.API_KEY
 import com.sicoapp.movieapp.utils.URL_IMAGE
 import retrofit2.Call
@@ -21,6 +24,8 @@ import kotlin.properties.Delegates
  * @date 12/6/2020
  */
 class DetailsViewModel(itemId: Int) : BaseObservable() {
+
+    var liveDataMovieRating: LiveData<MovieRatingTabelModel>? = null
 
     @get:Bindable
     var imageUrl by Delegates.observable("TEST imageUrl") { _, _, _ -> notifyPropertyChanged(BR.imageUrl) }
@@ -40,6 +45,7 @@ class DetailsViewModel(itemId: Int) : BaseObservable() {
 
     init {
         loadDetailsMovies(itemId)
+        loadDb()
     }
 
         private fun loadDetailsMovies(itemId: Int) {
@@ -65,5 +71,17 @@ class DetailsViewModel(itemId: Int) : BaseObservable() {
                 }
             })
         }
+
+   fun loadDb(){
+
+        fun insertData(context: Context, originalTitle :String, rating: String) {
+            MovieRepository.insertData(context, originalTitle, rating)
+        }
+
+        fun getMovieRatingDetails(context: Context, originalTitle: String) : LiveData<MovieRatingTabelModel>? {
+            liveDataMovieRating = MovieRepository.getMovieRatingDetails(context, originalTitle)
+            return liveDataMovieRating
+        }
+    }
 }
 
