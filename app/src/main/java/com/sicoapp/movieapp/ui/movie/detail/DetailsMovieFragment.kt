@@ -20,12 +20,16 @@ class DetailsMovieFragment : Fragment() {
     var itemId = 0
 
     private val viewModel by lazy { DetailsViewModel(itemId) }
+    val viewModelInstance = viewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.getInt(ITEM_ID, -1)?.let {
             itemId = it
         }
+
+
     }
 
     //Spremis koji je film i koji je rating i kad otvoris taj film da vidi imal za njeg rating
@@ -42,31 +46,50 @@ class DetailsMovieFragment : Fragment() {
             false
         )
 
-
-        val viewModelInstance = viewModel
-
         binging.data = viewModelInstance
 
         var currentType = binging.smiley.selectedSmiley.rating
+
+        /* kada je kreiran view izvuci iz baze za njega rating smile
+         */
+
 
         binging.smiley.setSmileySelectedListener { type ->
             status.text = type.toString()
             currentType = type.rating
 
+                context?.let {
+                    viewModelInstance.insertData(it, itemId, currentType)
+                }
+
+
         }
 
-        context?.let { context ->
-            viewModelInstance.getMovieRatingDetails(context, itemId)
-                ?.observe(viewLifecycleOwner, Observer {
-                    currentType = it.rating!!
-                })
+        binging.btnReadLogin.setOnClickListener {
+
+            viewModelInstance.getMovieRatingDetails(it.context, itemId)!!.observe(viewLifecycleOwner, Observer {
+
+                if (it == null) {
+                    lblUseraname.text = "- - -"
+                    lblPassword.text = "- - -"
+                }
+                else {
+                    lblUseraname.text = it.itemId.toString()
+                    lblPassword.text = it.rating.toString()
+
+                }
+
+                context?.let { context ->
+                    viewModelInstance.getMovieRatingDetails(context, itemId)
+                        ?.observe(viewLifecycleOwner, Observer {
+                            currentType = it?.rating!!
+                        })
+                }
+            })
         }
 
-        if (currentType in 0..5) {
-            context?.let {
-                viewModelInstance.insertData(it, itemId, currentType)
-            }
-        }
+
+
         return binging.root
     }
 }

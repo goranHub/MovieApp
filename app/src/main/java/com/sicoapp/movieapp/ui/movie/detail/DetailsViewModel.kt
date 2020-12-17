@@ -44,7 +44,6 @@ class DetailsViewModel(itemId: Int) : BaseObservable() {
 
     init {
         loadDetailsMovies(itemId)
-
     }
 
     private fun loadDetailsMovies(itemId: Int) {
@@ -70,7 +69,6 @@ class DetailsViewModel(itemId: Int) : BaseObservable() {
             }
         })
     }
-
 
 
         fun insertData(context: Context, itemID: Int, rating: Int) {
