@@ -46,8 +46,7 @@ class DetailsMovieFragment : Fragment() {
         val viewModelInstance = viewModel
 
         binging.smiley.setSmileySelectedListener { type ->
-
-            status.text = type.toString()
+            
             currentType = type.rating
 
             binging.btnSave.setOnClickListener { view ->
@@ -61,9 +60,7 @@ class DetailsMovieFragment : Fragment() {
 
             viewModelInstance.getMovieRatingDetails(view.context, itemId)!!
                 .observe(viewLifecycleOwner, Observer { movieRatingTabelModel ->
-
-                    if (movieRatingTabelModel == null) {
-                    } else {
+                    if (movieRatingTabelModel != null) {
                         binging.smiley.setRating(movieRatingTabelModel.rating)
                     }
                 })
