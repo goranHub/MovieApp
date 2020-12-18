@@ -70,7 +70,6 @@ class DetailsViewModel(itemId: Int) : BaseObservable() {
         })
     }
 
-
         fun insertData(context: Context, itemID: Int, rating: Int) {
             MovieRepository.insertData(context, itemID, rating)
         }
@@ -82,6 +81,10 @@ class DetailsViewModel(itemId: Int) : BaseObservable() {
             liveDataMovieRating = MovieRepository.getMovieRatingDetails(context, itemId)
             return liveDataMovieRating
         }
+
+    fun removeDataForThatItem(context: Context, itemId: Int)  {
+        MovieRepository.removeDataForThatItem(context, itemId)
+    }
 
 }
 

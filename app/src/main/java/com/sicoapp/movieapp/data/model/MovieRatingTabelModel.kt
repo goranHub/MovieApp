@@ -15,7 +15,7 @@ class MovieRatingTabelModel(
     @ColumnInfo(name = "itemId")
     var itemId: Int?,
     @ColumnInfo(name = "rating")
-    var rating: Int?
+    var rating: Int
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

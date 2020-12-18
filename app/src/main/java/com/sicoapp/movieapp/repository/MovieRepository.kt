@@ -3,7 +3,6 @@ package com.sicoapp.movieapp.repository
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
-import com.hsalf.smileyrating.SmileyRating
 import com.sicoapp.movieapp.data.database.MovieDatabase
 import com.sicoapp.movieapp.data.model.MovieRatingTabelModel
 import kotlinx.coroutines.CoroutineScope
@@ -41,6 +40,14 @@ class MovieRepository {
             movieDatabase = initDB(context)
             movieRatingTabelModel = movieDatabase!!.movieDao().getMovieDetails(itemId)
             return movieRatingTabelModel as LiveData<MovieRatingTabelModel>
+
+        }
+
+        fun removeDataForThatItem(context: Context, itemId: Int) {
+            movieDatabase = initDB(context)
+            CoroutineScope(IO).launch {
+                movieDatabase!!.movieDao().removeDataForThatItem(itemId)
+            }
 
         }
     }

@@ -44,8 +44,8 @@
 
         <com.hsalf.smileyrating.SmileyRating
             android:id="@+id/smiley"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="395dp"
+            android:layout_height="60dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
@@ -55,15 +55,15 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/popularity"
-            app:layout_constraintVertical_bias="0.75" />
+            app:layout_constraintVertical_bias="0.402" />
 
         <TextView
             android:id="@+id/status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.77"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/smiley" />
 
@@ -99,7 +99,7 @@
             style="@style/popularity_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="28dp"
             android:background="@color/design_default_color_secondary_variant"
             android:text="@string/popularity_text"
             app:layout_constraintEnd_toStartOf="@+id/release_date_Text"
@@ -113,7 +113,7 @@
             style="@style/release_date_Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="28dp"
             android:background="@color/design_default_color_secondary_variant"
             android:text="@string/release_date_Text"
             app:layout_constraintEnd_toEndOf="parent"
@@ -151,56 +151,49 @@
 
 
         <Button
-            android:id="@+id/btnReadLogin"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/btnCall"
+            android:layout_width="99dp"
+            android:layout_height="43dp"
             android:layout_marginStart="40dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="40dp"
-            android:text="Click To Read Credentials From Room"
+            android:text="call"
             android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/lblUseraname"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.864" />
-
-        <TextView
-            android:id="@+id/lblUseraname"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:layout_marginBottom="8dp"
-            android:gravity="center"
-            android:lineSpacingExtra="5dp"
-            android:padding="10dp"
-            android:text="- - -"
-            android:textColor="@android:color/holo_orange_light"
-            android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/smiley"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/lblPassword"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:layout_marginTop="204dp"
-            android:gravity="center"
-            android:lineSpacingExtra="5dp"
-            android:padding="10dp"
-            android:text="- - -"
-            android:textColor="@android:color/holo_orange_light"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/status"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.6"
+            app:layout_constraintHorizontal_bias="0.112"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lblUseraname"
-            app:layout_constraintVertical_bias="0.934" />
+            app:layout_constraintTop_toBottomOf="@+id/popularity"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="99dp"
+            android:layout_height="43dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="8dp"
+            android:text="save"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/status"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/smiley" />
+
+        <Button
+            android:id="@+id/btnDeleteAll"
+            android:layout_width="99dp"
+            android:layout_height="43dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="40dp"
+            android:text="delete"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/smiley"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.719"
+            app:layout_constraintStart_toEndOf="@+id/btnCall"
+            app:layout_constraintTop_toBottomOf="@+id/release_date"
+            app:layout_constraintVertical_bias="0.0" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

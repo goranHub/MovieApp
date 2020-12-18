@@ -20,19 +20,13 @@ class DetailsMovieFragment : Fragment() {
     var itemId = 0
 
     private val viewModel by lazy { DetailsViewModel(itemId) }
-    val viewModelInstance = viewModel
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.getInt(ITEM_ID, -1)?.let {
             itemId = it
         }
-
-
     }
-
-    //Spremis koji je film i koji je rating i kad otvoris taj film da vidi imal za njeg rating
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,49 +40,38 @@ class DetailsMovieFragment : Fragment() {
             false
         )
 
-        binging.data = viewModelInstance
+        binging.data = viewModel
 
-        var currentType = binging.smiley.selectedSmiley.rating
-
-        /* kada je kreiran view izvuci iz baze za njega rating smile
-         */
-
+        var currentType: Int
+        val viewModelInstance = viewModel
 
         binging.smiley.setSmileySelectedListener { type ->
+
             status.text = type.toString()
             currentType = type.rating
 
+            binging.btnSave.setOnClickListener { view ->
                 context?.let {
                     viewModelInstance.insertData(it, itemId, currentType)
                 }
-
-
+            }
         }
 
-        binging.btnReadLogin.setOnClickListener {
+        binging.btnCall.setOnClickListener { view ->
 
-            viewModelInstance.getMovieRatingDetails(it.context, itemId)!!.observe(viewLifecycleOwner, Observer {
+            viewModelInstance.getMovieRatingDetails(view.context, itemId)!!
+                .observe(viewLifecycleOwner, Observer { movieRatingTabelModel ->
 
-                if (it == null) {
-                    lblUseraname.text = "- - -"
-                    lblPassword.text = "- - -"
-                }
-                else {
-                    lblUseraname.text = it.itemId.toString()
-                    lblPassword.text = it.rating.toString()
-
-                }
-
-                context?.let { context ->
-                    viewModelInstance.getMovieRatingDetails(context, itemId)
-                        ?.observe(viewLifecycleOwner, Observer {
-                            currentType = it?.rating!!
-                        })
-                }
-            })
+                    if (movieRatingTabelModel == null) {
+                    } else {
+                        binging.smiley.setRating(movieRatingTabelModel.rating)
+                    }
+                })
         }
 
-
+        binging.btnDeleteAll.setOnClickListener {
+            viewModelInstance.removeDataForThatItem(it.context, itemId)
+        }
 
         return binging.root
     }

@@ -14,6 +14,9 @@ interface DAOAccess {
     suspend fun InsertData(movieRatingTabelModel: MovieRatingTabelModel)
 
     @Query("SELECT * FROM MovieRating WHERE itemId =:itemId")
-    fun getMovieDetails(itemId: Int?) : LiveData<MovieRatingTabelModel>
+    fun getMovieDetails(itemId: Int?): LiveData<MovieRatingTabelModel>
+
+    @Query("DELETE FROM MovieRating  WHERE itemId =:itemId")
+    fun removeDataForThatItem(itemId: Int)
 
 }
