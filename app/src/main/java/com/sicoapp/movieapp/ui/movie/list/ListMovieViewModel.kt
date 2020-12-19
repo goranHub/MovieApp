@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.sicoapp.movieapp.data.api.ApiClient
 import com.sicoapp.movieapp.data.api.MovieApiService
-import com.sicoapp.movieapp.data.response.topRated.AboveTopRated
+import com.sicoapp.movieapp.data.response.AboveTopRated
 import com.sicoapp.movieapp.ui.movie.list.adapter.ListMovieAdapter
 import com.sicoapp.movieapp.utils.API_KEY
 import retrofit2.Call

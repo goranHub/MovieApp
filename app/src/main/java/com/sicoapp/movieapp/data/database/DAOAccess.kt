@@ -17,6 +17,6 @@ interface DAOAccess {
     fun getMovieDetails(itemId: Int?): LiveData<MovieRatingTabelModel>
 
     @Query("DELETE FROM MovieRating  WHERE itemId =:itemId")
-    fun removeDataForThatItem(itemId: Int)
+    suspend fun removeDataForThatItem(itemId: Int)
 
 }

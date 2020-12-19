@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -19,7 +20,7 @@ class ListMovieFragment : Fragment() {
     private lateinit var binding: FragmentMovieListBinding
 
     private val viewModel by lazy {
-        //dolazi id iz ListMovieViewModel stavljamo ga u bundle i pokrecemo detailsFragment
+
         ListMovieViewModel({ postID ->
             val bundle = bundleOf(ITEM_ID to postID)
             findNavController().navigate(
@@ -35,7 +36,6 @@ class ListMovieFragment : Fragment() {
         })
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,6 +43,13 @@ class ListMovieFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_movie_list, container, false)
         binding.data = viewModel
+
+        binding.topAppBar.setNavigationOnClickListener {
+            val text = "more"
+            val duration = Toast.LENGTH_SHORT
+            val toast = Toast.makeText(context, text, duration)
+            toast.show()
+        }
         return binding.root
     }
 }

@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.databinding.BaseObservable
 import com.sicoapp.movieapp.data.api.ApiClient
 import com.sicoapp.movieapp.data.api.MovieApiService
-import com.sicoapp.movieapp.data.response.topRated.Crew
-import com.sicoapp.movieapp.data.response.topRated.Movie
+import com.sicoapp.movieapp.data.response.Crew
+import com.sicoapp.movieapp.data.response.Movie
 import com.sicoapp.movieapp.ui.movie.crew.adapter.CrewMovieAdpater
 import com.sicoapp.movieapp.utils.API_KEY
 import retrofit2.Call

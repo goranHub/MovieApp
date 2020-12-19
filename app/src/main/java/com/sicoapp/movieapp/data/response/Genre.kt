@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.data.response.topRated
+package com.sicoapp.movieapp.data.response
 
 data class Genre(
     val id: Int,

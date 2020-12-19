@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.data.response.topRated
+package com.sicoapp.movieapp.data.response
 
 import com.google.gson.annotations.SerializedName
 

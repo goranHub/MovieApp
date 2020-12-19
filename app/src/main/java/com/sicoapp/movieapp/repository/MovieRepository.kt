@@ -28,8 +28,6 @@ class MovieRepository {
 
             movieDatabase = initDB(context)
 
-            Log.i("instancaee", movieDatabase.toString())
-
             CoroutineScope(IO).launch {
                 val movieRatingDetails = MovieRatingTabelModel(itemId, rating)
                 movieDatabase!!.movieDao().InsertData(movieRatingDetails)
@@ -40,7 +38,6 @@ class MovieRepository {
             movieDatabase = initDB(context)
             movieRatingTabelModel = movieDatabase!!.movieDao().getMovieDetails(itemId)
             return movieRatingTabelModel as LiveData<MovieRatingTabelModel>
-
         }
 
         fun removeDataForThatItem(context: Context, itemId: Int) {

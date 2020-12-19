@@ -3,7 +3,7 @@ package com.sicoapp.movieapp.ui.movie.list
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
-import com.sicoapp.movieapp.data.response.topRated.Movie
+import com.sicoapp.movieapp.data.response.Movie
 import com.sicoapp.movieapp.utils.URL_IMAGE
 import kotlin.properties.Delegates
 

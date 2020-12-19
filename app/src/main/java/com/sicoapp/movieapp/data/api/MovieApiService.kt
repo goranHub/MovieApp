@@ -1,7 +1,7 @@
 package com.sicoapp.movieapp.data.api
 
-import com.sicoapp.movieapp.data.response.topRated.AboveTopRated
-import com.sicoapp.movieapp.data.response.topRated.Movie
+import com.sicoapp.movieapp.data.response.AboveTopRated
+import com.sicoapp.movieapp.data.response.Movie
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

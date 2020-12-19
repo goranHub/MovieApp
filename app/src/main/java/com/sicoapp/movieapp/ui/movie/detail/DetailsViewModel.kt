@@ -9,7 +9,7 @@ import androidx.lifecycle.LiveData
 import com.sicoapp.movieapp.data.api.ApiClient
 import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.data.model.MovieRatingTabelModel
-import com.sicoapp.movieapp.data.response.topRated.Movie
+import com.sicoapp.movieapp.data.response.Movie
 import com.sicoapp.movieapp.repository.MovieRepository
 import com.sicoapp.movieapp.utils.API_KEY
 import com.sicoapp.movieapp.utils.URL_IMAGE

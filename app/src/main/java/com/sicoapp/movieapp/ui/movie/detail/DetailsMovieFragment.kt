@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.hsalf.smileyrating.SmileyRating
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.FragmentMovieDetailsBinding
 import com.sicoapp.movieapp.utils.ITEM_ID
-import kotlinx.android.synthetic.main.fragment_movie_details.*
 import kotlin.properties.Delegates
 
 class DetailsMovieFragment : Fragment() {
@@ -18,7 +18,6 @@ class DetailsMovieFragment : Fragment() {
     private lateinit var binging: FragmentMovieDetailsBinding
     var currentType by Delegates.notNull<Int>()
     var itemId = 0
-
     private val viewModel by lazy { DetailsViewModel(itemId) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,28 +41,14 @@ class DetailsMovieFragment : Fragment() {
 
         binging.data = viewModel
 
-        var currentType: Int
         val viewModelInstance = viewModel
 
         binging.smiley.setSmileySelectedListener { type ->
-            
-            currentType = type.rating
-
-            binging.btnSave.setOnClickListener { view ->
-                context?.let {
-                    viewModelInstance.insertData(it, itemId, currentType)
-                }
-            }
+            saveIntoDB(type, viewModelInstance)
         }
 
         binging.btnCall.setOnClickListener { view ->
-
-            viewModelInstance.getMovieRatingDetails(view.context, itemId)!!
-                .observe(viewLifecycleOwner, Observer { movieRatingTabelModel ->
-                    if (movieRatingTabelModel != null) {
-                        binging.smiley.setRating(movieRatingTabelModel.rating)
-                    }
-                })
+            callFromDB(view,viewModelInstance)
         }
 
         binging.btnDeleteAll.setOnClickListener {
@@ -71,5 +56,23 @@ class DetailsMovieFragment : Fragment() {
         }
 
         return binging.root
+    }
+
+    private fun saveIntoDB(type: SmileyRating.Type, viewModelInstance : DetailsViewModel) {
+        currentType = type.rating
+        binging.btnSave.setOnClickListener { view ->
+            context?.let {
+                viewModelInstance.insertData(it, itemId, currentType)
+            }
+        }
+    }
+
+    private fun callFromDB(view: View,  viewModelInstance : DetailsViewModel){
+        viewModelInstance.getMovieRatingDetails(view.context, itemId)!!
+            .observe(viewLifecycleOwner, { movieRatingTabelModel ->
+                if (movieRatingTabelModel != null) {
+                    binging.smiley.setRating(movieRatingTabelModel.rating)
+                }
+            })
     }
 }
