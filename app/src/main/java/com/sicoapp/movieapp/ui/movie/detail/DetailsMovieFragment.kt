@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.hsalf.smileyrating.SmileyRating
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.FragmentMovieDetailsBinding
@@ -18,7 +19,8 @@ class DetailsMovieFragment : Fragment() {
     var currentType by Delegates.notNull<Int>()
     var itemId = 0
 
-    private val viewModel by lazy { DetailsViewModel(itemId) }
+    private lateinit var viewModel : DetailsViewModel
+    private lateinit var viewModelFactory : DetailViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +41,10 @@ class DetailsMovieFragment : Fragment() {
             false
         )
 
-        binding.data = viewModel.mObserver
+        viewModelFactory = DetailViewModelFactory(itemId)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(DetailsViewModel::class.java)
 
+        binding.data = viewModel.mObserver
 
         val viewModelInstance = viewModel
 
