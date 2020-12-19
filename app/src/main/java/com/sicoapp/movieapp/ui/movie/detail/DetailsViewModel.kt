@@ -6,6 +6,7 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import com.sicoapp.movieapp.data.api.ApiClient
 import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.data.model.MovieRatingTabelModel
@@ -18,29 +19,21 @@ import retrofit2.Callback
 import retrofit2.Response
 import kotlin.properties.Delegates
 
+
 /**
  * @author ll4
  * @date 12/6/2020
  */
-class DetailsViewModel(itemId: Int) : BaseObservable() {
+class DetailsViewModel(itemId: Int) : ViewModel() {
+
+    var mObserver = Observer()
+
+
 
     var liveDataMovieRating: LiveData<MovieRatingTabelModel>? = null
 
-    @get:Bindable
-    var imageUrl by Delegates.observable("TEST imageUrl") { _, _, _ -> notifyPropertyChanged(BR.imageUrl) }
 
-    @get:Bindable
-    var overview by Delegates.observable("TEST overview") { _, _, _ -> notifyPropertyChanged(BR.overview) }
 
-    @get:Bindable
-    var popularity by Delegates.observable("TEST popularity") { _, _, _ -> notifyPropertyChanged(BR.popularity) }
-
-    @get:Bindable
-    var releaseDate by Delegates.observable("TEST releaseDate") { _, _, _ ->
-        notifyPropertyChanged(
-            BR.releaseDate
-        )
-    }
 
     init {
         loadDetailsMovies(itemId)
@@ -58,10 +51,10 @@ class DetailsViewModel(itemId: Int) : BaseObservable() {
                 response: Response<Movie>
             ) {
                 responseMovie = response.body() ?: return
-                imageUrl = URL_IMAGE + responseMovie.posterPath
-                overview = responseMovie.overview
-                popularity = responseMovie.popularity
-                releaseDate = responseMovie.releaseDate
+                mObserver.imageUrl = URL_IMAGE + responseMovie.posterPath
+                mObserver.overview = responseMovie.overview
+                mObserver.popularity = responseMovie.popularity
+                mObserver.releaseDate = responseMovie.releaseDate
             }
 
             override fun onFailure(call: Call<Movie>, t: Throwable) {

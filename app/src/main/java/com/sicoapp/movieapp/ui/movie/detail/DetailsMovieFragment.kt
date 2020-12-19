@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.hsalf.smileyrating.SmileyRating
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.FragmentMovieDetailsBinding
@@ -15,9 +14,10 @@ import kotlin.properties.Delegates
 
 class DetailsMovieFragment : Fragment() {
 
-    private lateinit var binging: FragmentMovieDetailsBinding
+    private lateinit var binding: FragmentMovieDetailsBinding
     var currentType by Delegates.notNull<Int>()
     var itemId = 0
+
     private val viewModel by lazy { DetailsViewModel(itemId) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,35 +32,36 @@ class DetailsMovieFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binging = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_movie_details,
             container,
             false
         )
 
-        binging.data = viewModel
+        binding.data = viewModel.mObserver
+
 
         val viewModelInstance = viewModel
 
-        binging.smiley.setSmileySelectedListener { type ->
+        binding.smiley.setSmileySelectedListener { type ->
             saveIntoDB(type, viewModelInstance)
         }
 
-        binging.btnCall.setOnClickListener { view ->
+        binding.btnCall.setOnClickListener { view ->
             callFromDB(view,viewModelInstance)
         }
 
-        binging.btnDeleteAll.setOnClickListener {
+        binding.btnDeleteAll.setOnClickListener {
             viewModelInstance.removeDataForThatItem(it.context, itemId)
         }
 
-        return binging.root
+        return binding.root
     }
 
     private fun saveIntoDB(type: SmileyRating.Type, viewModelInstance : DetailsViewModel) {
         currentType = type.rating
-        binging.btnSave.setOnClickListener { view ->
+        binding.btnSave.setOnClickListener { view ->
             context?.let {
                 viewModelInstance.insertData(it, itemId, currentType)
             }
@@ -71,7 +72,7 @@ class DetailsMovieFragment : Fragment() {
         viewModelInstance.getMovieRatingDetails(view.context, itemId)!!
             .observe(viewLifecycleOwner, { movieRatingTabelModel ->
                 if (movieRatingTabelModel != null) {
-                    binging.smiley.setRating(movieRatingTabelModel.rating)
+                    binding.smiley.setRating(movieRatingTabelModel.rating)
                 }
             })
     }
