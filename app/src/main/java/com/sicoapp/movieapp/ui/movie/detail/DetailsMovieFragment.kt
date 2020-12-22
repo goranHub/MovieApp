@@ -44,7 +44,7 @@ class DetailsMovieFragment : Fragment() {
         viewModelFactory = DetailViewModelFactory(itemId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(DetailsViewModel::class.java)
 
-        binding.data = viewModel.mObserver
+        binding.data = viewModel.detailsObserver
 
         val viewModelInstance = viewModel
 

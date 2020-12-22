@@ -25,7 +25,6 @@ class CrewViewModel(crewId: Int) : BaseObservable() {
         val movieDetailsApiServis = ApiClient().getClient()?.create(MovieApiService::class.java)
         val currentCall = movieDetailsApiServis?.getCrew(crewId, API_KEY)
 
-
         currentCall?.enqueue(object : Callback<Movie> {
             override fun onResponse(
                 call: Call<Movie>,
@@ -34,9 +33,11 @@ class CrewViewModel(crewId: Int) : BaseObservable() {
                 crewList = response.body()?.credits?.crew ?: return
 
                 val list = crewList
+                    //.asSequence()
                     .filter { !it.profilePath.isNullOrBlank() }
                     .distinctBy { it.profilePath }
-                    .map { CrewItemViewModel(it) }
+                    .map { CrewObservable(it) }
+                    //.toMutableList()
 
                 adapter.addCrew(list)
             }

@@ -9,7 +9,7 @@ import kotlin.properties.Delegates
  * @author ll4
  * @date 12/19/2020
  */
-class Observer() : BaseObservable() {
+class DetailsObserver() : BaseObservable() {
 
     @get:Bindable
     var imageUrl by Delegates.observable("TEST imageUrl") { _, _, _ -> notifyPropertyChanged(BR.imageUrl) }

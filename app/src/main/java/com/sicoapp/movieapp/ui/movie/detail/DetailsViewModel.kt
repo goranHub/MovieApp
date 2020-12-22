@@ -2,9 +2,6 @@ package com.sicoapp.movieapp.ui.movie.detail
 
 import android.content.Context
 import android.util.Log
-import androidx.databinding.BaseObservable
-import androidx.databinding.Bindable
-import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.sicoapp.movieapp.data.api.ApiClient
@@ -17,7 +14,6 @@ import com.sicoapp.movieapp.utils.URL_IMAGE
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.properties.Delegates
 
 
 /**
@@ -26,14 +22,9 @@ import kotlin.properties.Delegates
  */
 class DetailsViewModel(itemId: Int) : ViewModel() {
 
-    var mObserver = Observer()
-
-
+    var detailsObserver = DetailsObserver()
 
     var liveDataMovieRating: LiveData<MovieRatingTabelModel>? = null
-
-
-
 
     init {
         loadDetailsMovies(itemId)
@@ -42,7 +33,7 @@ class DetailsViewModel(itemId: Int) : ViewModel() {
     private fun loadDetailsMovies(itemId: Int) {
         val movieDetailsApiServis =
             ApiClient().getClient()?.create(MovieApiService::class.java) ?: return
-        val currentCall = movieDetailsApiServis.getAllMyMovies(itemId, API_KEY)
+        val currentCall = movieDetailsApiServis.getAllMyMoviesById(itemId, API_KEY)
         lateinit var responseMovie: Movie
 
         currentCall.enqueue(object : Callback<Movie> {
@@ -51,10 +42,10 @@ class DetailsViewModel(itemId: Int) : ViewModel() {
                 response: Response<Movie>
             ) {
                 responseMovie = response.body() ?: return
-                mObserver.imageUrl = URL_IMAGE + responseMovie.posterPath
-                mObserver.overview = responseMovie.overview
-                mObserver.popularity = responseMovie.popularity
-                mObserver.releaseDate = responseMovie.releaseDate
+                detailsObserver.imageUrl = URL_IMAGE + responseMovie.posterPath
+                detailsObserver.overview = responseMovie.overview
+                detailsObserver.popularity = responseMovie.popularity
+                detailsObserver.releaseDate = responseMovie.releaseDate
             }
 
             override fun onFailure(call: Call<Movie>, t: Throwable) {
@@ -63,21 +54,20 @@ class DetailsViewModel(itemId: Int) : ViewModel() {
         })
     }
 
-        fun insertData(context: Context, itemID: Int, rating: Int) {
-            MovieRepository.insertData(context, itemID, rating)
-        }
-
-        fun getMovieRatingDetails(
-            context: Context,
-            itemId: Int
-        ): LiveData<MovieRatingTabelModel>? {
-            liveDataMovieRating = MovieRepository.getMovieRatingDetails(context, itemId)
-            return liveDataMovieRating
-        }
-
-    fun removeDataForThatItem(context: Context, itemId: Int)  {
-        MovieRepository.removeDataForThatItem(context, itemId)
+    fun insertData(context: Context, itemID: Int, rating: Int) {
+        MovieRepository.insertData(context, itemID, rating)
     }
 
+    fun getMovieRatingDetails(
+        context: Context,
+        itemId: Int
+    ): LiveData<MovieRatingTabelModel>? {
+        liveDataMovieRating = MovieRepository.getMovieRatingDetails(context, itemId)
+        return liveDataMovieRating
+    }
+
+    fun removeDataForThatItem(context: Context, itemId: Int) {
+        MovieRepository.removeDataForThatItem(context, itemId)
+    }
 }
 

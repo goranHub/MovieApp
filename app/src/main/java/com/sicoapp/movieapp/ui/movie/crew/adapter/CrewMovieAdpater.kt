@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.ItemCrewBinding
-import com.sicoapp.movieapp.ui.movie.crew.CrewItemViewModel
+import com.sicoapp.movieapp.ui.movie.crew.CrewObservable
 
 /**
  * @author ll4
@@ -15,7 +15,7 @@ import com.sicoapp.movieapp.ui.movie.crew.CrewItemViewModel
 class CrewMovieAdpater() :
     RecyclerView.Adapter<ViewHolder>(){
 
-    var list = mutableListOf<CrewItemViewModel>()
+    var list = mutableListOf<CrewObservable>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
        val binding :ItemCrewBinding = DataBindingUtil.inflate(
@@ -34,7 +34,7 @@ class CrewMovieAdpater() :
 
     override fun getItemCount() = list.size
 
-    fun addCrew(crewItems: List<CrewItemViewModel>) {
+    fun addCrew(crewItems: List<CrewObservable>) {
         list.clear()
         list.addAll(crewItems)
         notifyDataSetChanged()

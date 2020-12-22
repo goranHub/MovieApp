@@ -45,8 +45,6 @@ class MovieRepository {
             CoroutineScope(IO).launch {
                 movieDatabase!!.movieDao().removeDataForThatItem(itemId)
             }
-
         }
     }
-
 }

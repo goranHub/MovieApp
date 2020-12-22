@@ -11,7 +11,13 @@ import kotlin.properties.Delegates
  * @author ll4
  * @date 12/10/2020
  */
-class CrewItemViewModel(val crew: Crew) : BaseObservable() {
+
+/*
+bind the property profilePath
+from response with layout
+
+ */
+class CrewObservable(val crew: Crew) : BaseObservable() {
 
     @get:Bindable
     var imageActorUrl by Delegates.observable("") { _, _, _ -> notifyPropertyChanged(BR.imageActorUrl) }

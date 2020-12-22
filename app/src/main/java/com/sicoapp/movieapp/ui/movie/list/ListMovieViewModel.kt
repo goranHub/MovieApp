@@ -15,19 +15,21 @@ import retrofit2.Response
  * @author ll4
  * @date 12/6/2020
  */
-class ListMovieViewModel(val postId: (Int) -> Unit, val crewID: (Int) -> Unit ) : ViewModel() {
+class ListMovieViewModel(val postId: (Int) -> Unit, val crewID: (Int) -> Unit) :
+    ViewModel() {
 
     // iz adaptera id stavljamo u postId od ListMovieViewModel
-    val adapter = ListMovieAdapter ({ it -> postId(it) },{ it -> crewID(it) } )
+    val adapter = ListMovieAdapter({ it -> postId(it) }, { it -> crewID(it) })
+    var pageId = 1
 
     init {
-        loadMovies()
+        loadMovies(pageId)
     }
 
-    private fun loadMovies() {
+     fun loadMovies(pageId: Int) {
         val topMoviesApiService =
             ApiClient().getClient()?.create(MovieApiService::class.java) ?: return
-        val callAllTopMovies = topMoviesApiService.getTopRatedMovies(API_KEY)
+        val callAllTopMovies = topMoviesApiService.getTopRatedMovies(API_KEY, pageId.toString())
 
         callAllTopMovies.enqueue(object : Callback<AboveTopRated> {
             override fun onResponse(
@@ -37,12 +39,17 @@ class ListMovieViewModel(val postId: (Int) -> Unit, val crewID: (Int) -> Unit ) 
                 val moviesList = response.body()?.results ?: return
                 val movieItemsList = moviesList.map { ListItemViewModel(it) }
                 adapter.addMovies(movieItemsList)
+
             }
+
             override fun onFailure(call: Call<AboveTopRated>, t: Throwable) {
                 Log.d("mojkum", "onFailure ${t.localizedMessage}")
             }
         })
+
     }
+
+
 }
 
 
