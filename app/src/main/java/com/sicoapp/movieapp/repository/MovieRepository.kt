@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
  * @author ll4
  * @date 12/15/2020
  */
-class MovieRepository {
+class MovieRepository() {
 
     companion object{
         var movieDatabase : MovieDatabaseForSmiley ? = null

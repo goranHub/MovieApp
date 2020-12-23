@@ -9,12 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.hsalf.smileyrating.SmileyRating
 import com.sicoapp.movieapp.R
+import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.databinding.FragmentMovieDetailsBinding
 import com.sicoapp.movieapp.utils.ITEM_ID
+import com.sicoapp.movieapp.utils.Injection
 import kotlin.properties.Delegates
 
-class DetailsMovieFragment : Fragment() {
+class DetailsMovieFragment() : Fragment() {
 
+    private val service = Injection.provideMovieApiService()
     private lateinit var binding: FragmentMovieDetailsBinding
     var currentType by Delegates.notNull<Int>()
     var itemId = 0
@@ -41,7 +44,7 @@ class DetailsMovieFragment : Fragment() {
             false
         )
 
-        viewModelFactory = DetailViewModelFactory(itemId)
+        viewModelFactory = DetailViewModelFactory(itemId, service.getClient())
         viewModel = ViewModelProvider(this, viewModelFactory).get(DetailsViewModel::class.java)
 
         binding.data = viewModel.detailsObserver

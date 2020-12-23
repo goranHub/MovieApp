@@ -4,8 +4,14 @@ import android.util.Log
 import com.sicoapp.movieapp.data.response.AboveTopRated
 import com.sicoapp.movieapp.data.response.Crew
 import com.sicoapp.movieapp.data.response.Movie
+import com.sicoapp.movieapp.ui.movie.detail.DetailsObserver
+import com.sicoapp.movieapp.ui.movie.list.ListItemViewModel
 import com.sicoapp.movieapp.utils.API_KEY
 import com.sicoapp.movieapp.utils.BASE_URL
+import com.sicoapp.movieapp.utils.URL_IMAGE
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.logging.HttpLoggingInterceptor.Level
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,13 +28,13 @@ import retrofit2.http.Query
 
 
 fun retrofitCallCrew(
-    service: MovieApiService.Companion,
+    service: MovieApiService?,
     id: Int,
     onSuccess: (movies: List<Crew>) -> Unit,
-    onError: (error: String ) ->  Unit
-){
-    val movieDetailsApiServis = MovieApiService.getClient()?.create(MovieApiService::class.java)
-    val currentCall = movieDetailsApiServis?.getCrew(id, API_KEY)
+    onError: (error: String) -> Unit
+) {
+    // val movieDetailsApiServis = MovieApiService.getClient()?.create(MovieApiService::class.java)
+    val currentCall = service?.getCrew(id, API_KEY)
 
     currentCall?.enqueue(object : Callback<Movie> {
         override fun onResponse(
@@ -51,6 +57,60 @@ fun retrofitCallCrew(
 }
 
 
+fun retrofitCallList(
+    service: MovieApiService?,
+    pageId: Int,
+    onSuccess: (movies: List<ListItemViewModel>) -> Unit,
+    onError: (error: String) -> Unit
+) {
+    val currentCall = service?.getTopRatedMovies(API_KEY, pageId.toString())
+
+    currentCall?.enqueue(object : Callback<AboveTopRated> {
+        override fun onResponse(
+            call: Call<AboveTopRated>,
+            response: Response<AboveTopRated>
+        ) {
+            Log.d("movieApiService", "got a response $response")
+            if (response.isSuccessful) {
+                val moviesList = response.body()?.results ?: emptyList()
+                val movieItemsList = moviesList.map { ListItemViewModel(it) }
+                onSuccess(movieItemsList)
+            } else {
+                onError(response.errorBody()?.string() ?: "Unknown error")
+            }
+        }
+
+        override fun onFailure(call: Call<AboveTopRated>, t: Throwable) {
+            Log.d("error5", "onFailure ${t.localizedMessage}")
+        }
+    })
+}
+
+fun retrofitCallDetail(
+    service: MovieApiService?,
+    itemId: Int,
+    detailsObserver : DetailsObserver
+) {
+    val currentCall = service?.getAllMyMoviesById(itemId, API_KEY)
+
+    lateinit var responseMovie: Movie
+
+    currentCall?.enqueue(object : Callback<Movie> {
+        override fun onResponse(
+            call: Call<Movie>,
+            response: Response<Movie>
+        ) {
+            responseMovie = response.body() ?: return
+            detailsObserver.imageUrl = URL_IMAGE + responseMovie.posterPath
+            detailsObserver.overview = responseMovie.overview
+            detailsObserver.popularity = responseMovie.popularity
+            detailsObserver.releaseDate = responseMovie.releaseDate
+        }
+        override fun onFailure(call: Call<Movie>, t: Throwable) {
+            Log.d("error", "onFailure ${t.localizedMessage}")
+        }
+    })
+}
 
 interface MovieApiService {
 
@@ -75,16 +135,23 @@ interface MovieApiService {
     fun getCrew(@Path("id") id: Int, @Query("api_key") apiKey: String): Call<Movie>
 
     companion object {
+
         private var retrofit: Retrofit? = null
 
-        fun getClient(): Retrofit? {
-            if (retrofit == null) {
-                retrofit = Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build()
-            }
-            return retrofit
+        fun getClient(): MovieApiService {
+
+            val logger = HttpLoggingInterceptor()
+            logger.level = Level.BASIC
+
+            val client = OkHttpClient.Builder()
+                .addInterceptor(logger)
+                .build()
+            return Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(MovieApiService::class.java)
         }
     }
 }

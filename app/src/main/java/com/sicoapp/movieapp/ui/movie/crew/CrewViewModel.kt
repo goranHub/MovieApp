@@ -9,7 +9,7 @@ import com.sicoapp.movieapp.ui.movie.crew.adapter.CrewMovieAdpater
 
 class CrewViewModel(
     crewId: Int,
-    private val service: MovieApiService.Companion
+    private val service: MovieApiService?
 ) : BaseObservable() {
     val adapter = CrewMovieAdpater()
     lateinit var crewList: List<Crew>
@@ -23,11 +23,9 @@ class CrewViewModel(
         retrofitCallCrew(service, crewId,
             {
                 val list = it
-                    //.asSequence()
                     .filter { !it.profilePath.isNullOrBlank() }
                     .distinctBy { it.profilePath }
                     .map { CrewObservable(it) }
-                //.toMutableList()
                 adapter.addCrew(list)
             },{
                 Log.d(it, "onFailure if (response.isSuccessful) in MovieApiService ")

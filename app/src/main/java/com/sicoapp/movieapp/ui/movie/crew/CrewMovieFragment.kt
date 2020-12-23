@@ -10,13 +10,15 @@ import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.databinding.FragmentMovieCrewBinding
 import com.sicoapp.movieapp.utils.CREW_ID
+import com.sicoapp.movieapp.utils.Injection
 
-class CrewMovieFragment : Fragment() {
+class CrewMovieFragment() : Fragment() {
 
+    val service = Injection.provideMovieApiService()
     private lateinit var binding: FragmentMovieCrewBinding
     var crewId = 0
     val movieApiService = MovieApiService
-    private val viewModel by lazy { CrewViewModel(crewId, movieApiService ) }
+    private val viewModel by lazy { CrewViewModel(crewId, service.getClient()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

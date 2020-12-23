@@ -14,10 +14,11 @@ import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.FragmentMovieListBinding
 import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
+import com.sicoapp.movieapp.utils.Injection
 
 
-class ListMovieFragment : Fragment() {
-
+class ListMovieFragment() : Fragment() {
+    val service = Injection.provideMovieApiService()
     private lateinit var binding: FragmentMovieListBinding
     private var pageId = 1
 
@@ -35,7 +36,10 @@ class ListMovieFragment : Fragment() {
                 R.id.action_movieListFragment_to_crewMovieFragment,
                 bundleCrewId
             )
-        })
+        },
+
+            service.getClient())
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
