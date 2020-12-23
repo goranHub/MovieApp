@@ -4,8 +4,8 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.sicoapp.movieapp.data.api.ApiClient
 import com.sicoapp.movieapp.data.api.MovieApiService
+import com.sicoapp.movieapp.data.api.MovieApiService.Companion.getClient
 import com.sicoapp.movieapp.data.model.MovieRatingTabelModel
 import com.sicoapp.movieapp.data.response.Movie
 import com.sicoapp.movieapp.repository.MovieRepository
@@ -32,7 +32,7 @@ class DetailsViewModel(itemId: Int) : ViewModel() {
 
     private fun loadDetailsMovies(itemId: Int) {
         val movieDetailsApiServis =
-            ApiClient().getClient()?.create(MovieApiService::class.java) ?: return
+            getClient()?.create(MovieApiService::class.java) ?: return
         val currentCall = movieDetailsApiServis.getAllMyMoviesById(itemId, API_KEY)
         lateinit var responseMovie: Movie
 

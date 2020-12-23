@@ -1,7 +1,6 @@
 package com.sicoapp.movieapp.ui.movie.list
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,18 +24,24 @@ class ListMovieFragment : Fragment() {
     private val viewModel by lazy {
 
         ListMovieViewModel({ postID ->
-            val bundle = bundleOf(ITEM_ID to postID)
+            val bundleItemId = bundleOf(ITEM_ID to postID)
             findNavController().navigate(
                 R.id.action_movieListFragment_to_movieDetailsFragment,
-                bundle
+                bundleItemId
             )
         }, { crewID ->
-            val bundleCrew = bundleOf(CREW_ID to crewID)
+            val bundleCrewId = bundleOf(CREW_ID to crewID)
             findNavController().navigate(
                 R.id.action_movieListFragment_to_crewMovieFragment,
-                bundleCrew
+                bundleCrewId
             )
         })
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // add dividers between RecyclerView's row items
+
     }
 
     override fun onCreateView(
@@ -47,7 +52,6 @@ class ListMovieFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_movie_list, container, false)
         binding.data = viewModel
-
 
 
         binding.topAppBar.setNavigationOnClickListener {

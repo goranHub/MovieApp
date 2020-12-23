@@ -2,8 +2,8 @@ package com.sicoapp.movieapp.ui.movie.list
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.sicoapp.movieapp.data.api.ApiClient
 import com.sicoapp.movieapp.data.api.MovieApiService
+import com.sicoapp.movieapp.data.api.MovieApiService.Companion.getClient
 import com.sicoapp.movieapp.data.response.AboveTopRated
 import com.sicoapp.movieapp.ui.movie.list.adapter.ListMovieAdapter
 import com.sicoapp.movieapp.utils.API_KEY
@@ -28,7 +28,7 @@ class ListMovieViewModel(val postId: (Int) -> Unit, val crewID: (Int) -> Unit) :
 
      fun loadMovies(pageId: Int) {
         val topMoviesApiService =
-            ApiClient().getClient()?.create(MovieApiService::class.java) ?: return
+            getClient()?.create(MovieApiService::class.java) ?: return
         val callAllTopMovies = topMoviesApiService.getTopRatedMovies(API_KEY, pageId.toString())
 
         callAllTopMovies.enqueue(object : Callback<AboveTopRated> {
@@ -44,7 +44,6 @@ class ListMovieViewModel(val postId: (Int) -> Unit, val crewID: (Int) -> Unit) :
                 Log.d("mojkum", "onFailure ${t.localizedMessage}")
             }
         })
-
     }
 }
 

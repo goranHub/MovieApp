@@ -12,21 +12,21 @@ import com.sicoapp.movieapp.data.model.MovieRatingTabelModel
  * @date 12/15/2020
  */
 @Database(entities = arrayOf(MovieRatingTabelModel::class), version = 1, exportSchema = false)
-abstract class MovieDatabase : RoomDatabase() {
+abstract class MovieDatabaseForSmiley : RoomDatabase() {
 
     abstract fun movieDao() : DAOAccess
 
     companion object {
         @Volatile
-        private var INSTANCE: MovieDatabase? = null
+        private var INSTANCE: MovieDatabaseForSmiley? = null
 
-        fun getDataClient(context: Context): MovieDatabase {
+        fun getDataClient(context: Context): MovieDatabaseForSmiley {
             if (INSTANCE != null) return INSTANCE!!
 
             synchronized(this) {
 
                 INSTANCE = Room
-                    .databaseBuilder(context, MovieDatabase::class.java, "MOVIE_DATABASE")
+                    .databaseBuilder(context, MovieDatabaseForSmiley::class.java, "MOVIE_DATABASE")
                     .fallbackToDestructiveMigration()
                     .build()
 

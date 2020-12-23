@@ -1,9 +1,8 @@
 package com.sicoapp.movieapp.repository
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
-import com.sicoapp.movieapp.data.database.MovieDatabase
+import com.sicoapp.movieapp.data.database.MovieDatabaseForSmiley
 import com.sicoapp.movieapp.data.model.MovieRatingTabelModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -16,12 +15,12 @@ import kotlinx.coroutines.launch
 class MovieRepository {
 
     companion object{
-        var movieDatabase : MovieDatabase ? = null
+        var movieDatabase : MovieDatabaseForSmiley ? = null
         var movieRatingTabelModel : LiveData<MovieRatingTabelModel>? = null
 
 
-        fun initDB (context: Context) : MovieDatabase{
-            return MovieDatabase.getDataClient(context)
+        fun initDB (context: Context) : MovieDatabaseForSmiley{
+            return MovieDatabaseForSmiley.getDataClient(context)
         }
 
         fun insertData(context: Context, itemId: Int, rating: Int) {

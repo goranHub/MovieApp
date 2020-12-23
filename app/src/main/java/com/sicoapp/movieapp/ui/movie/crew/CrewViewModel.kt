@@ -2,8 +2,8 @@ package com.sicoapp.movieapp.ui.movie.crew
 
 import android.util.Log
 import androidx.databinding.BaseObservable
-import com.sicoapp.movieapp.data.api.ApiClient
 import com.sicoapp.movieapp.data.api.MovieApiService
+import com.sicoapp.movieapp.data.api.MovieApiService.Companion.getClient
 import com.sicoapp.movieapp.data.response.Crew
 import com.sicoapp.movieapp.data.response.Movie
 import com.sicoapp.movieapp.ui.movie.crew.adapter.CrewMovieAdpater
@@ -22,7 +22,7 @@ class CrewViewModel(crewId: Int) : BaseObservable() {
 
     private fun loadCrew(crewId: Int) {
 
-        val movieDetailsApiServis = ApiClient().getClient()?.create(MovieApiService::class.java)
+        val movieDetailsApiServis = getClient()?.create(MovieApiService::class.java)
         val currentCall = movieDetailsApiServis?.getCrew(crewId, API_KEY)
 
         currentCall?.enqueue(object : Callback<Movie> {

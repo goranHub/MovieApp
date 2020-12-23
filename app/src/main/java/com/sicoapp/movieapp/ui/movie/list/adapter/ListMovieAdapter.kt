@@ -54,7 +54,6 @@ class ListMovieAdapter(private val postID: (Int) -> Unit, private val crewID: (I
     override fun getItemCount() = list.size
 
     fun addMovies(listItems: List<ListItemViewModel>) {
-        list.clear()
         list.addAll(listItems)
         notifyDataSetChanged()
     }
