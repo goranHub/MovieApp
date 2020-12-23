@@ -3,16 +3,14 @@ package com.sicoapp.movieapp.ui.movie.crew
 import android.util.Log
 import androidx.databinding.BaseObservable
 import com.sicoapp.movieapp.data.api.MovieApiService
-import com.sicoapp.movieapp.data.api.MovieApiService.Companion.getClient
+import com.sicoapp.movieapp.data.api.retrofitCallCrew
 import com.sicoapp.movieapp.data.response.Crew
-import com.sicoapp.movieapp.data.response.Movie
 import com.sicoapp.movieapp.ui.movie.crew.adapter.CrewMovieAdpater
-import com.sicoapp.movieapp.utils.API_KEY
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class CrewViewModel(crewId: Int) : BaseObservable() {
+class CrewViewModel(
+    crewId: Int,
+    private val service: MovieApiService.Companion
+) : BaseObservable() {
     val adapter = CrewMovieAdpater()
     lateinit var crewList: List<Crew>
 
@@ -22,29 +20,18 @@ class CrewViewModel(crewId: Int) : BaseObservable() {
 
     private fun loadCrew(crewId: Int) {
 
-        val movieDetailsApiServis = getClient()?.create(MovieApiService::class.java)
-        val currentCall = movieDetailsApiServis?.getCrew(crewId, API_KEY)
-
-        currentCall?.enqueue(object : Callback<Movie> {
-            override fun onResponse(
-                call: Call<Movie>,
-                response: Response<Movie>
-            ) {
-                crewList = response.body()?.credits?.crew ?: return
-
-                val list = crewList
+        retrofitCallCrew(service, crewId,
+            {
+                val list = it
                     //.asSequence()
                     .filter { !it.profilePath.isNullOrBlank() }
                     .distinctBy { it.profilePath }
                     .map { CrewObservable(it) }
-                    //.toMutableList()
-
+                //.toMutableList()
                 adapter.addCrew(list)
+            },{
+                Log.d(it, "onFailure if (response.isSuccessful) in MovieApiService ")
             }
-
-            override fun onFailure(call: Call<Movie>, t: Throwable) {
-                Log.d("error5", "onFailure ${t.localizedMessage}")
-            }
-        })
+        )
     }
 }

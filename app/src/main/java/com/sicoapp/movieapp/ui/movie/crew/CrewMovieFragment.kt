@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.sicoapp.movieapp.R
+import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.databinding.FragmentMovieCrewBinding
 import com.sicoapp.movieapp.utils.CREW_ID
 
@@ -14,8 +15,8 @@ class CrewMovieFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieCrewBinding
     var crewId = 0
-
-    private val viewModel by lazy { CrewViewModel(crewId) }
+    val movieApiService = MovieApiService
+    private val viewModel by lazy { CrewViewModel(crewId, movieApiService ) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
