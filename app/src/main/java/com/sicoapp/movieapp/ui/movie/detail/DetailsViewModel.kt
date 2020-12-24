@@ -13,7 +13,7 @@ import com.sicoapp.movieapp.repository.MovieRepository
  * @author ll4
  * @date 12/6/2020
  */
-class DetailsViewModel(itemId: Int, val service: MovieApiService?) : ViewModel() {
+class DetailsViewModel(itemId: Int) : ViewModel() {
 
     var detailsObserver = DetailsObserver()
 
@@ -25,11 +25,9 @@ class DetailsViewModel(itemId: Int, val service: MovieApiService?) : ViewModel()
 
     private fun loadDetailsMovies(itemId: Int) {
         retrofitCallDetail(
-            service,
             itemId,
             detailsObserver
         )
-
     }
 
     fun insertData(context: Context, itemID: Int, rating: Int) {

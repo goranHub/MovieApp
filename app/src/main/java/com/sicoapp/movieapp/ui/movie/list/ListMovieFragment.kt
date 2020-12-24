@@ -36,10 +36,7 @@ class ListMovieFragment() : Fragment() {
                 R.id.action_movieListFragment_to_crewMovieFragment,
                 bundleCrewId
             )
-        },
-
-            service.getClient())
-
+        })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

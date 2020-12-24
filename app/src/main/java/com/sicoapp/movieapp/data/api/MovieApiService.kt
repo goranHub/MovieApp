@@ -8,6 +8,7 @@ import com.sicoapp.movieapp.ui.movie.detail.DetailsObserver
 import com.sicoapp.movieapp.ui.movie.list.ListItemViewModel
 import com.sicoapp.movieapp.utils.API_KEY
 import com.sicoapp.movieapp.utils.BASE_URL
+import com.sicoapp.movieapp.utils.Injection
 import com.sicoapp.movieapp.utils.URL_IMAGE
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -33,7 +34,7 @@ fun retrofitCallCrew(
     onSuccess: (movies: List<Crew>) -> Unit,
     onError: (error: String) -> Unit
 ) {
-    // val movieDetailsApiServis = MovieApiService.getClient()?.create(MovieApiService::class.java)
+
     val currentCall = service?.getCrew(id, API_KEY)
 
     currentCall?.enqueue(object : Callback<Movie> {
@@ -58,14 +59,14 @@ fun retrofitCallCrew(
 
 
 fun retrofitCallList(
-    service: MovieApiService?,
     pageId: Int,
     onSuccess: (movies: List<ListItemViewModel>) -> Unit,
     onError: (error: String) -> Unit
 ) {
-    val currentCall = service?.getTopRatedMovies(API_KEY, pageId.toString())
+    val service = Injection.provideMovieApiService().getClient()
+    val currentCall = service.getTopRatedMovies(API_KEY, pageId.toString())
 
-    currentCall?.enqueue(object : Callback<AboveTopRated> {
+    currentCall.enqueue(object : Callback<AboveTopRated> {
         override fun onResponse(
             call: Call<AboveTopRated>,
             response: Response<AboveTopRated>
@@ -87,15 +88,15 @@ fun retrofitCallList(
 }
 
 fun retrofitCallDetail(
-    service: MovieApiService?,
     itemId: Int,
     detailsObserver : DetailsObserver
 ) {
-    val currentCall = service?.getAllMyMoviesById(itemId, API_KEY)
+    val service = Injection.provideMovieApiService().getClient()
+    val currentCall = service.getAllMyMoviesById(itemId, API_KEY)
 
     lateinit var responseMovie: Movie
 
-    currentCall?.enqueue(object : Callback<Movie> {
+    currentCall.enqueue(object : Callback<Movie> {
         override fun onResponse(
             call: Call<Movie>,
             response: Response<Movie>

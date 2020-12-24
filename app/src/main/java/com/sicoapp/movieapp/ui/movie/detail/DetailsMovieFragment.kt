@@ -17,7 +17,6 @@ import kotlin.properties.Delegates
 
 class DetailsMovieFragment() : Fragment() {
 
-    private val service = Injection.provideMovieApiService()
     private lateinit var binding: FragmentMovieDetailsBinding
     var currentType by Delegates.notNull<Int>()
     var itemId = 0
@@ -44,7 +43,7 @@ class DetailsMovieFragment() : Fragment() {
             false
         )
 
-        viewModelFactory = DetailViewModelFactory(itemId, service.getClient())
+        viewModelFactory = DetailViewModelFactory(itemId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(DetailsViewModel::class.java)
 
         binding.data = viewModel.detailsObserver

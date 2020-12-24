@@ -13,8 +13,7 @@ import retrofit2.Response
  */
 class ListMovieViewModel(
     val postId: (Int) -> Unit,
-    val crewID: (Int) -> Unit,
-    val service: MovieApiService
+    val crewID: (Int) -> Unit
 ) : ViewModel() {
 
     // iz adaptera id stavljamo u postId od ListMovieViewModel
@@ -26,7 +25,7 @@ class ListMovieViewModel(
     }
 
      fun loadMovies(pageId: Int) {
-         retrofitCallList(service, pageId,
+         retrofitCallList( pageId,
              {
                  adapter.addMovies(it)
              },{
