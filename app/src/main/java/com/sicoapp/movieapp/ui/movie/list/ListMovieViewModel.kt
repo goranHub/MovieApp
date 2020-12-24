@@ -26,10 +26,12 @@ class ListMovieViewModel(
 
      fun loadMovies(pageId: Int) {
          retrofitCallList( pageId,
-             {
+             {  //it List<ListItemViewModel>
+                //onSuccess: (movies: List<ListItemViewModel>) -> Unit,
                  adapter.addMovies(it)
              },{
                  Log.d(it, "onFailure if (response.isSuccessful) in MovieApiService ")
+                 return@retrofitCallList true
              }
          )
     }

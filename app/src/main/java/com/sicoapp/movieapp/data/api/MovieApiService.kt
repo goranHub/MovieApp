@@ -30,12 +30,12 @@ import retrofit2.http.Query
 val service = Injection.provideMovieApiService().getClient()
 
 fun retrofitCallCrew(
-    id: Int,
+    crewId: Int,
     onSuccess: (movies: List<Crew>) -> Unit,
     onError: (error: String) -> Unit
 ) {
 
-    val currentCall = service.getCrew(id, API_KEY)
+    val currentCall = service.getCrew(crewId, API_KEY)
 
     currentCall.enqueue(object : Callback<Movie> {
         override fun onResponse(
@@ -60,7 +60,7 @@ fun retrofitCallCrew(
 fun retrofitCallList(
     pageId: Int,
     onSuccess: (movies: List<ListItemViewModel>) -> Unit,
-    onError: (error: String) -> Unit
+    onError: (error: String) -> Boolean
 ) {
     val currentCall = service.getTopRatedMovies(API_KEY, pageId.toString())
 
@@ -78,7 +78,6 @@ fun retrofitCallList(
                 onError(response.errorBody()?.string() ?: "Unknown error")
             }
         }
-
         override fun onFailure(call: Call<AboveTopRated>, t: Throwable) {
             Log.d("error5", "onFailure ${t.localizedMessage}")
         }
