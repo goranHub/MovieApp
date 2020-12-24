@@ -3,7 +3,6 @@ package com.sicoapp.movieapp.ui.movie.detail
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.data.api.retrofitCallDetail
 import com.sicoapp.movieapp.data.model.MovieRatingTabelModel
 import com.sicoapp.movieapp.repository.MovieRepository
@@ -16,7 +15,6 @@ import com.sicoapp.movieapp.repository.MovieRepository
 class DetailsViewModel(itemId: Int) : ViewModel() {
 
     var detailsObserver = DetailsObserver()
-
     var liveDataMovieRating: LiveData<MovieRatingTabelModel>? = null
 
     init {

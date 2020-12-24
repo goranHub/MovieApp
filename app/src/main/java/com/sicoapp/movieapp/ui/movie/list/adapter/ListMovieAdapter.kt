@@ -11,7 +11,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.ItemMovieBinding
-import com.sicoapp.movieapp.ui.movie.crew.adapter.CrewClickListener
 import com.sicoapp.movieapp.ui.movie.list.ListItemViewModel
 
 class ListMovieAdapter(private val postID: (Int) -> Unit, private val crewID: (Int) -> Unit) :
@@ -20,7 +19,6 @@ class ListMovieAdapter(private val postID: (Int) -> Unit, private val crewID: (I
     var list = mutableListOf<ListItemViewModel>()
 
     private val clickListener = object : CustomClickListener {
-
         // movie id predajemo postId lambdi
         override fun cardClicked(id: Int?) {
             id?.let { postID(it) }

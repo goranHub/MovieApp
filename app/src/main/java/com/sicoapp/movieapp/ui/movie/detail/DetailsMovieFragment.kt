@@ -9,10 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.hsalf.smileyrating.SmileyRating
 import com.sicoapp.movieapp.R
-import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.databinding.FragmentMovieDetailsBinding
 import com.sicoapp.movieapp.utils.ITEM_ID
-import com.sicoapp.movieapp.utils.Injection
 import kotlin.properties.Delegates
 
 class DetailsMovieFragment() : Fragment() {

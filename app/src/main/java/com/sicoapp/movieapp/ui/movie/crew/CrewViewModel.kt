@@ -20,7 +20,7 @@ class CrewViewModel(
 
     private fun loadCrew(crewId: Int) {
 
-        retrofitCallCrew(service, crewId,
+        retrofitCallCrew(crewId,
             {
                 val list = it
                     .filter { !it.profilePath.isNullOrBlank() }

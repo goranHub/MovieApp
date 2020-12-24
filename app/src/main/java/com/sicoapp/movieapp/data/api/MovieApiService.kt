@@ -27,17 +27,17 @@ import retrofit2.http.Query
  * @date 12/6/2020
  */
 
+val service = Injection.provideMovieApiService().getClient()
 
 fun retrofitCallCrew(
-    service: MovieApiService?,
     id: Int,
     onSuccess: (movies: List<Crew>) -> Unit,
     onError: (error: String) -> Unit
 ) {
 
-    val currentCall = service?.getCrew(id, API_KEY)
+    val currentCall = service.getCrew(id, API_KEY)
 
-    currentCall?.enqueue(object : Callback<Movie> {
+    currentCall.enqueue(object : Callback<Movie> {
         override fun onResponse(
             call: Call<Movie>,
             response: Response<Movie>
@@ -50,7 +50,6 @@ fun retrofitCallCrew(
                 onError(response.errorBody()?.string() ?: "Unknown error")
             }
         }
-
         override fun onFailure(call: Call<Movie>, t: Throwable) {
             Log.d("error5", "onFailure ${t.localizedMessage}")
         }
@@ -63,7 +62,6 @@ fun retrofitCallList(
     onSuccess: (movies: List<ListItemViewModel>) -> Unit,
     onError: (error: String) -> Unit
 ) {
-    val service = Injection.provideMovieApiService().getClient()
     val currentCall = service.getTopRatedMovies(API_KEY, pageId.toString())
 
     currentCall.enqueue(object : Callback<AboveTopRated> {
@@ -91,9 +89,7 @@ fun retrofitCallDetail(
     itemId: Int,
     detailsObserver : DetailsObserver
 ) {
-    val service = Injection.provideMovieApiService().getClient()
     val currentCall = service.getAllMyMoviesById(itemId, API_KEY)
-
     lateinit var responseMovie: Movie
 
     currentCall.enqueue(object : Callback<Movie> {
@@ -121,7 +117,6 @@ interface MovieApiService {
         @Query("page") page: String?
 
     ): Call<AboveTopRated>
-
 
     @GET("movie/top_rated")
     suspend fun fetchTopRatedMovies(

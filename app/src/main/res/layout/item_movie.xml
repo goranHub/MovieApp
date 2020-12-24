@@ -15,7 +15,7 @@
 
         <variable
             name="itemCrewClickListener"
-            type="com.sicoapp.movieapp.ui.movie.crew.adapter.CrewClickListener" />
+            type="com.sicoapp.movieapp.ui.movie.list.adapter.CrewClickListener" />
     </data>
 
 
