@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.ui.movie.detail
+package com.sicoapp.movieapp.utils
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable

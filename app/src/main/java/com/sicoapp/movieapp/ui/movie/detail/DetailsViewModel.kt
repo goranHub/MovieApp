@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.sicoapp.movieapp.data.api.retrofitCallDetail
 import com.sicoapp.movieapp.data.model.MovieRatingTabelModel
 import com.sicoapp.movieapp.repository.MovieRepository
+import com.sicoapp.movieapp.utils.DetailsObserver
 
 
 /**

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="data"
-            type="com.sicoapp.movieapp.ui.movie.detail.DetailsObserver" />
+            type="com.sicoapp.movieapp.utils.DetailsObserver" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

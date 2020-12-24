@@ -4,7 +4,7 @@ import android.util.Log
 import com.sicoapp.movieapp.data.response.AboveTopRated
 import com.sicoapp.movieapp.data.response.Crew
 import com.sicoapp.movieapp.data.response.Movie
-import com.sicoapp.movieapp.ui.movie.detail.DetailsObserver
+import com.sicoapp.movieapp.utils.DetailsObserver
 import com.sicoapp.movieapp.ui.movie.list.ListItemViewModel
 import com.sicoapp.movieapp.utils.API_KEY
 import com.sicoapp.movieapp.utils.BASE_URL

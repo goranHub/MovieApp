@@ -12,7 +12,7 @@
 
         <variable
             name="itemClickListener"
-            type="com.sicoapp.movieapp.ui.movie.list.adapter.CustomClickListener" />
+            type="com.sicoapp.movieapp.utils.CardClickListener" />
 
     </data>
 

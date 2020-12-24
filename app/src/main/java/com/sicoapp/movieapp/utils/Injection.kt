@@ -12,6 +12,4 @@ object Injection {
     fun provideMovieApiService(): MovieApiService.Companion {
         return MovieApiService.Companion
     }
-
-
 }
