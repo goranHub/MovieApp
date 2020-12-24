@@ -24,12 +24,10 @@ abstract class MovieDatabaseForSmiley : RoomDatabase() {
             if (INSTANCE != null) return INSTANCE!!
 
             synchronized(this) {
-
                 INSTANCE = Room
                     .databaseBuilder(context, MovieDatabaseForSmiley::class.java, "MOVIE_DATABASE")
                     .fallbackToDestructiveMigration()
                     .build()
-
                 return INSTANCE!!
             }
 

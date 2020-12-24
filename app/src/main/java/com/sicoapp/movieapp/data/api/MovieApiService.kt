@@ -27,86 +27,7 @@ import retrofit2.http.Query
  * @date 12/6/2020
  */
 
-val service = Injection.provideMovieApiService().getClient()
 
-fun retrofitCallCrew(
-    crewId: Int,
-    onSuccess: (movies: List<Crew>) -> Unit,
-    onError: (error: String) -> Unit
-) {
-
-    val currentCall = service.getCrew(crewId, API_KEY)
-
-    currentCall.enqueue(object : Callback<Movie> {
-        override fun onResponse(
-            call: Call<Movie>,
-            response: Response<Movie>
-        ) {
-            Log.d("movieApiService", "got a response $response")
-            if (response.isSuccessful) {
-                val crewList = response.body()?.credits?.crew ?: emptyList()
-                onSuccess(crewList)
-            } else {
-                onError(response.errorBody()?.string() ?: "Unknown error")
-            }
-        }
-        override fun onFailure(call: Call<Movie>, t: Throwable) {
-            Log.d("error5", "onFailure ${t.localizedMessage}")
-        }
-    })
-}
-
-
-fun retrofitCallList(
-    pageId: Int,
-    onSuccess: (movies: List<ListItemViewModel>) -> Unit,
-    onError: (error: String) -> Boolean
-) {
-    val currentCall = service.getTopRatedMovies(API_KEY, pageId.toString())
-
-    currentCall.enqueue(object : Callback<AboveTopRated> {
-        override fun onResponse(
-            call: Call<AboveTopRated>,
-            response: Response<AboveTopRated>
-        ) {
-            Log.d("movieApiService", "got a response $response")
-            if (response.isSuccessful) {
-                val moviesList = response.body()?.results ?: emptyList()
-                val movieItemsList = moviesList.map { ListItemViewModel(it) }
-                onSuccess(movieItemsList)
-            } else {
-                onError(response.errorBody()?.string() ?: "Unknown error")
-            }
-        }
-        override fun onFailure(call: Call<AboveTopRated>, t: Throwable) {
-            Log.d("error5", "onFailure ${t.localizedMessage}")
-        }
-    })
-}
-
-fun retrofitCallDetail(
-    itemId: Int,
-    detailsObserver : DetailsObserver
-) {
-    val currentCall = service.getAllMyMoviesById(itemId, API_KEY)
-    lateinit var responseMovie: Movie
-
-    currentCall.enqueue(object : Callback<Movie> {
-        override fun onResponse(
-            call: Call<Movie>,
-            response: Response<Movie>
-        ) {
-            responseMovie = response.body() ?: return
-            detailsObserver.imageUrl = URL_IMAGE + responseMovie.posterPath
-            detailsObserver.overview = responseMovie.overview
-            detailsObserver.popularity = responseMovie.popularity
-            detailsObserver.releaseDate = responseMovie.releaseDate
-        }
-        override fun onFailure(call: Call<Movie>, t: Throwable) {
-            Log.d("error", "onFailure ${t.localizedMessage}")
-        }
-    })
-}
 
 interface MovieApiService {
 
@@ -114,14 +35,7 @@ interface MovieApiService {
     fun getTopRatedMovies(
         @Query("api_key") apiKey: String?,
         @Query("page") page: String?
-
     ): Call<AboveTopRated>
-
-    @GET("movie/top_rated")
-    suspend fun fetchTopRatedMovies(
-        @Query("api_key") apiKey: String?,
-        @Query("page") page: String?
-    ): Response<AboveTopRated>
 
     @GET("movie/{id}")
     fun getAllMyMoviesById(@Path("id") id: Int, @Query("api_key") apiKey: String): Call<Movie>
@@ -131,13 +45,9 @@ interface MovieApiService {
 
     companion object {
 
-        private var retrofit: Retrofit? = null
-
         fun getClient(): MovieApiService {
-
             val logger = HttpLoggingInterceptor()
             logger.level = Level.BASIC
-
             val client = OkHttpClient.Builder()
                 .addInterceptor(logger)
                 .build()

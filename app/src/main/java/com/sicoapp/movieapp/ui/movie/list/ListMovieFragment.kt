@@ -14,11 +14,10 @@ import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.FragmentMovieListBinding
 import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
-import com.sicoapp.movieapp.utils.Injection
 
 
 class ListMovieFragment() : Fragment() {
-    val service = Injection.provideMovieApiService()
+
     private lateinit var binding: FragmentMovieListBinding
     private var pageId = 1
 
@@ -39,21 +38,14 @@ class ListMovieFragment() : Fragment() {
         })
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // add dividers between RecyclerView's row items
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        binding = DataBindingUtil
+            .inflate(inflater, R.layout.fragment_movie_list, container, false)
 
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_movie_list, container, false)
         binding.data = viewModel
-
 
         binding.topAppBar.setNavigationOnClickListener {
             val text = "more"
@@ -61,7 +53,6 @@ class ListMovieFragment() : Fragment() {
             val toast = Toast.makeText(context, text, duration)
             toast.show()
         }
-
 
         binding.recylerViewFragmentTopMovie.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {

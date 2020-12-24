@@ -2,10 +2,8 @@ package com.sicoapp.movieapp.ui.movie.list
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.data.api.retrofitCallList
 import com.sicoapp.movieapp.ui.movie.list.adapter.ListMovieAdapter
-import retrofit2.Response
 
 /**
  * @author ll4

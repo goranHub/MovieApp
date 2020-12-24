@@ -18,7 +18,6 @@ class MovieRepository() {
         var movieDatabase : MovieDatabaseForSmiley ? = null
         var movieRatingTabelModel : LiveData<MovieRatingTabelModel>? = null
 
-
         fun initDB (context: Context) : MovieDatabaseForSmiley{
             return MovieDatabaseForSmiley.getDataClient(context)
         }

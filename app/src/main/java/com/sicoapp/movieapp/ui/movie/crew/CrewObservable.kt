@@ -15,7 +15,6 @@ import kotlin.properties.Delegates
 /*
 bind the property profilePath
 from response with layout
-
  */
 class CrewObservable(val crew: Crew) : BaseObservable() {
 

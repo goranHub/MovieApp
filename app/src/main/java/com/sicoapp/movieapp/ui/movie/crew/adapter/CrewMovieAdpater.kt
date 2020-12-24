@@ -12,8 +12,7 @@ import com.sicoapp.movieapp.ui.movie.crew.CrewObservable
  * @author ll4
  * @date 12/11/2020
  */
-class CrewMovieAdpater() :
-    RecyclerView.Adapter<ViewHolder>(){
+class CrewMovieAdpater(): RecyclerView.Adapter<ViewHolder>(){
 
     var list = mutableListOf<CrewObservable>()
 
