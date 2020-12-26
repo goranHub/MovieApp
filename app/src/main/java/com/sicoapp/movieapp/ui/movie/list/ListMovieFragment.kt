@@ -16,20 +16,24 @@ import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
 
 
-class ListMovieFragment() : Fragment() {
+class ListMovieFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieListBinding
     private var pageId = 1
 
     private val viewModel by lazy {
 
-        ListMovieViewModel({ postID ->
+        ListMovieViewModel(
+            {
+                postID ->
             val bundleItemId = bundleOf(ITEM_ID to postID)
             findNavController().navigate(
                 R.id.action_movieListFragment_to_movieDetailsFragment,
                 bundleItemId
             )
-        }, { crewID ->
+        },
+            {
+                crewID ->
             val bundleCrewId = bundleOf(CREW_ID to crewID)
             findNavController().navigate(
                 R.id.action_movieListFragment_to_crewMovieFragment,

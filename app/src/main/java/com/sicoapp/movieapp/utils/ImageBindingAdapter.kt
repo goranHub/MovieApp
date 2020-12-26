@@ -10,8 +10,7 @@ import com.bumptech.glide.Glide
  * @date 12/7/2020
  */
 
-interface ImageBindingAdapter {
-    companion object {
+ object ImageBindingAdapter {
         @JvmStatic
         @BindingAdapter("loadImageUrl")
         fun loadImage(view: ImageView, profileImage: String) {
@@ -20,4 +19,4 @@ interface ImageBindingAdapter {
                 .into(view)
         }
     }
-}
+

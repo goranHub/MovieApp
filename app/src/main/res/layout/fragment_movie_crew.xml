@@ -26,7 +26,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:setAdapter="@{data.adapter}"
             tools:itemCount="20"
-            tools:listitem="@layout/item_movie" />
+            tools:listitem="@layout/item_credits" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

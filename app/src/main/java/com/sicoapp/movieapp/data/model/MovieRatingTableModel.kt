@@ -3,7 +3,6 @@ package com.sicoapp.movieapp.data.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.hsalf.smileyrating.SmileyRating
 
 
 /**
@@ -11,7 +10,7 @@ import com.hsalf.smileyrating.SmileyRating
  * @date 12/15/2020
  */
 @Entity(tableName = "MovieRating")
-class MovieRatingTabelModel(
+class MovieRatingTableModel(
     @ColumnInfo(name = "itemId")
     var itemId: Int?,
     @ColumnInfo(name = "rating")

@@ -7,12 +7,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.sicoapp.movieapp.R
-import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.databinding.FragmentMovieCrewBinding
 import com.sicoapp.movieapp.utils.CREW_ID
-import com.sicoapp.movieapp.utils.Injection
 
-class CrewMovieFragment() : Fragment() {
+class CrewMovieFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieCrewBinding
     var crewId = 0

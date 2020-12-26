@@ -13,7 +13,7 @@ import com.sicoapp.movieapp.databinding.FragmentMovieDetailsBinding
 import com.sicoapp.movieapp.utils.ITEM_ID
 import kotlin.properties.Delegates
 
-class DetailsMovieFragment() : Fragment() {
+class DetailsMovieFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieDetailsBinding
     var currentType by Delegates.notNull<Int>()
@@ -33,7 +33,6 @@ class DetailsMovieFragment() : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_movie_details,
@@ -59,13 +58,12 @@ class DetailsMovieFragment() : Fragment() {
         binding.btnDeleteAll.setOnClickListener {
             viewModelInstance.removeDataForThatItem(it.context, itemId)
         }
-
         return binding.root
     }
 
     private fun saveIntoDB(type: SmileyRating.Type, viewModelInstance : DetailsViewModel) {
         currentType = type.rating
-        binding.btnSave.setOnClickListener { view ->
+        binding.btnSave.setOnClickListener {
             context?.let {
                 viewModelInstance.insertData(it, itemId, currentType)
             }
@@ -73,7 +71,7 @@ class DetailsMovieFragment() : Fragment() {
     }
 
     private fun callFromDB(view: View,  viewModelInstance : DetailsViewModel){
-        viewModelInstance.getMovieRatingDetails(view.context, itemId)!!
+        viewModelInstance.getSavedSmileyDetails(view.context, itemId)!!
             .observe(viewLifecycleOwner, { movieRatingTabelModel ->
                 if (movieRatingTabelModel != null) {
                     binding.smiley.setRating(movieRatingTabelModel.rating)
