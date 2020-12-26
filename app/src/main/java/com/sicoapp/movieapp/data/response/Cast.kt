@@ -18,6 +18,6 @@ data class Cast(
     @SerializedName("original_name")
     val originalName: String,
     val popularity: Double,
-    @SerializedName("poster_path")
-    val profilePath: Any
+    @SerializedName("profile_path")
+    val profilePath: String
 )

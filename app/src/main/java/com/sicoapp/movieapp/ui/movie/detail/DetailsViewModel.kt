@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.sicoapp.movieapp.data.api.retrofitCallDetail
-import com.sicoapp.movieapp.data.model.MovieRatingTabelModel
-import com.sicoapp.movieapp.repository.MovieRepository
+import com.sicoapp.movieapp.data.model.MovieRatingTableModel
+import com.sicoapp.movieapp.repository.SmileyRepository
 import com.sicoapp.movieapp.utils.DetailsObserver
 
 
@@ -16,7 +16,7 @@ import com.sicoapp.movieapp.utils.DetailsObserver
 class DetailsViewModel(itemId: Int) : ViewModel() {
 
     var detailsObserver = DetailsObserver()
-    var liveDataMovieRating: LiveData<MovieRatingTabelModel>? = null
+    var liveDataMovieRating: LiveData<MovieRatingTableModel>? = null
 
     init {
         loadDetailsMovies(itemId)
@@ -30,19 +30,19 @@ class DetailsViewModel(itemId: Int) : ViewModel() {
     }
 
     fun insertData(context: Context, itemID: Int, rating: Int) {
-        MovieRepository.insertData(context, itemID, rating)
+        SmileyRepository.insertData(context, itemID, rating)
     }
 
-    fun getMovieRatingDetails(
+    fun getSavedSmileyDetails(
         context: Context,
         itemId: Int
-    ): LiveData<MovieRatingTabelModel>? {
-        liveDataMovieRating = MovieRepository.getMovieRatingDetails(context, itemId)
+    ): LiveData<MovieRatingTableModel>? {
+        liveDataMovieRating = SmileyRepository.getMovieRatingDetails(context, itemId)
         return liveDataMovieRating
     }
 
     fun removeDataForThatItem(context: Context, itemId: Int) {
-        MovieRepository.removeDataForThatItem(context, itemId)
+        SmileyRepository.removeDataForThatItem(context, itemId)
     }
 }
 

@@ -4,14 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.sicoapp.movieapp.data.model.MovieRatingTabelModel
+import com.sicoapp.movieapp.data.model.MovieRatingTableModel
 
 
 /**
  * @author ll4
  * @date 12/15/2020
  */
-@Database(entities = arrayOf(MovieRatingTabelModel::class), version = 1, exportSchema = false)
+@Database(entities = [MovieRatingTableModel::class], version = 1, exportSchema = false)
 abstract class MovieDatabaseForSmiley : RoomDatabase() {
 
     abstract fun movieDao() : DAOAccess
@@ -30,7 +30,6 @@ abstract class MovieDatabaseForSmiley : RoomDatabase() {
                     .build()
                 return INSTANCE!!
             }
-
         }
     }
 }

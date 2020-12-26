@@ -15,7 +15,11 @@ class ListMovieViewModel(
 ) : ViewModel() {
 
     // iz adaptera id stavljamo u postId od ListMovieViewModel
-    val adapter = ListMovieAdapter({ it -> postId(it) }, { it -> crewID(it) })
+    val adapter =
+        ListMovieAdapter(
+            { it -> postId(it) },
+            { it -> crewID(it) })
+
     var pageId = 1
 
     init {

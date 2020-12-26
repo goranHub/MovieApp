@@ -3,7 +3,7 @@ package com.sicoapp.movieapp.repository
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.sicoapp.movieapp.data.database.MovieDatabaseForSmiley
-import com.sicoapp.movieapp.data.model.MovieRatingTabelModel
+import com.sicoapp.movieapp.data.model.MovieRatingTableModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -12,13 +12,13 @@ import kotlinx.coroutines.launch
  * @author ll4
  * @date 12/15/2020
  */
-class MovieRepository() {
+class SmileyRepository() {
 
     companion object{
         var movieDatabase : MovieDatabaseForSmiley ? = null
-        var movieRatingTabelModel : LiveData<MovieRatingTabelModel>? = null
+        private var movieRatingTableModel : LiveData<MovieRatingTableModel>? = null
 
-        fun initDB (context: Context) : MovieDatabaseForSmiley{
+        private fun initDB (context: Context) : MovieDatabaseForSmiley{
             return MovieDatabaseForSmiley.getDataClient(context)
         }
 
@@ -27,21 +27,21 @@ class MovieRepository() {
             movieDatabase = initDB(context)
 
             CoroutineScope(IO).launch {
-                val movieRatingDetails = MovieRatingTabelModel(itemId, rating)
-                movieDatabase!!.movieDao().InsertData(movieRatingDetails)
+                val movieRatingDetails = MovieRatingTableModel(itemId, rating)
+                movieDatabase!!.movieDao().insert(movieRatingDetails)
             }
         }
 
-        fun getMovieRatingDetails(context: Context, itemId: Int) : LiveData<MovieRatingTabelModel> {
+        fun getMovieRatingDetails(context: Context, itemId: Int) : LiveData<MovieRatingTableModel> {
             movieDatabase = initDB(context)
-            movieRatingTabelModel = movieDatabase!!.movieDao().getMovieDetails(itemId)
-            return movieRatingTabelModel as LiveData<MovieRatingTabelModel>
+            movieRatingTableModel = movieDatabase!!.movieDao().loadById(itemId)
+            return movieRatingTableModel as LiveData<MovieRatingTableModel>
         }
 
         fun removeDataForThatItem(context: Context, itemId: Int) {
             movieDatabase = initDB(context)
             CoroutineScope(IO).launch {
-                movieDatabase!!.movieDao().removeDataForThatItem(itemId)
+                movieDatabase!!.movieDao().deleteByID(itemId)
             }
         }
     }

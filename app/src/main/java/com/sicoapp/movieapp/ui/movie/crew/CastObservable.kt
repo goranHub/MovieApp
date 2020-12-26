@@ -1,0 +1,35 @@
+package com.sicoapp.movieapp.ui.movie.crew
+
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
+import androidx.databinding.library.baseAdapters.BR
+import com.sicoapp.movieapp.data.response.Cast
+import com.sicoapp.movieapp.utils.URL_IMAGE
+import kotlin.properties.Delegates
+
+/**
+ * @author ll4
+ * @date 12/10/2020
+ */
+
+/*
+bind the property profilePath
+from response with layout
+ */
+class CastObservable(cast: Cast) : BaseObservable() {
+
+    @get:Bindable
+    var imageActorUrl by Delegates.observable("") { _, _, _ -> notifyPropertyChanged(BR.imageUrl) }
+
+    @get:Bindable
+    var actorName by Delegates.observable("") { _, _, _ -> notifyPropertyChanged(BR.actorName) }
+
+    @get:Bindable
+    var character by Delegates.observable("") { _, _, _ -> notifyPropertyChanged(BR.character) }
+
+    init {
+        imageActorUrl = URL_IMAGE + cast.profilePath
+        actorName = cast.name
+        character = cast.character
+    }
+}
