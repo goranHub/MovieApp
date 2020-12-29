@@ -15,10 +15,13 @@ class ListMovieViewModel(
 ) : ViewModel() {
 
     // iz adaptera id stavljamo u postId od ListMovieViewModel
+
     val adapter =
         ListMovieAdapter(
-            { it -> postId(it) },
-            { it -> crewID(it) })
+            { it -> postId(it) }
+            ,
+            { it -> crewID(it) }
+        )
 
     var pageId = 1
 
@@ -31,7 +34,9 @@ class ListMovieViewModel(
              {  //it List<ListItemViewModel>
                 //onSuccess: (movies: List<ListItemViewModel>) -> Unit,
                  adapter.addMovies(it)
-             },{
+             }
+             ,
+             {
                  Log.d(it, "onFailure if (response.isSuccessful) in MovieApiService ")
                  return@retrofitCallList true
              }

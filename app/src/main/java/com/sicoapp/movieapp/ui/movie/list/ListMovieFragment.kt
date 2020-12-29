@@ -64,9 +64,6 @@ class ListMovieFragment : Fragment() {
                 if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
                     viewModel.loadMovies(pageId++)
                 }
-                if (!recyclerView.canScrollVertically(-1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    viewModel.loadMovies(pageId--)
-                }
             }
         })
         return binding.root

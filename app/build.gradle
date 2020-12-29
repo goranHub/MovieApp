@@ -97,7 +97,6 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
-    //Paging Library
-    implementation 'androidx.paging:paging-runtime-ktx:3.0.0-alpha06'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
 }

@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.sicoapp.movieapp.data.api.retrofitCallDetail
-import com.sicoapp.movieapp.data.model.MovieRatingTableModel
+import com.sicoapp.movieapp.data.model.SmileyRatingTableModel
 import com.sicoapp.movieapp.repository.SmileyRepository
 import com.sicoapp.movieapp.utils.DetailsObserver
 
@@ -16,7 +16,6 @@ import com.sicoapp.movieapp.utils.DetailsObserver
 class DetailsViewModel(itemId: Int) : ViewModel() {
 
     var detailsObserver = DetailsObserver()
-    var liveDataMovieRating: LiveData<MovieRatingTableModel>? = null
 
     init {
         loadDetailsMovies(itemId)
@@ -36,9 +35,8 @@ class DetailsViewModel(itemId: Int) : ViewModel() {
     fun getSavedSmileyDetails(
         context: Context,
         itemId: Int
-    ): LiveData<MovieRatingTableModel>? {
-        liveDataMovieRating = SmileyRepository.getMovieRatingDetails(context, itemId)
-        return liveDataMovieRating
+    ): LiveData<SmileyRatingTableModel> {
+        return SmileyRepository.getMovieRatingDetails(context, itemId)
     }
 
     fun removeDataForThatItem(context: Context, itemId: Int) {

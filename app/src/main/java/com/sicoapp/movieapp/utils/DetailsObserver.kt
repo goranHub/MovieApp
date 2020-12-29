@@ -9,7 +9,7 @@ import kotlin.properties.Delegates
  * @author ll4
  * @date 12/19/2020
  */
-class DetailsObserver() : BaseObservable() {
+class DetailsObserver : BaseObservable() {
 
     @get:Bindable
     var imageUrl by Delegates.observable("TEST imageUrl") { _, _, _ -> notifyPropertyChanged(BR.imageUrl) }
@@ -21,9 +21,5 @@ class DetailsObserver() : BaseObservable() {
     var popularity by Delegates.observable("TEST popularity") { _, _, _ -> notifyPropertyChanged(BR.popularity) }
 
     @get:Bindable
-    var releaseDate by Delegates.observable("TEST releaseDate") { _, _, _ ->
-        notifyPropertyChanged(
-            BR.releaseDate
-        )
-    }
+    var releaseDate by Delegates.observable("TEST releaseDate") { _, _, _ -> notifyPropertyChanged(BR.releaseDate) }
 }

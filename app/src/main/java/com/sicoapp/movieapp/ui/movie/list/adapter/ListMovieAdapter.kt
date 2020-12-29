@@ -47,6 +47,7 @@ class ListMovieAdapter(private val postID: (Int) -> Unit, private val crewID: (I
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dataModel = list[position]
         holder.bind(dataModel)
+        //bind listener with layout
         holder.itemRowBinding.itemClickListener = clickListener
         holder.itemRowBinding.itemCrewClickListener = crewListener
     }

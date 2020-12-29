@@ -2,8 +2,9 @@ package com.sicoapp.movieapp.repository
 
 import android.content.Context
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.sicoapp.movieapp.data.database.MovieDatabaseForSmiley
-import com.sicoapp.movieapp.data.model.MovieRatingTableModel
+import com.sicoapp.movieapp.data.model.SmileyRatingTableModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -16,7 +17,7 @@ class SmileyRepository() {
 
     companion object{
         var movieDatabase : MovieDatabaseForSmiley ? = null
-        private var movieRatingTableModel : LiveData<MovieRatingTableModel>? = null
+        private var smileyRatingTableModel : LiveData<SmileyRatingTableModel>? = null
 
         private fun initDB (context: Context) : MovieDatabaseForSmiley{
             return MovieDatabaseForSmiley.getDataClient(context)
@@ -27,15 +28,15 @@ class SmileyRepository() {
             movieDatabase = initDB(context)
 
             CoroutineScope(IO).launch {
-                val movieRatingDetails = MovieRatingTableModel(itemId, rating)
+                val movieRatingDetails = SmileyRatingTableModel(itemId, rating)
                 movieDatabase!!.movieDao().insert(movieRatingDetails)
             }
         }
 
-        fun getMovieRatingDetails(context: Context, itemId: Int) : LiveData<MovieRatingTableModel> {
+        fun getMovieRatingDetails(context: Context, itemId: Int) : MutableLiveData<SmileyRatingTableModel> {
             movieDatabase = initDB(context)
-            movieRatingTableModel = movieDatabase!!.movieDao().loadById(itemId)
-            return movieRatingTableModel as LiveData<MovieRatingTableModel>
+            smileyRatingTableModel = movieDatabase!!.movieDao().loadById(itemId)
+            return smileyRatingTableModel as MutableLiveData<SmileyRatingTableModel>
         }
 
         fun removeDataForThatItem(context: Context, itemId: Int) {

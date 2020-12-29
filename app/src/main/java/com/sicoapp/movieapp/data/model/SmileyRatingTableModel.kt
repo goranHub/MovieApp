@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
  * @date 12/15/2020
  */
 @Entity(tableName = "MovieRating")
-class MovieRatingTableModel(
+class SmileyRatingTableModel(
     @ColumnInfo(name = "itemId")
     var itemId: Int?,
     @ColumnInfo(name = "rating")
