@@ -33,7 +33,6 @@ fun retrofitCallCrew(
             response: Response<Movie>
         )
         {
-            Log.d("movieApiService", "got a response $response")
             if (response.isSuccessful) {
                 val crewList = response.body()?.credits?.cast ?: emptyList()
                 onSuccess(crewList)

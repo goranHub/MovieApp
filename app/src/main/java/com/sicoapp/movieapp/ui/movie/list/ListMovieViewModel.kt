@@ -18,10 +18,8 @@ class ListMovieViewModel(
 
     val adapter =
         ListMovieAdapter(
-            { it -> postId(it) }
-            ,
-            { it -> crewID(it) }
-        )
+            { it -> postId(it) },
+            { it -> crewID(it) })
 
     var pageId = 1
 

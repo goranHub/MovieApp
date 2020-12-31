@@ -3,9 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="data"
             type="com.sicoapp.movieapp.utils.DetailsObserver" />
+
+        <variable
+            name="save"
+            type="com.sicoapp.movieapp.ui.movie.detail.DetailsMovieFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -55,7 +60,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/popularity"
-            app:layout_constraintVertical_bias="0.638" />
+            app:layout_constraintVertical_bias="0.638"/>
 
         <TextView
             android:id="@+id/textOverview"
