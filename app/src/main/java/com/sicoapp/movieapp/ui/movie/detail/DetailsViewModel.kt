@@ -14,8 +14,8 @@ import androidx.hilt.lifecycle.ViewModelInject
  * @date 12/6/2020
  */
 
-class DetailsViewModel  @ViewModelInject
-constructor(
+class DetailsViewModel
+(
     itemId: Int,
     private val SmileyRepository: SmileyRepository
 ) : ViewModel() {

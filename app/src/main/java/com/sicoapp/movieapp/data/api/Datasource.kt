@@ -5,7 +5,6 @@ import com.sicoapp.movieapp.data.response.*
 import com.sicoapp.movieapp.ui.movie.list.ListItemViewModel
 import com.sicoapp.movieapp.utils.API_KEY
 import com.sicoapp.movieapp.utils.DetailsObserver
-import com.sicoapp.movieapp.utils.Injection
 import com.sicoapp.movieapp.utils.URL_IMAGE
 import retrofit2.Call
 import retrofit2.Callback
@@ -15,8 +14,9 @@ import retrofit2.Response
  * @author ll4
  * @date 12/24/2020
  */
+
 private val TAG: String = MovieApiService::class.java.name
-val service = Injection.provideMovieApiService().getClient()
+val service = MovieApiService.getClient()
 
 
 fun retrofitCallCrew(

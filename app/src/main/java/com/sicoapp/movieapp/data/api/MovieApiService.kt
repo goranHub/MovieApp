@@ -20,6 +20,8 @@ import retrofit2.http.Query
 
 interface MovieApiService {
 
+
+
     @GET("movie/top_rated")
     fun loadTopRated(
         @Query("api_key") apiKey: String?,

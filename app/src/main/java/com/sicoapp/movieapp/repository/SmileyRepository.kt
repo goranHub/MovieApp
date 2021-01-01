@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
  * @date 12/15/2020
  */
 
-class SmileyRepository constructor(
+class SmileyRepository (
     val dao: DAOAccess) {
 
         private var smileyRatingTableModel: LiveData<SmileyRatingTableModel>? = null
