@@ -1,15 +1,15 @@
-package com.sicoapp.movieapp.ui.movie.list
+package com.sicoapp.movieapp.ui.movie.topmovie
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.sicoapp.movieapp.data.api.retrofitCallList
-import com.sicoapp.movieapp.ui.movie.list.adapter.ListMovieAdapter
+import com.sicoapp.movieapp.data.api.retrofitCallTopRated
+import com.sicoapp.movieapp.ui.movie.topmovie.adapter.Adapter
 
 /**
  * @author ll4
  * @date 12/6/2020
  */
-class ListMovieViewModel(
+class TopMovieViewModel(
     val postId: (Int) -> Unit,
     val crewID: (Int) -> Unit
 ) : ViewModel() {
@@ -17,7 +17,7 @@ class ListMovieViewModel(
     // iz adaptera id stavljamo u postId od ListMovieViewModel
 
     val adapter =
-        ListMovieAdapter(
+        Adapter(
             { it -> postId(it) },
             { it -> crewID(it) })
 
@@ -28,7 +28,7 @@ class ListMovieViewModel(
     }
 
      fun loadMovies(pageId: Int) {
-         retrofitCallList( pageId,
+         retrofitCallTopRated( pageId,
              {  //it List<ListItemViewModel>
                 //onSuccess: (movies: List<ListItemViewModel>) -> Unit,
                  adapter.addMovies(it)
@@ -36,7 +36,7 @@ class ListMovieViewModel(
              ,
              {
                  Log.d(it, "onFailure if (response.isSuccessful) in MovieApiService ")
-                 return@retrofitCallList true
+                 return@retrofitCallTopRated true
              }
          )
     }

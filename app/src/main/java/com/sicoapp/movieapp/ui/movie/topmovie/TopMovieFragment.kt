@@ -1,10 +1,9 @@
-package com.sicoapp.movieapp.ui.movie.list
+package com.sicoapp.movieapp.ui.movie.topmovie
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -16,14 +15,14 @@ import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
 
 
-class ListMovieFragment : Fragment() {
+class TopMovieFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieListBinding
     private var pageId = 1
 
     private val viewModel by lazy {
 
-        ListMovieViewModel(
+        TopMovieViewModel(
             {
                 postID ->
             val bundleItemId = bundleOf(ITEM_ID to postID)
@@ -51,11 +50,26 @@ class ListMovieFragment : Fragment() {
 
         binding.data = viewModel
 
-        binding.topAppBar.setNavigationOnClickListener {
+     /*
+            binding.topAppBar.setNavigationOnClickListener {
             val text = "more"
             val duration = Toast.LENGTH_SHORT
             val toast = Toast.makeText(context, text, duration)
             toast.show()
+        }
+      */
+
+
+        binding.bottomNavigationView.setOnNavigationItemReselectedListener {
+
+            if(it.toString().equals("Popular")){
+                findNavController().navigate(R.id.action_movieListFragment_to_popularMovieFragment)
+            }
+
+            if(it.toString().equals("Now")){
+                findNavController().navigate(R.id.action_movieListFragment_to_nowMovieFragment)
+            }
+
         }
 
         binding.recylerViewFragmentTopMovie.addOnScrollListener(object : RecyclerView.OnScrollListener() {

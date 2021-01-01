@@ -16,7 +16,7 @@ import kotlin.properties.Delegates
 bind the property profilePath
 from response with layout
  */
-class CastObservable(cast: Cast) : BaseObservable() {
+class CrewObservable(cast: Cast) : BaseObservable() {
 
     @get:Bindable
     var imageActorUrl by Delegates.observable("") { _, _, _ -> notifyPropertyChanged(BR.imageUrl) }

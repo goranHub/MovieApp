@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.ui.movie.list
+package com.sicoapp.movieapp.utils
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
@@ -11,7 +11,7 @@ import kotlin.properties.Delegates
  * @author ll4
  * @date 12/10/2020
  */
-class ListItemViewModel(val movie: Movie) : BaseObservable() {
+class BindImageUrl(val movie: Movie) : BaseObservable() {
 
     @get:Bindable
     var imageUrl by Delegates.observable("") { _, _, _ -> notifyPropertyChanged(BR.imageUrl) }

@@ -8,7 +8,7 @@
 
         <variable
             name="data"
-            type="com.sicoapp.movieapp.ui.movie.crew.CastObservable" />
+            type="com.sicoapp.movieapp.ui.movie.crew.CrewObservable" />
 
         <variable
             name="itemClickListener"

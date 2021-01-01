@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.ui.movie.list.adapter
+package com.sicoapp.movieapp.ui.movie.topmovie.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.BR

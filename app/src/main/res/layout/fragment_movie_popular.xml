@@ -6,13 +6,13 @@
     <data>
         <variable
             name="data"
-            type="com.sicoapp.movieapp.ui.movie.topmovie.TopMovieViewModel" />
+            type="com.sicoapp.movieapp.ui.movie.popular.PopularViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.movie.topmovie.TopMovieFragment">
+        tools:context=".ui.movie.popular.PopularMovieFragment">
 
 
         <com.google.android.material.appbar.AppBarLayout
@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent">
             <include
                 android:id="@+id/movie_list_toolbar"
-                layout="@layout/toolbar_home"
+                layout="@layout/toolbar_popular"
                 />
         </com.google.android.material.appbar.AppBarLayout>
 

@@ -3,13 +3,13 @@ package com.sicoapp.movieapp.ui.movie.crew
 import android.util.Log
 import androidx.databinding.BaseObservable
 import com.sicoapp.movieapp.data.api.retrofitCallCrew
-import com.sicoapp.movieapp.ui.movie.crew.adapter.CrewMovieAdapter
+import com.sicoapp.movieapp.ui.movie.crew.adapter.CrewAdapter
 
 class CrewViewModel(
     crewId: Int,
 ) : BaseObservable() {
 
-    val adapter = CrewMovieAdapter()
+    val adapter = CrewAdapter()
 
     init {
         loadCrew(crewId)
@@ -21,7 +21,7 @@ class CrewViewModel(
                 val list = it
                     .filter { !it.profilePath.isNullOrBlank() }
                     .distinctBy { it.profilePath }
-                    .map { CastObservable(it) }
+                    .map { CrewObservable(it) }
                 adapter.addCast(list)
             },
             {

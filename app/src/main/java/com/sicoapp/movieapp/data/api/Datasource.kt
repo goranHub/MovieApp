@@ -2,8 +2,8 @@ package com.sicoapp.movieapp.data.api
 
 import android.util.Log
 import com.sicoapp.movieapp.data.response.*
-import com.sicoapp.movieapp.ui.movie.list.ListItemViewModel
 import com.sicoapp.movieapp.utils.API_KEY
+import com.sicoapp.movieapp.utils.BindImageUrl
 import com.sicoapp.movieapp.utils.DetailsObserver
 import com.sicoapp.movieapp.utils.URL_IMAGE
 import retrofit2.Call
@@ -46,9 +46,9 @@ fun retrofitCallCrew(
     })
 }
 
-fun retrofitCallList(
+fun retrofitCallTopRated(
     pageId: Int,
-    onSuccess: (movies: List<ListItemViewModel>) -> Unit,
+    onSuccess: (movies: List<BindImageUrl>) -> Unit,
     onError: (error: String) -> Boolean
 )
 {
@@ -65,7 +65,7 @@ fun retrofitCallList(
             if (response.isSuccessful)
             {
                 val moviesList = response.body()?.results ?: emptyList()
-                val movieItemsList = moviesList.map { ListItemViewModel(it) }
+                val movieItemsList = moviesList.map { BindImageUrl(it) }
                 onSuccess(movieItemsList)
             }
             else
@@ -80,6 +80,43 @@ fun retrofitCallList(
     }
     )
 }
+
+
+fun retrofitCallPopular(
+    pageId: Int,
+    onSuccess: (movies: List<BindImageUrl>) -> Unit,
+    onError: (error: String) -> Boolean
+)
+{
+    val currentCall = service.loadPopular(API_KEY, pageId.toString())
+
+    currentCall.enqueue(object : Callback<AboveTopRated>
+    {
+        override fun onResponse(
+            call: Call<AboveTopRated>,
+            response: Response<AboveTopRated>
+        )
+        {
+            Log.d("movieApiService", "got a response $response")
+            if (response.isSuccessful)
+            {
+                val moviesList = response.body()?.results ?: emptyList()
+                val movieItemsList = moviesList.map { BindImageUrl(it) }
+                onSuccess(movieItemsList)
+            }
+            else
+            {
+                onError(response.errorBody()?.string() ?: "Unknown error")
+            }
+        }
+        override fun onFailure(call: Call<AboveTopRated>, t: Throwable)
+        {
+            Log.d(TAG, "onFailure ${t.localizedMessage}")
+        }
+    }
+    )
+}
+
 
 /*
 without recyclerview

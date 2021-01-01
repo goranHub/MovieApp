@@ -2,6 +2,7 @@ package com.sicoapp.movieapp
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -27,6 +28,8 @@ class MainActivity : AppCompatActivity() {
         Log.d("daoAcces", "${dao.hashCode()}")
         Log.d("smileyRepository", "${smileyRepository.hashCode()}")
 
-        bottomNavigationView.setupWithNavController(NavHostFragment.findNavController(this.nav_host_fragment))
+       // bottomNavigationView.setupWithNavController(NavHostFragment.findNavController(this.nav_host_fragment))
+
+
     }
 }

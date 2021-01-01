@@ -28,6 +28,12 @@ interface MovieApiService {
         @Query("page") page: String?
     ): Call<AboveTopRated>
 
+    @GET("movie/popular")
+    fun loadPopular(
+        @Query("api_key") apiKey: String?,
+        @Query("page") page: String?
+    ): Call<AboveTopRated>
+
     @GET("movie/{id}")
     fun loadById(@Path("id") id: Int,
                  @Query("api_key") apiKey: String): Call<Movie>
