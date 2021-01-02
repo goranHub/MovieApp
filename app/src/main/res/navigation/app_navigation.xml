@@ -3,66 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_navigation"
-    app:startDestination="@id/movieListFragment">
+    app:startDestination="@id/topMovieFragment">
 
     <fragment
-        android:id="@+id/movieListFragment"
+        android:id="@+id/topMovieFragment"
         android:name="com.sicoapp.movieapp.ui.movie.topmovie.TopMovieFragment"
-        android:label="fragment_movie_list">
+        android:label="Top Movie">
         <action
             android:id="@+id/action_movieListFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
         <action
             android:id="@+id/action_movieListFragment_to_crewMovieFragment"
             app:destination="@id/crewMovieFragment" />
-        <argument
-            android:name="id"
-            app:argType="integer"
-            android:defaultValue="1" />
-        <action
-            android:id="@+id/action_movieListFragment_to_popularMovieFragment"
-            app:destination="@id/popularMovieFragment" />
-        <action
-            android:id="@+id/action_movieListFragment_to_nowMovieFragment"
-            app:destination="@id/nowMovieFragment" />
     </fragment>
 
     <fragment
             android:id="@+id/movieDetailsFragment"
             android:name="com.sicoapp.movieapp.ui.movie.detail.DetailsMovieFragment"
-            android:label="fragment_fight_club"
+            android:label="Details"
             tools:layout="@layout/fragment_movie_details" />
     <fragment
         android:id="@+id/crewMovieFragment"
         android:name="com.sicoapp.movieapp.ui.movie.crew.CrewMovieFragment"
-        android:label="fragment_crew_movie" />
+        android:label="Crew" />
     <fragment
         android:id="@+id/popularMovieFragment"
         android:name="com.sicoapp.movieapp.ui.movie.popular.PopularMovieFragment"
-        android:label="PopularMovieFragment" >
-        <action
-            android:id="@+id/action_popularMovieFragment_to_movieDetailsFragment"
-            app:destination="@id/movieDetailsFragment" />
-        <action
-            android:id="@+id/action_popularMovieFragment_to_crewMovieFragment"
-            app:destination="@id/crewMovieFragment" />
-        <action
-            android:id="@+id/action_popularMovieFragment_to_movieListFragment"
-            app:destination="@id/movieListFragment" />
-        <action
-            android:id="@+id/action_popularMovieFragment_to_nowMovieFragment"
-            app:destination="@id/nowMovieFragment" />
-    </fragment>
+        android:label="@string/popular" />
     <fragment
         android:id="@+id/nowMovieFragment"
         android:name="com.sicoapp.movieapp.ui.movie.now.NowMovieFragment"
-        android:label="NowMovieFragment" >
-        <action
-            android:id="@+id/action_nowMovieFragment_to_movieDetailsFragment"
-            app:destination="@id/movieDetailsFragment" />
-        <action
-            android:id="@+id/action_nowMovieFragment_to_crewMovieFragment"
-            app:destination="@id/crewMovieFragment" />
-    </fragment>
+        android:label="Now" />
 
 </navigation>

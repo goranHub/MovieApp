@@ -42,12 +42,7 @@ class DetailsMovieFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_movie_details,
-            container,
-            false
-        )
+        binding = FragmentMovieDetailsBinding.inflate(inflater)
 
         binding.data = viewModel.detailsObserver
 

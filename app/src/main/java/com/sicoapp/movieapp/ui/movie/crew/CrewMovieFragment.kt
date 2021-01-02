@@ -27,7 +27,7 @@ class CrewMovieFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_crew, container, false)
+        binding = FragmentMovieCrewBinding.inflate(inflater)
         binding.data = viewModel
         return binding.root
     }

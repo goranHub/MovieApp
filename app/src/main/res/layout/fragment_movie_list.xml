@@ -15,21 +15,6 @@
         tools:context=".ui.movie.topmovie.TopMovieFragment">
 
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-            <include
-                android:id="@+id/movie_list_toolbar"
-                layout="@layout/toolbar_home"
-                />
-        </com.google.android.material.appbar.AppBarLayout>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recylerViewFragmentTopMovie"
             android:layout_width="402dp"

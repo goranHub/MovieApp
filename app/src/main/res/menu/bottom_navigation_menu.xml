@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/breakingNewsFragment"
+    <item android:id="@+id/topMovieFragment"
         android:title="Top Movie"
-        android:icon="@drawable/ic_menu_24dp"
-        
-        />
+        android:icon="@drawable/ic_menu_24dp"/>
 
-    <item android:id="@+id/savedNewsFragment"
+    <item android:id="@+id/popularMovieFragment"
         android:title="Popular"
         android:icon="@drawable/ic_menu_24dp" />
 
-    <item android:id="@+id/searchNewsFragment"
+    <item android:id="@+id/nowMovieFragment"
         android:title="Now"
         android:icon="@drawable/ic_menu_24dp" />
 </menu>

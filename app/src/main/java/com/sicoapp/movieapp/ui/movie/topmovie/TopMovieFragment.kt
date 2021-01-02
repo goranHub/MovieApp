@@ -45,29 +45,19 @@ class TopMovieFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil
-            .inflate(inflater, R.layout.fragment_movie_list, container, false)
+
+        binding = FragmentMovieListBinding.inflate(inflater)
 
         binding.data = viewModel
-
-     /*
-            binding.topAppBar.setNavigationOnClickListener {
-            val text = "more"
-            val duration = Toast.LENGTH_SHORT
-            val toast = Toast.makeText(context, text, duration)
-            toast.show()
-        }
-      */
-
 
         binding.bottomNavigationView.setOnNavigationItemReselectedListener {
 
             if(it.toString().equals("Popular")){
-                findNavController().navigate(R.id.action_movieListFragment_to_popularMovieFragment)
+              //  findNavController().navigate(R.id.action_movieListFragment_to_popularMovieFragment)
             }
 
             if(it.toString().equals("Now")){
-                findNavController().navigate(R.id.action_movieListFragment_to_nowMovieFragment)
+                //findNavController().navigate(R.id.action_movieListFragment_to_nowMovieFragment)
             }
 
         }

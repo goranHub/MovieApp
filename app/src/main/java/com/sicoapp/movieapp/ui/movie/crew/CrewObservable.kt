@@ -12,10 +12,7 @@ import kotlin.properties.Delegates
  * @date 12/10/2020
  */
 
-/*
-bind the property profilePath
-from response with layout
- */
+
 class CrewObservable(cast: Cast) : BaseObservable() {
 
     @get:Bindable

@@ -31,18 +31,12 @@ class PopularMovieFragment : Fragment()   {
             {
                     postID ->
                 val bundleItemId = bundleOf(ITEM_ID to postID)
-                findNavController().navigate(
-                    R.id.action_popularMovieFragment_to_movieDetailsFragment,
-                    bundleItemId
-                )
+
             },
             {
                     crewID ->
                 val bundleCrewId = bundleOf(CREW_ID to crewID)
-                findNavController().navigate(
-                    R.id.action_popularMovieFragment_to_crewMovieFragment,
-                    bundleCrewId
-                )
+
             })
     }
 
@@ -50,23 +44,10 @@ class PopularMovieFragment : Fragment()   {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil
-            .inflate(inflater, R.layout.fragment_movie_popular, container, false)
+        binding = FragmentMoviePopularBinding.inflate(inflater)
 
         binding.data = viewModel
 
-
-        binding.bottomNavigationView.setOnNavigationItemReselectedListener {
-
-            if(it.toString().equals("Top Movie")){
-                findNavController().navigate(R.id.action_popularMovieFragment_to_movieListFragment)
-            }
-
-            if(it.toString().equals("Now")){
-                findNavController().navigate(R.id.action_popularMovieFragment_to_nowMovieFragment)
-            }
-
-        }
 
         binding.recylerViewFragmentTopMovie.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
