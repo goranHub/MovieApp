@@ -10,23 +10,32 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
+import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.databinding.FragmentMoviePopularBinding
 import com.sicoapp.movieapp.utils.BindMovie
 import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * @author ll4
  * @date 1/1/2021
  */
+@AndroidEntryPoint
 class PopularMovieFragment : Fragment() {
 
     private lateinit var binding: FragmentMoviePopularBinding
     private var pageId = 1
 
+    @Inject
+    lateinit var api: MovieApiService
+
     private val viewModel by lazy {
 
-        PopularViewModel(pageId,
+        PopularViewModel(
+            api,
+            pageId,
             { postID ->
                 val bundleItemId = bundleOf(ITEM_ID to postID)
                 findNavController().navigate(

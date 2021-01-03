@@ -18,6 +18,7 @@ import io.reactivex.schedulers.Schedulers
 
 class DetailsViewModel
     (
+    val api: MovieApiService,
     val itemId: Int,
     private val SmileyRepository: SmileyRepository
 ) : ViewModel() {
@@ -38,7 +39,7 @@ class DetailsViewModel
 
     fun rxToLiveData() : LiveData<Movie> {
         val source = LiveDataReactiveStreams.fromPublisher(
-            MovieApiService.getClient().getByID(itemId, API_KEY)
+            api.getByID(itemId, API_KEY)
                 .subscribeOn(Schedulers.io())
         )
         return source

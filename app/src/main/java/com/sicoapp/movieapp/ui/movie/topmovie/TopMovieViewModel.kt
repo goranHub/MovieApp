@@ -15,6 +15,7 @@ import io.reactivex.schedulers.Schedulers
  * @date 12/6/2020
  */
 class TopMovieViewModel(
+    val api: MovieApiService,
     private val pageId: Int,
     val postId: (Int) -> Unit,
     val crewID: (Int) -> Unit
@@ -30,7 +31,7 @@ class TopMovieViewModel(
 
     fun rxToLiveData() : LiveData<MovieResponse> {
         val source = LiveDataReactiveStreams.fromPublisher(
-            MovieApiService.getClient().loadTopRated(API_KEY, pageId.toString())
+            api.loadTopRated(API_KEY, pageId.toString())
                 .subscribeOn(Schedulers.io())
         )
         return source

@@ -7,14 +7,22 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.sicoapp.movieapp.R
+import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.databinding.FragmentMovieCrewBinding
 import com.sicoapp.movieapp.utils.CREW_ID
-
+import com.sicoapp.movieapp.utils.URL_IMAGE
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+@AndroidEntryPoint
 class CrewMovieFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieCrewBinding
     var crewId = 0
-    private val viewModel by lazy { CrewViewModel(crewId) }
+
+    @Inject
+    lateinit var api: MovieApiService
+
+    private val viewModel by lazy { CrewViewModel(crewId, api) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +36,21 @@ class CrewMovieFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMovieCrewBinding.inflate(inflater)
+
+        updateUI()
+
         binding.data = viewModel
         return binding.root
     }
+
+    private fun updateUI(){
+        viewModel.rxToLiveData().observe(viewLifecycleOwner, {
+            val list= it.credits.cast
+                    .filter { !it.profilePath.isNullOrBlank() }
+                    .distinctBy { it.profilePath }
+                    .map { CrewObservable(it) }
+            viewModel.adapter.addCast(list)
+        })
+    }
+
 }

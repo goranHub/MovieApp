@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.hsalf.smileyrating.SmileyRating
+import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.databinding.FragmentMovieDetailsBinding
 import com.sicoapp.movieapp.repository.SmileyRepository
 import com.sicoapp.movieapp.utils.DetailsObserver
@@ -27,7 +28,10 @@ class DetailsMovieFragment : Fragment() {
     @Inject
     lateinit var smileyRepository: SmileyRepository
 
-    private val viewModel by lazy { DetailsViewModel(itemId, smileyRepository) }
+    @Inject
+    lateinit var api: MovieApiService
+
+    private val viewModel by lazy { DetailsViewModel(api,itemId, smileyRepository) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

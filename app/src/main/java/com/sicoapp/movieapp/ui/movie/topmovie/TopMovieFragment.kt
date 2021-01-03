@@ -10,20 +10,28 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
+import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.databinding.FragmentMovieListBinding
 import com.sicoapp.movieapp.utils.BindMovie
 import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class TopMovieFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieListBinding
     private var pageId = 1
 
+    @Inject
+    lateinit var api: MovieApiService
+
     private val viewModel by lazy {
 
-        TopMovieViewModel(pageId,
+        TopMovieViewModel(
+            api,
+            pageId,
             {
                 postID ->
             val bundleItemId = bundleOf(ITEM_ID to postID)

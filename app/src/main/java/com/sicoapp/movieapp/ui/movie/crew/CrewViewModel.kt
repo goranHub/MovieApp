@@ -1,32 +1,26 @@
 package com.sicoapp.movieapp.ui.movie.crew
 
-import android.util.Log
 import androidx.databinding.BaseObservable
-import com.sicoapp.movieapp.data.api.retrofitCallCrew
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.LiveDataReactiveStreams
+import com.sicoapp.movieapp.data.api.MovieApiService
+import com.sicoapp.movieapp.data.response.Movie
 import com.sicoapp.movieapp.ui.movie.crew.adapter.CrewAdapter
+import com.sicoapp.movieapp.utils.API_KEY
+import io.reactivex.schedulers.Schedulers
 
-class CrewViewModel(
-    crewId: Int,
+class CrewViewModel (
+    val crewId: Int,
+    val api: MovieApiService
 ) : BaseObservable() {
 
     val adapter = CrewAdapter()
 
-    init {
-        loadCrew(crewId)
-    }
-
-    private fun loadCrew(crewId: Int) {
-        retrofitCallCrew(crewId,
-            { it ->
-                val list = it
-                    .filter { !it.profilePath.isNullOrBlank() }
-                    .distinctBy { it.profilePath }
-                    .map { CrewObservable(it) }
-                adapter.addCast(list)
-            },
-            {
-                Log.d(it, "onFailure if (response.isSuccessful) in MovieApiService ")
-            }
+    fun rxToLiveData() : LiveData<Movie> {
+        val source = LiveDataReactiveStreams.fromPublisher(
+            api.loadCrewBy( crewId , API_KEY,)
+                .subscribeOn(Schedulers.io())
         )
+        return source
     }
 }

@@ -46,20 +46,11 @@ interface MovieApiService {
         @Query("api_key") apiKey: String
     ): Call<Movie>
 
-    companion object {
-        fun getClient(): MovieApiService {
-            val logger = HttpLoggingInterceptor()
-            logger.level = Level.BASIC
-            val client = OkHttpClient.Builder()
-                .addInterceptor(logger)
-                .build()
-            return Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(MovieApiService::class.java)
-        }
-    }
+
+    @GET("movie/{id}?&append_to_response=credits")
+    fun loadCrewBy(
+        @Path("id") id: Int,
+        @Query("api_key") apiKey: String
+    ): Flowable<Movie>
+
 }
