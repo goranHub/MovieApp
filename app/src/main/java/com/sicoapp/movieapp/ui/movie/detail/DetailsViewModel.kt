@@ -1,9 +1,14 @@
 package com.sicoapp.movieapp.ui.movie.detail
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.ViewModel
+import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.data.model.SmileyRatingTableModel
+import com.sicoapp.movieapp.data.response.Movie
 import com.sicoapp.movieapp.repository.SmileyRepository
+import com.sicoapp.movieapp.utils.API_KEY
+import io.reactivex.schedulers.Schedulers
 
 
 /**
@@ -12,7 +17,10 @@ import com.sicoapp.movieapp.repository.SmileyRepository
  */
 
 class DetailsViewModel
-    (private val SmileyRepository: SmileyRepository) : ViewModel() {
+    (
+    val itemId: Int,
+    private val SmileyRepository: SmileyRepository
+) : ViewModel() {
 
     fun insertData(itemID: Int, rating: Int) {
         SmileyRepository.insertData(itemID, rating)
@@ -26,6 +34,14 @@ class DetailsViewModel
 
     fun removeDataForThatItem(itemId: Int) {
         SmileyRepository.removeDataForThatItem(itemId)
+    }
+
+    fun rxToLiveData() : LiveData<Movie> {
+        val source = LiveDataReactiveStreams.fromPublisher(
+            MovieApiService.getClient().getByID(itemId, API_KEY)
+                .subscribeOn(Schedulers.io())
+        )
+        return source
     }
 }
 

@@ -11,14 +11,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.ItemMovieBinding
-import com.sicoapp.movieapp.utils.BindImageUrl
+import com.sicoapp.movieapp.utils.BindMovie
 import com.sicoapp.movieapp.utils.CardClickListener
 import com.sicoapp.movieapp.utils.CrewClickListener
 
 class Adapter(private val postID: (Int) -> Unit, private val crewID: (Int) -> Unit) :
     RecyclerView.Adapter<ViewHolder>(){
 
-    var list = mutableListOf<BindImageUrl>()
+    var list = mutableListOf<BindMovie>()
 
     private val clickListener = object : CardClickListener {
         // movie id predajemo postId lambdi
@@ -54,7 +54,7 @@ class Adapter(private val postID: (Int) -> Unit, private val crewID: (Int) -> Un
 
     override fun getItemCount() = list.size
 
-    fun addMovies(listItems: List<BindImageUrl>) {
+    fun addMovies(listItems: List<BindMovie>) {
         list.addAll(listItems)
         notifyDataSetChanged()
     }

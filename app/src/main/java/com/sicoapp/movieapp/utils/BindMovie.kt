@@ -11,7 +11,7 @@ import kotlin.properties.Delegates
  * @author ll4
  * @date 12/10/2020
  */
-class BindImageUrl(val movie: Movie) : BaseObservable() {
+class BindMovie(val movie: Movie) : BaseObservable() {
 
     @get:Bindable
     var imageUrl by Delegates.observable("") { _, _, _ -> notifyPropertyChanged(BR.imageUrl) }

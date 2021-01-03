@@ -7,7 +7,7 @@
     <data>
         <variable
             name="data"
-            type="com.sicoapp.movieapp.utils.BindImageUrl" />
+            type="com.sicoapp.movieapp.utils.BindMovie" />
 
         <variable
             name="itemClickListener"

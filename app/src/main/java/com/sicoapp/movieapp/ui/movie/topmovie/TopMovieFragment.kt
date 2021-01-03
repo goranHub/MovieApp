@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.FragmentMovieListBinding
+import com.sicoapp.movieapp.utils.BindMovie
 import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
 
@@ -22,7 +23,7 @@ class TopMovieFragment : Fragment() {
 
     private val viewModel by lazy {
 
-        TopMovieViewModel(
+        TopMovieViewModel(pageId,
             {
                 postID ->
             val bundleItemId = bundleOf(ITEM_ID to postID)
@@ -50,26 +51,39 @@ class TopMovieFragment : Fragment() {
 
         binding.data = viewModel
 
-        binding.bottomNavigationView.setOnNavigationItemReselectedListener {
+        init()
+        scrollRecylerView()
 
-            if(it.toString().equals("Popular")){
-              //  findNavController().navigate(R.id.action_movieListFragment_to_popularMovieFragment)
+        return binding.root
+    }
+
+
+    private fun init() {
+        viewModel.rxToLiveData().observe(
+            viewLifecycleOwner, Observer {
+                val movieResponse = it.results
+                val movieItemsList = movieResponse.map { BindMovie(it) }
+                viewModel.adapter.addMovies(movieItemsList)
             }
+        )
+    }
 
-            if(it.toString().equals("Now")){
-                //findNavController().navigate(R.id.action_movieListFragment_to_nowMovieFragment)
-            }
-
-        }
-
-        binding.recylerViewFragmentTopMovie.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+    private fun scrollRecylerView() {
+        binding.recylerViewFragmentTopMovie.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
+
                 if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    viewModel.loadMovies(pageId++)
+                    viewModel.rxToLiveData().observe(
+                        viewLifecycleOwner, Observer {
+                            val movieResponse = it.results
+                            val movieItemsList = movieResponse.map { BindMovie(it) }
+                            viewModel.adapter.addMovies(movieItemsList)
+                        }
+                    )
                 }
             }
         })
-        return binding.root
     }
 }

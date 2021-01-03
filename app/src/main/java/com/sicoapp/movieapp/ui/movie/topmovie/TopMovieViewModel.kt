@@ -1,15 +1,21 @@
 package com.sicoapp.movieapp.ui.movie.topmovie
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.ViewModel
-import com.sicoapp.movieapp.data.api.retrofitCallTopRated
+import com.sicoapp.movieapp.data.api.MovieApiService
+import com.sicoapp.movieapp.data.response.MovieResponse
 import com.sicoapp.movieapp.ui.movie.topmovie.adapter.Adapter
+import com.sicoapp.movieapp.utils.API_KEY
+import io.reactivex.schedulers.Schedulers
 
 /**
  * @author ll4
  * @date 12/6/2020
  */
 class TopMovieViewModel(
+    private val pageId: Int,
     val postId: (Int) -> Unit,
     val crewID: (Int) -> Unit
 ) : ViewModel() {
@@ -21,24 +27,13 @@ class TopMovieViewModel(
             { it -> postId(it) },
             { it -> crewID(it) })
 
-    var pageId = 1
 
-    init {
-        loadMovies(pageId)
-    }
-
-     fun loadMovies(pageId: Int) {
-         retrofitCallTopRated( pageId,
-             {  //it List<ListItemViewModel>
-                //onSuccess: (movies: List<ListItemViewModel>) -> Unit,
-                 adapter.addMovies(it)
-             }
-             ,
-             {
-                 Log.d(it, "onFailure if (response.isSuccessful) in MovieApiService ")
-                 return@retrofitCallTopRated true
-             }
-         )
+    fun rxToLiveData() : LiveData<MovieResponse> {
+        val source = LiveDataReactiveStreams.fromPublisher(
+            MovieApiService.getClient().loadTopRated(API_KEY, pageId.toString())
+                .subscribeOn(Schedulers.io())
+        )
+        return source
     }
 }
 

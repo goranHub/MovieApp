@@ -3,9 +3,7 @@ package com.sicoapp.movieapp.data.api
 import android.util.Log
 import com.sicoapp.movieapp.data.response.*
 import com.sicoapp.movieapp.utils.API_KEY
-import com.sicoapp.movieapp.utils.BindImageUrl
-import com.sicoapp.movieapp.utils.DetailsObserver
-import com.sicoapp.movieapp.utils.URL_IMAGE
+import com.sicoapp.movieapp.utils.BindMovie
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -46,73 +44,7 @@ fun retrofitCallCrew(
     })
 }
 
-fun retrofitCallTopRated(
-    pageId: Int,
-    onSuccess: (movies: List<BindImageUrl>) -> Unit,
-    onError: (error: String) -> Boolean
-)
-{
-    val currentCall = service.loadTopRated(API_KEY, pageId.toString())
-
-    currentCall.enqueue(object : Callback<MovieResponse>
-    {
-        override fun onResponse(
-            call: Call<MovieResponse>,
-            response: Response<MovieResponse>
-        )
-        {
-            Log.d("movieApiService", "got a response $response")
-            if (response.isSuccessful)
-            {
-                val moviesList = response.body()?.results ?: emptyList()
-                val movieItemsList = moviesList.map { BindImageUrl(it) }
-                onSuccess(movieItemsList)
-            }
-            else
-            {
-                onError(response.errorBody()?.string() ?: "Unknown error")
-            }
-        }
-        override fun onFailure(call: Call<MovieResponse>, t: Throwable)
-        {
-            Log.d(TAG, "onFailure ${t.localizedMessage}")
-        }
-    }
-    )
-}
 
 
-fun retrofitCallPopular(
-    pageId: Int,
-    onSuccess: (movies: List<BindImageUrl>) -> Unit,
-    onError: (error: String) -> Boolean
-)
-{
-    val currentCall = service.loadPopular(API_KEY, pageId.toString())
 
-    currentCall.enqueue(object : Callback<MovieResponse>
-    {
-        override fun onResponse(
-            call: Call<MovieResponse>,
-            response: Response<MovieResponse>
-        )
-        {
-            Log.d("movieApiService", "got a response $response")
-            if (response.isSuccessful)
-            {
-                val moviesList = response.body()?.results ?: emptyList()
-                val movieItemsList = moviesList.map { BindImageUrl(it) }
-                onSuccess(movieItemsList)
-            }
-            else
-            {
-                onError(response.errorBody()?.string() ?: "Unknown error")
-            }
-        }
-        override fun onFailure(call: Call<MovieResponse>, t: Throwable)
-        {
-            Log.d(TAG, "onFailure ${t.localizedMessage}")
-        }
-    }
-    )
-}
+

@@ -5,20 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.LiveDataReactiveStreams
 import com.hsalf.smileyrating.SmileyRating
-import com.sicoapp.movieapp.data.api.MovieApiService
-import com.sicoapp.movieapp.data.database.DAOAccess
-import com.sicoapp.movieapp.data.response.Movie
 import com.sicoapp.movieapp.databinding.FragmentMovieDetailsBinding
 import com.sicoapp.movieapp.repository.SmileyRepository
-import com.sicoapp.movieapp.utils.API_KEY
 import com.sicoapp.movieapp.utils.DetailsObserver
 import com.sicoapp.movieapp.utils.ITEM_ID
 import com.sicoapp.movieapp.utils.URL_IMAGE
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
@@ -34,7 +27,7 @@ class DetailsMovieFragment : Fragment() {
     @Inject
     lateinit var smileyRepository: SmileyRepository
 
-    private val viewModel by lazy { DetailsViewModel(smileyRepository) }
+    private val viewModel by lazy { DetailsViewModel(itemId, smileyRepository) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +43,7 @@ class DetailsMovieFragment : Fragment() {
     ): View {
         binding = FragmentMovieDetailsBinding.inflate(inflater)
 
-        liveDataGetMovie(itemId)
+        updateUI()
 
         binding.data = detailsObserver
 
@@ -93,18 +86,14 @@ class DetailsMovieFragment : Fragment() {
     and update UI with bindAdapters from DetailsObserver
      */
 
-    private fun liveDataGetMovie(userId: Int) : LiveData<Movie> {
-        val source = LiveDataReactiveStreams.fromPublisher(
-            MovieApiService.getClient().getByID(userId, API_KEY)
-                .subscribeOn(Schedulers.io())
-        )
 
-        source.observe(viewLifecycleOwner, {
+    private fun updateUI(){
+        viewModel.rxToLiveData().observe(viewLifecycleOwner, {
             detailsObserver.imageUrl = URL_IMAGE + it.posterPath
             detailsObserver.overview = it.overview
             detailsObserver.popularity = it.popularity
             detailsObserver.releaseDate = it.releaseDate
         })
-        return source
     }
+
 }
