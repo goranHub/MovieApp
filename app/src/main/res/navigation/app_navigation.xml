@@ -29,7 +29,14 @@
     <fragment
         android:id="@+id/popularMovieFragment"
         android:name="com.sicoapp.movieapp.ui.movie.popular.PopularMovieFragment"
-        android:label="@string/popular" />
+        android:label="@string/popular" >
+        <action
+            android:id="@+id/action_popularMovieFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+        <action
+            android:id="@+id/action_popularMovieFragment_to_crewMovieFragment"
+            app:destination="@id/crewMovieFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nowMovieFragment"
         android:name="com.sicoapp.movieapp.ui.movie.now.NowMovieFragment"

@@ -54,11 +54,11 @@ fun retrofitCallTopRated(
 {
     val currentCall = service.loadTopRated(API_KEY, pageId.toString())
 
-    currentCall.enqueue(object : Callback<AboveTopRated>
+    currentCall.enqueue(object : Callback<MovieResponse>
     {
         override fun onResponse(
-            call: Call<AboveTopRated>,
-            response: Response<AboveTopRated>
+            call: Call<MovieResponse>,
+            response: Response<MovieResponse>
         )
         {
             Log.d("movieApiService", "got a response $response")
@@ -73,7 +73,7 @@ fun retrofitCallTopRated(
                 onError(response.errorBody()?.string() ?: "Unknown error")
             }
         }
-        override fun onFailure(call: Call<AboveTopRated>, t: Throwable)
+        override fun onFailure(call: Call<MovieResponse>, t: Throwable)
         {
             Log.d(TAG, "onFailure ${t.localizedMessage}")
         }
@@ -90,11 +90,11 @@ fun retrofitCallPopular(
 {
     val currentCall = service.loadPopular(API_KEY, pageId.toString())
 
-    currentCall.enqueue(object : Callback<AboveTopRated>
+    currentCall.enqueue(object : Callback<MovieResponse>
     {
         override fun onResponse(
-            call: Call<AboveTopRated>,
-            response: Response<AboveTopRated>
+            call: Call<MovieResponse>,
+            response: Response<MovieResponse>
         )
         {
             Log.d("movieApiService", "got a response $response")
@@ -109,45 +109,7 @@ fun retrofitCallPopular(
                 onError(response.errorBody()?.string() ?: "Unknown error")
             }
         }
-        override fun onFailure(call: Call<AboveTopRated>, t: Throwable)
-        {
-            Log.d(TAG, "onFailure ${t.localizedMessage}")
-        }
-    }
-    )
-}
-
-
-/*
-without recyclerview
- */
-fun retrofitCallDetail(itemId: Int,detailsObserver: DetailsObserver)
-{
-    val currentCall = service.loadById(itemId, API_KEY)
-    lateinit var responseMovie: Movie
-
-    currentCall.enqueue(object : Callback<Movie>
-    {
-        override fun onResponse(
-            call: Call<Movie>,
-            response: Response<Movie>
-        )
-        {
-            if (response.isSuccessful)
-            {
-                responseMovie = response.body() ?: return
-                detailsObserver.imageUrl = URL_IMAGE + responseMovie.posterPath
-                detailsObserver.overview = responseMovie.overview
-                detailsObserver.popularity = responseMovie.popularity
-                detailsObserver.releaseDate = responseMovie.releaseDate
-            }
-            else
-            {
-                val errorResponse = response.errorBody()?.string()
-                Log.d(TAG, "$errorResponse")
-            }
-        }
-        override fun onFailure(call: Call<Movie>, t: Throwable)
+        override fun onFailure(call: Call<MovieResponse>, t: Throwable)
         {
             Log.d(TAG, "onFailure ${t.localizedMessage}")
         }

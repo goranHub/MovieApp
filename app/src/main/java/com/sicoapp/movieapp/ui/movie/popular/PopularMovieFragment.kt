@@ -20,8 +20,6 @@ import com.sicoapp.movieapp.utils.ITEM_ID
  */
 class PopularMovieFragment : Fragment()   {
 
-
-
     private lateinit var binding: FragmentMoviePopularBinding
     private var pageId = 1
 
@@ -31,11 +29,15 @@ class PopularMovieFragment : Fragment()   {
             {
                     postID ->
                 val bundleItemId = bundleOf(ITEM_ID to postID)
+                findNavController().navigate(
+                    R.id.action_popularMovieFragment_to_movieDetailsFragment, bundleItemId)
 
             },
             {
                     crewID ->
                 val bundleCrewId = bundleOf(CREW_ID to crewID)
+                findNavController().navigate(
+                    R.id.action_popularMovieFragment_to_crewMovieFragment, bundleCrewId)
 
             })
     }
@@ -47,7 +49,6 @@ class PopularMovieFragment : Fragment()   {
         binding = FragmentMoviePopularBinding.inflate(inflater)
 
         binding.data = viewModel
-
 
         binding.recylerViewFragmentTopMovie.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {

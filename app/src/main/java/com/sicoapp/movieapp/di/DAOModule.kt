@@ -1,4 +1,4 @@
-package com.androiddevs.runningappyt.di
+package com.sicoapp.movieapp.di
 
 import android.content.Context
 import androidx.room.Room
