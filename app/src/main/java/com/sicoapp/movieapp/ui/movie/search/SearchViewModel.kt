@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.ui.movie.now
+package com.sicoapp.movieapp.ui.movie.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
@@ -22,10 +22,7 @@ class SearchViewModel(val api: MovieApiService,) : ViewModel() {
     private val _movieResult = MutableLiveData<Resource<List<BindMovie>>>()
     val movieResult : LiveData<Resource<List<BindMovie>>> = _movieResult
 
-    val adapter =
-        Adapter(
-            { it ->  },
-            { it ->  })
+    val adapter = SearchAdapter()
 
 
 

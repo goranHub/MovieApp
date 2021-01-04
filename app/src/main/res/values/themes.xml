@@ -57,8 +57,6 @@
         <item name="searchIcon">@null</item>
         <item name="searchHintIcon">@drawable/ic_search_24dp</item>
         <item name="iconifiedByDefault">false</item>
-        <item name="editTextBackground">@android:color/background_dark</item>
-        <item name="queryBackground">@android:color/background_dark</item>
     </style>
 
     <style name="SearchViewTheme">

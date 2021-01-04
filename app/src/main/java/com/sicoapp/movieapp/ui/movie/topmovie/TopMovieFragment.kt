@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.api.MovieApiService
-import com.sicoapp.movieapp.databinding.FragmentMovieListBinding
+import com.sicoapp.movieapp.databinding.FragmentMovieTopBinding
 import com.sicoapp.movieapp.utils.BindMovie
 import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
@@ -21,7 +21,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class TopMovieFragment : Fragment() {
 
-    private lateinit var binding: FragmentMovieListBinding
+    private lateinit var binding: FragmentMovieTopBinding
     private var pageId = 1
 
     @Inject
@@ -54,7 +54,7 @@ class TopMovieFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = FragmentMovieListBinding.inflate(inflater)
+        binding = FragmentMovieTopBinding.inflate(inflater)
         binding.data = viewModel
 
         init()

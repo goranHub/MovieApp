@@ -1,19 +1,22 @@
-package com.sicoapp.movieapp.ui.movie.now
+package com.sicoapp.movieapp.ui.movie.search
 
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.R
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
 import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.databinding.FragmentMovieSearchBinding
 import com.sicoapp.movieapp.utils.BindMovie
+import com.sicoapp.movieapp.utils.ITEM_ID
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -24,7 +27,7 @@ import javax.inject.Inject
  */
 
 @AndroidEntryPoint
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
 
     @Inject
     lateinit var api: MovieApiService
@@ -47,12 +50,12 @@ class SearchFragment : Fragment() {
 
         init()
 
+        viewModel.adapter.listener = this
+
         setupSearchView()
 
         return binding.root
     }
-
-
 
     private fun setupSearchView() {
         (binding.searchView.findViewById(R.id.search_src_text) as TextView).setTextColor(Color.RED)
@@ -62,14 +65,13 @@ class SearchFragment : Fragment() {
             viewModel.rxToLiveData(query).observe( viewLifecycleOwner, Observer {
                 val movieResponse = it.results
                 val movieItemsList = movieResponse.map { BindMovie(it) }
-                viewModel.adapter.addMovies(movieItemsList)
+                viewModel.adapter.updateItems(movieItemsList)
             })
         }
     }
 
     fun init() {
         binding.recyclerView.adapter = viewModel.adapter
-
     }
 
     fun SearchView.clickSubmitButton(clickedBlock: (String) -> Unit) {
@@ -83,5 +85,15 @@ class SearchFragment : Fragment() {
                 return true
             }
         })
+    }
+
+    override fun onItemClick(movie: BindMovie, imageView: ImageView, textView: TextView) {
+
+        val bundleItemId = bundleOf(ITEM_ID to movie.movie.id)
+        findNavController().navigate(
+            com.sicoapp.movieapp.R.id.action_searchFragment_to_movieDetailsFragment,
+            bundleItemId
+        )
+
     }
 }

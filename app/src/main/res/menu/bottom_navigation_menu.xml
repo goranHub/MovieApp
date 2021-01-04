@@ -10,6 +10,6 @@
         android:icon="@drawable/ic_menu_24dp" />
 
     <item android:id="@+id/searchFragment"
-        android:title="Now"
+        android:title="Search"
         android:icon="@drawable/ic_menu_24dp" />
 </menu>
