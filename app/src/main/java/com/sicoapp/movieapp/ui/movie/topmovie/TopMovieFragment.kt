@@ -28,7 +28,6 @@ class TopMovieFragment : Fragment() {
     lateinit var api: MovieApiService
 
     private val viewModel by lazy {
-
         TopMovieViewModel(
             api,
             pageId,
@@ -39,7 +38,7 @@ class TopMovieFragment : Fragment() {
                 R.id.action_movieListFragment_to_movieDetailsFragment,
                 bundleItemId
             )
-        },
+            },
             {
                 crewID ->
             val bundleCrewId = bundleOf(CREW_ID to crewID)
@@ -56,7 +55,6 @@ class TopMovieFragment : Fragment() {
     ): View {
 
         binding = FragmentMovieListBinding.inflate(inflater)
-
         binding.data = viewModel
 
         init()
@@ -64,7 +62,6 @@ class TopMovieFragment : Fragment() {
 
         return binding.root
     }
-
 
     private fun init() {
         viewModel.rxToLiveData().observe(

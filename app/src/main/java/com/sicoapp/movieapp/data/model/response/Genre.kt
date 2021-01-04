@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.data.response
+package com.sicoapp.movieapp.data.model.response
 
 data class Genre(
     val id: Int,

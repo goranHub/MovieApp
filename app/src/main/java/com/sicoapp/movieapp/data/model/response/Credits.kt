@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.data.response
+package com.sicoapp.movieapp.data.model.response
 
 data class Credits(
     val cast: List<Cast>,

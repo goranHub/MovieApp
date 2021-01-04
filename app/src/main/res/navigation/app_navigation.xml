@@ -38,8 +38,8 @@
             app:destination="@id/crewMovieFragment" />
     </fragment>
     <fragment
-        android:id="@+id/nowMovieFragment"
-        android:name="com.sicoapp.movieapp.ui.movie.now.NowMovieFragment"
-        android:label="Now" />
+        android:id="@+id/searchFragment"
+        android:name="com.sicoapp.movieapp.ui.movie.now.SearchFragment"
+        android:label="Search" />
 
 </navigation>

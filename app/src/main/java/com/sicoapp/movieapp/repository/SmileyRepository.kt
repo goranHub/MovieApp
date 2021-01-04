@@ -34,5 +34,4 @@ class SmileyRepository (
                 dao.deleteByID(itemId)
             }
         }
-
-}
+    }

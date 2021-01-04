@@ -3,8 +3,7 @@ package com.sicoapp.movieapp.utils
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
-import com.sicoapp.movieapp.data.response.Movie
-import com.sicoapp.movieapp.utils.URL_IMAGE
+import com.sicoapp.movieapp.data.model.response.Movie
 import kotlin.properties.Delegates
 
 /**

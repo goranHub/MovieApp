@@ -31,7 +31,7 @@ class DetailsMovieFragment : Fragment() {
     @Inject
     lateinit var api: MovieApiService
 
-    private val viewModel by lazy { DetailsViewModel(api,itemId, smileyRepository) }
+    private val viewModel by lazy { DetailsViewModel(api, itemId, smileyRepository) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
