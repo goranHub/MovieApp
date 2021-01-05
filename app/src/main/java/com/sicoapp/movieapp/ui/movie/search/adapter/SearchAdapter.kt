@@ -4,19 +4,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.databinding.ItemMovieSearchBinding
-import com.sicoapp.movieapp.utils.BindMovie
+import com.sicoapp.movieapp.utils.BindMulti
 
 /**
  * @author ll4
  * @date 1/4/2021
  */
-class SearchAdapter(private val postID: (Int) -> Unit) : RecyclerView.Adapter<ViewHolder>() {
+class SearchAdapter(private val postIdAndTyp: (Int, String) -> Unit) : RecyclerView.Adapter<ViewHolder>() {
 
     private val TAG = this.javaClass.simpleName
 
-    private var searchItems = ArrayList<BindMovie>()
+    private var searchItems = ArrayList<BindMulti>()
 
-    fun updateItems(newList: List<BindMovie>) {
+    lateinit var mediaTyp: String
+
+    fun updateItems(newList: List<BindMulti>) {
         searchItems.clear()
         searchItems.addAll(newList)
         notifyDataSetChanged()
@@ -31,7 +33,10 @@ class SearchAdapter(private val postID: (Int) -> Unit) : RecyclerView.Adapter<Vi
         //holder.itemRowBinding.itemClickListener = clickListener
 
         binding.cardItemLayout.setOnClickListener{
-            binding.data?.movie?.id?.let { it1 -> postID(it1) }
+            mediaTyp = binding.data?.movie?.media_type.toString()
+            binding.data?.movie?.id?.let { it1 -> postIdAndTyp(it1, mediaTyp) }
+
+
         }
 
         return ViewHolder(binding)

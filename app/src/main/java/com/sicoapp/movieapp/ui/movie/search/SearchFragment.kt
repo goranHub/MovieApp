@@ -13,7 +13,9 @@ import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.databinding.FragmentMovieSearchBinding
 import com.sicoapp.movieapp.utils.BindMovie
+import com.sicoapp.movieapp.utils.BindMulti
 import com.sicoapp.movieapp.utils.ITEM_ID
+import com.sicoapp.movieapp.utils.MEDIATYP
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -34,11 +36,11 @@ class SearchFragment : Fragment() {
 
     private val viewModel by lazy {
         SearchViewModel(api)
-        { postID ->
-            val bundleItemId = bundleOf(ITEM_ID to postID)
+        { postID, mediaTyp ->
+            val bundlePostIdAndMediaTyp = bundleOf(ITEM_ID to postID, MEDIATYP to mediaTyp)
             findNavController().navigate(
                 R.id.action_searchFragment_to_movieDetailsFragment,
-                bundleItemId
+                bundlePostIdAndMediaTyp
             )
         }
     }
@@ -59,22 +61,26 @@ class SearchFragment : Fragment() {
         return binding.root
     }
 
+    private fun init() {
+        binding.recyclerView.adapter = viewModel.adapter
+    }
+
     private fun setupSearchView() {
 
         binding.searchView.clickSubmitButton { query ->
-            viewModel.rxToLiveData(query).observe(viewLifecycleOwner, Observer { movieResponse ->
-                val movieResponse = movieResponse.results
-                val movieItemsList = movieResponse.map { BindMovie(it) }
+
+            viewModel.rxMulti(query).observe(viewLifecycleOwner, Observer {
+
+                val movieResponse = it.results
+                val movieItemsList = movieResponse.map { BindMulti(it) }
                 viewModel.adapter.updateItems(movieItemsList)
             })
         }
     }
 
-    private fun init() {
-        binding.recyclerView.adapter = viewModel.adapter
-    }
 
-    fun SearchView.clickSubmitButton(clickedBlock: (String) -> Unit) {
+    private fun SearchView.clickSubmitButton(clickedBlock: (String) -> Unit) {
+
         setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 clickedBlock(query)

@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.data.model.response
+package com.sicoapp.movieapp.data.model.movie
 
 /**
  * @author ll4
@@ -6,5 +6,5 @@ package com.sicoapp.movieapp.data.model.response
  */
 data class MovieResponse (
     val page: Int,
-    val results: MutableList<Movie>
+    val results: List<Movie>
 )

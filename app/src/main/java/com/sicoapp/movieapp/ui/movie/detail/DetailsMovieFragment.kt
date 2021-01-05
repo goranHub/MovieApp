@@ -11,6 +11,7 @@ import com.sicoapp.movieapp.databinding.FragmentMovieDetailsBinding
 import com.sicoapp.movieapp.repository.SmileyRepository
 import com.sicoapp.movieapp.utils.DetailsObserver
 import com.sicoapp.movieapp.utils.ITEM_ID
+import com.sicoapp.movieapp.utils.MEDIATYP
 import com.sicoapp.movieapp.utils.URL_IMAGE
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -22,6 +23,7 @@ class DetailsMovieFragment : Fragment() {
     private lateinit var binding: FragmentMovieDetailsBinding
     var currentType by Delegates.notNull<Int>()
     var itemId = 0
+    var mediaTyp = ""
 
     var detailsObserver = DetailsObserver()
 
@@ -31,12 +33,15 @@ class DetailsMovieFragment : Fragment() {
     @Inject
     lateinit var api: MovieApiService
 
-    private val viewModel by lazy { DetailsViewModel(api, itemId, smileyRepository) }
+    private val viewModel by lazy { DetailsViewModel(api, itemId, mediaTyp, smileyRepository) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.getInt(ITEM_ID, -1)?.let {
             itemId = it
+        }
+        arguments?.getString(MEDIATYP, "")?.let{
+            mediaTyp = it
         }
 
     }
@@ -47,7 +52,11 @@ class DetailsMovieFragment : Fragment() {
     ): View {
         binding = FragmentMovieDetailsBinding.inflate(inflater)
 
-        updateUI()
+        if(mediaTyp.equals("movie")){
+            updateUIMovie()
+        }else{
+            updateUITv()
+        }
 
         binding.data = detailsObserver
 
@@ -84,19 +93,21 @@ class DetailsMovieFragment : Fragment() {
             })
     }
 
-    /*
-    make retrofit call
-    the response flowable convert to live data
-    and update UI with bindAdapters from DetailsObserver
-     */
-
-
-    private fun updateUI(){
-        viewModel.rxToLiveData().observe(viewLifecycleOwner, {
+    private fun updateUIMovie(){
+        viewModel.lifeDataMovie().observe(viewLifecycleOwner, {
             detailsObserver.imageUrl = URL_IMAGE + it.posterPath
             detailsObserver.overview = it.overview
             detailsObserver.popularity = it.popularity
             detailsObserver.releaseDate = it.releaseDate
+        })
+    }
+
+    private fun updateUITv(){
+        viewModel.lifeDataTv().observe(viewLifecycleOwner, {
+            detailsObserver.imageUrl = URL_IMAGE + it.poster_path
+            detailsObserver.overview = it.overview
+            detailsObserver.popularity = it.type
+            detailsObserver.releaseDate = it.first_air_date
         })
     }
 

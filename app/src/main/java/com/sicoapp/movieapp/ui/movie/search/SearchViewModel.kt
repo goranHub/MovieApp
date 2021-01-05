@@ -1,10 +1,9 @@
 package com.sicoapp.movieapp.ui.movie.search
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.LiveDataReactiveStreams
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.sicoapp.movieapp.data.api.MovieApiService
-import com.sicoapp.movieapp.data.model.response.MovieResponse
+import com.sicoapp.movieapp.data.model.response.multi.Multi
+import com.sicoapp.movieapp.data.model.movie.MovieResponse
 import com.sicoapp.movieapp.ui.movie.search.adapter.SearchAdapter
 import com.sicoapp.movieapp.utils.API_KEY
 import io.reactivex.schedulers.Schedulers
@@ -13,14 +12,60 @@ import io.reactivex.schedulers.Schedulers
  * @author ll4
  * @date 1/4/2021
  */
-class SearchViewModel(val api: MovieApiService,  val postId: (Int) -> Unit) : ViewModel() {
+class SearchViewModel( val api: MovieApiService, val postIdAndTyp: (Int, String) -> Unit) : ViewModel() {
 
-    val adapter = SearchAdapter { it -> postId(it) }
+    val adapter = SearchAdapter {
+            postId,mediaTyp-> postIdAndTyp(postId,mediaTyp)
+    }
 
-    fun rxToLiveData(query :String) : LiveData<MovieResponse> {
-        return LiveDataReactiveStreams.fromPublisher(
+    var movieLiveData = MutableLiveData<MovieResponse>()
+
+    var serieResponse = MutableLiveData<MovieResponse>()
+
+
+    val combinedLifeData = movieLiveData.combineWith(serieResponse) {
+            serieResponse, movieLiveData ->
+        serieResponse
+    }
+
+    fun rxMovie(query :String) : LiveData<MovieResponse> {
+
+        var movieResponseLifeData= LiveDataReactiveStreams.fromPublisher(
             api.searchMovie(API_KEY, query,1 )
                 .subscribeOn(Schedulers.io())
         )
+        return movieResponseLifeData
+    }
+
+    fun rxTV(query :String) : LiveData<MovieResponse> {
+
+        return LiveDataReactiveStreams.fromPublisher(
+            api.searchTvShow(API_KEY,1 , query)
+                .subscribeOn(Schedulers.io())
+        )
+    }
+
+
+    fun rxMulti(query :String) : LiveData<Multi> {
+
+        var multi= LiveDataReactiveStreams.fromPublisher(
+            api.searchMulti(API_KEY,query,1 )
+                .subscribeOn(Schedulers.io())
+        )
+        return multi
+    }
+
+    private fun <T, K, R> LiveData<T>.combineWith(
+        liveData: LiveData<K>,
+        block: (T?, K?) -> R
+    ): LiveData<R> {
+        val result = MediatorLiveData<R>()
+        result.addSource(this) {
+            result.value = block(this.value, liveData.value)
+        }
+        result.addSource(liveData) {
+            result.value = block(this.value, liveData.value)
+        }
+        return result
     }
 }
