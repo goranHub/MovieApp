@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.databinding.FragmentMovieSearchBinding
-import com.sicoapp.movieapp.databinding.ItemMovieSearchBinding
 import com.sicoapp.movieapp.utils.BindMovie
 import com.sicoapp.movieapp.utils.ITEM_ID
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,9 +62,8 @@ class SearchFragment : Fragment() {
     private fun setupSearchView() {
 
         binding.searchView.clickSubmitButton { query ->
-
-            viewModel.rxToLiveData(query).observe(viewLifecycleOwner, Observer {
-                val movieResponse = it.results
+            viewModel.rxToLiveData(query).observe(viewLifecycleOwner, Observer { movieResponse ->
+                val movieResponse = movieResponse.results
                 val movieItemsList = movieResponse.map { BindMovie(it) }
                 viewModel.adapter.updateItems(movieItemsList)
             })

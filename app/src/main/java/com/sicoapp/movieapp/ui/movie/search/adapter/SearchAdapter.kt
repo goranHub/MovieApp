@@ -2,12 +2,9 @@ package com.sicoapp.movieapp.ui.movie.search.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.databinding.ItemMovieSearchBinding
 import com.sicoapp.movieapp.utils.BindMovie
-import com.sicoapp.movieapp.utils.CardClickListener
 
 /**
  * @author ll4
@@ -20,6 +17,7 @@ class SearchAdapter(private val postID: (Int) -> Unit) : RecyclerView.Adapter<Vi
     private var searchItems = ArrayList<BindMovie>()
 
     fun updateItems(newList: List<BindMovie>) {
+        searchItems.clear()
         searchItems.addAll(newList)
         notifyDataSetChanged()
     }
