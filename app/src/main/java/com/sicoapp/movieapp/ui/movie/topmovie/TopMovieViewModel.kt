@@ -15,13 +15,13 @@ import io.reactivex.schedulers.Schedulers
  */
 class TopMovieViewModel(
     val api: MovieApiService,
-    private val pageId: Int,
     val postId: (Int) -> Unit,
     val crewID: (Int) -> Unit
 ) : ViewModel() {
 
     // iz adaptera id stavljamo u postId od ListMovieViewModel
 
+    var pageId = 1
     val adapter =
         Adapter(
             { it -> postId(it) },
@@ -33,6 +33,7 @@ class TopMovieViewModel(
             api.loadTopRated(API_KEY, pageId.toString())
                 .subscribeOn(Schedulers.io())
         )
+        pageId++
         return source
     }
 }

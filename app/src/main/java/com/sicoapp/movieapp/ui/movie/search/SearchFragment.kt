@@ -9,6 +9,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.databinding.FragmentMovieSearchBinding
@@ -32,7 +33,6 @@ class SearchFragment : Fragment() {
     lateinit var binding: FragmentMovieSearchBinding
     lateinit var response: List<BindMovie>
 
-    private var postId = 1
 
     private val viewModel by lazy {
         SearchViewModel(api)
@@ -69,10 +69,24 @@ class SearchFragment : Fragment() {
 
         binding.searchView.clickSubmitButton { query ->
 
-            viewModel.rxMulti(query).observe(viewLifecycleOwner, Observer {
-                val movieResponse = it.results
+            viewModel.rxMulti(query).observe(viewLifecycleOwner, { multi ->
+                val movieResponse = multi.results
                 val movieItemsList = movieResponse.map { BindMulti(it) }
                 viewModel.adapter.updateItems(movieItemsList)
+
+
+                binding.recyclerView.addOnScrollListener(object :
+                    RecyclerView.OnScrollListener() {
+                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                        if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                            viewModel.rxMulti(query).observe(viewLifecycleOwner, { multi1 ->
+                                val movieResponse = multi1.results
+                                val movieItemsList = movieResponse.map { BindMulti(it) }
+                                viewModel.adapter.updateItems(movieItemsList)
+                        })
+                        }
+                    }
+                })
             })
         }
     }
@@ -90,4 +104,5 @@ class SearchFragment : Fragment() {
             }
         })
     }
+
 }

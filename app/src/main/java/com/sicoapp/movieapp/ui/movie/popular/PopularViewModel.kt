@@ -15,11 +15,11 @@ import io.reactivex.schedulers.Schedulers
  */
 class PopularViewModel(
     val api: MovieApiService,
-    private val pageId: Int,
     val postId: (Int) -> Unit,
     val crewID: (Int) -> Unit
 ) : ViewModel() {
 
+    var pageId = 1
     val adapter =
         Adapter(
             { it -> postId(it) },
@@ -31,6 +31,7 @@ class PopularViewModel(
             api.loadPopular(API_KEY, pageId.toString())
                 .subscribeOn(Schedulers.io())
         )
+        pageId++
         return source
     }
 }

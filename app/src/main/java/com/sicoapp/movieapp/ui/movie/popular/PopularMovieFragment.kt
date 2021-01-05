@@ -26,7 +26,6 @@ import javax.inject.Inject
 class PopularMovieFragment : Fragment() {
 
     private lateinit var binding: FragmentMoviePopularBinding
-    private var pageId = 1
 
     @Inject
     lateinit var api: MovieApiService
@@ -35,7 +34,6 @@ class PopularMovieFragment : Fragment() {
 
         PopularViewModel(
             api,
-            pageId,
             { postID ->
                 val bundleItemId = bundleOf(ITEM_ID to postID)
                 findNavController().navigate(
@@ -69,7 +67,7 @@ class PopularMovieFragment : Fragment() {
 
     private fun init() {
         viewModel.rxToLiveData().observe(
-            viewLifecycleOwner, Observer {
+            viewLifecycleOwner, {
                 val movieResponse = it.results
                 val movieItemsList = movieResponse.map { BindMovie(it) }
                 viewModel.adapter.addMovies(movieItemsList)
@@ -85,7 +83,7 @@ class PopularMovieFragment : Fragment() {
 
                 if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
                     viewModel.rxToLiveData().observe(
-                        viewLifecycleOwner, Observer {
+                        viewLifecycleOwner, {
                             val movieResponse = it.results
                             val movieItemsList = movieResponse.map { BindMovie(it) }
                             viewModel.adapter.addMovies(movieItemsList)

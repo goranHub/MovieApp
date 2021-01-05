@@ -22,7 +22,6 @@ import javax.inject.Inject
 class TopMovieFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieTopBinding
-    private var pageId = 1
 
     @Inject
     lateinit var api: MovieApiService
@@ -30,8 +29,6 @@ class TopMovieFragment : Fragment() {
     private val viewModel by lazy {
         TopMovieViewModel(
             api,
-            pageId,
-
             {
                 postID ->
             val bundleItemId = bundleOf(ITEM_ID to postID)
@@ -66,7 +63,7 @@ class TopMovieFragment : Fragment() {
 
     private fun init() {
         viewModel.rxToLiveData().observe(
-            viewLifecycleOwner, Observer {
+            viewLifecycleOwner, {
                 val movieResponse = it.results
                 val movieItemsList = movieResponse.map { BindMovie(it) }
                 viewModel.adapter.addMovies(movieItemsList)
@@ -75,6 +72,7 @@ class TopMovieFragment : Fragment() {
     }
 
     private fun scrollRecylerView() {
+
         binding.recylerViewFragmentTopMovie.addOnScrollListener(object :
             RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -82,7 +80,7 @@ class TopMovieFragment : Fragment() {
 
                 if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
                     viewModel.rxToLiveData().observe(
-                        viewLifecycleOwner, Observer {
+                        viewLifecycleOwner, {
                             val movieResponse = it.results
                             val movieItemsList = movieResponse.map { BindMovie(it) }
                             viewModel.adapter.addMovies(movieItemsList)

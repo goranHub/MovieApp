@@ -14,12 +14,11 @@ class SearchAdapter(private val postIdAndTyp: (Int, String) -> Unit) : RecyclerV
 
     private val TAG = this.javaClass.simpleName
 
-    private var searchItems = ArrayList<BindMulti>()
+    private var searchItems = mutableListOf<BindMulti>()
 
     lateinit var mediaTyp: String
 
     fun updateItems(newList: List<BindMulti>) {
-        searchItems.clear()
         searchItems.addAll(newList)
         notifyDataSetChanged()
     }

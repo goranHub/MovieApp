@@ -22,6 +22,7 @@ class SearchViewModel( val api: MovieApiService, val postIdAndTyp: (Int, String)
 
     var serieResponse = MutableLiveData<MovieResponse>()
 
+    var pageId = 1
 
     val combinedLifeData = movieLiveData.combineWith(serieResponse) {
             serieResponse, movieLiveData ->
@@ -29,12 +30,10 @@ class SearchViewModel( val api: MovieApiService, val postIdAndTyp: (Int, String)
     }
 
     fun rxMovie(query :String) : LiveData<MovieResponse> {
-
-        var movieResponseLifeData= LiveDataReactiveStreams.fromPublisher(
+        return LiveDataReactiveStreams.fromPublisher(
             api.searchMovie(API_KEY, query,1 )
                 .subscribeOn(Schedulers.io())
         )
-        return movieResponseLifeData
     }
 
     fun rxTV(query :String) : LiveData<MovieResponse> {
@@ -48,10 +47,11 @@ class SearchViewModel( val api: MovieApiService, val postIdAndTyp: (Int, String)
 
     fun rxMulti(query :String) : LiveData<Multi> {
 
-        var multi= LiveDataReactiveStreams.fromPublisher(
-            api.searchMulti(API_KEY,query,1 )
+        val multi= LiveDataReactiveStreams.fromPublisher(
+            api.searchMulti(API_KEY,query, pageId)
                 .subscribeOn(Schedulers.io())
         )
+        pageId++
         return multi
     }
 
