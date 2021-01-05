@@ -31,6 +31,7 @@ class TopMovieFragment : Fragment() {
         TopMovieViewModel(
             api,
             pageId,
+
             {
                 postID ->
             val bundleItemId = bundleOf(ITEM_ID to postID)
