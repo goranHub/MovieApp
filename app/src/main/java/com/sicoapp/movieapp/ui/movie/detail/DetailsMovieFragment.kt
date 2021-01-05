@@ -52,7 +52,7 @@ class DetailsMovieFragment : Fragment() {
     ): View {
         binding = FragmentMovieDetailsBinding.inflate(inflater)
 
-        if(mediaTyp.equals("movie")){
+        if(mediaTyp.equals("movie") or mediaTyp.equals("") ){
             updateUIMovie()
         }else{
             updateUITv()

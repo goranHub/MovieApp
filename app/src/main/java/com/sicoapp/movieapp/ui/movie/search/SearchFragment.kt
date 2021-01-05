@@ -70,7 +70,6 @@ class SearchFragment : Fragment() {
         binding.searchView.clickSubmitButton { query ->
 
             viewModel.rxMulti(query).observe(viewLifecycleOwner, Observer {
-
                 val movieResponse = it.results
                 val movieItemsList = movieResponse.map { BindMulti(it) }
                 viewModel.adapter.updateItems(movieItemsList)
@@ -86,7 +85,6 @@ class SearchFragment : Fragment() {
                 clickedBlock(query)
                 return true
             }
-
             override fun onQueryTextChange(query: String): Boolean {
                 return true
             }

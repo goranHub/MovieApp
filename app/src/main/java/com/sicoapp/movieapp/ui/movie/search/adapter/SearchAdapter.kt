@@ -35,8 +35,6 @@ class SearchAdapter(private val postIdAndTyp: (Int, String) -> Unit) : RecyclerV
         binding.cardItemLayout.setOnClickListener{
             mediaTyp = binding.data?.movie?.media_type.toString()
             binding.data?.movie?.id?.let { it1 -> postIdAndTyp(it1, mediaTyp) }
-
-
         }
 
         return ViewHolder(binding)
