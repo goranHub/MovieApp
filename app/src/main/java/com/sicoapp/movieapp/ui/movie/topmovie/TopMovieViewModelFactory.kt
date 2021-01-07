@@ -13,6 +13,7 @@ class TopMovieViewModelFactory @Inject constructor(
 
     private val remoteRepository: RemoteRepository
 
+
 ) : ViewModelProvider.Factory{
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

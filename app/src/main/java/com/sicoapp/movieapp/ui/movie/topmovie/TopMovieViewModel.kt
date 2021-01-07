@@ -13,14 +13,20 @@ class TopMovieViewModel(
 
 ) : ViewModel() {
 
+    val postId : (Int) -> Unit = {}
+    val crewID : (Int) -> Unit = {}
+
     val adapter =
         Adapter(
-            { it -> (it) },
-            { it -> (it) })
+            { it -> postId(it) },
+            { it -> crewID(it) })
+
+    var pageId = 1
 
 
-    fun topMovies(pageId :Int) = liveData {
+    fun topMovies() = liveData {
         emitSource(remoteRepository.fetchTopMovies(pageId).asLiveData())
+        pageId++
     }
 }
 
