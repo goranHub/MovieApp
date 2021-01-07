@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.ViewModel
 import com.sicoapp.movieapp.data.api.MovieApiService
-import com.sicoapp.movieapp.data.model.movie.MovieResponse
+import com.sicoapp.movieapp.data.model.response.movie.MovieResponse
 import com.sicoapp.movieapp.ui.movie.topmovie.adapter.Adapter
 import com.sicoapp.movieapp.utils.API_KEY
 import io.reactivex.schedulers.Schedulers

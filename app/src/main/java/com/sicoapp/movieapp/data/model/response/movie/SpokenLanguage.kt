@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.data.model.movie
+package com.sicoapp.movieapp.data.model.response.movie
 
 import com.google.gson.annotations.SerializedName
 

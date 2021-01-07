@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.ViewModel
 import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.data.model.SmileyRatingTableModel
-import com.sicoapp.movieapp.data.model.movie.Movie
-import com.sicoapp.movieapp.data.model.tvShow.TvResponse
+import com.sicoapp.movieapp.data.model.response.movie.Movie
+import com.sicoapp.movieapp.data.model.response.tvShow.TvResponse
 import com.sicoapp.movieapp.repository.SmileyRepository
 import com.sicoapp.movieapp.utils.API_KEY
 import io.reactivex.schedulers.Schedulers

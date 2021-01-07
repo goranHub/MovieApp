@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.data.model.movie
+package com.sicoapp.movieapp.data.model.response.movie
 
 /**
  * @author ll4

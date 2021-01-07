@@ -3,7 +3,7 @@ package com.sicoapp.movieapp.ui.movie.search
 import androidx.lifecycle.*
 import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.data.model.response.multi.Multi
-import com.sicoapp.movieapp.data.model.movie.MovieResponse
+import com.sicoapp.movieapp.data.model.response.movie.MovieResponse
 import com.sicoapp.movieapp.ui.movie.search.adapter.SearchAdapter
 import com.sicoapp.movieapp.utils.API_KEY
 import io.reactivex.schedulers.Schedulers
