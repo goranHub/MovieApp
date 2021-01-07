@@ -1,5 +1,6 @@
-package com.sicoapp.movieapp.repository
+package com.sicoapp.movieapp.data.repository
 
+import com.sicoapp.movieapp.data.api.ApiServiceFlowable
 import com.sicoapp.movieapp.data.api.ApiServisFlow
 import com.sicoapp.movieapp.data.model.response.movie.MovieResponse
 import com.sicoapp.movieapp.utils.API_KEY
@@ -13,6 +14,7 @@ import javax.inject.Inject
  */
 class RemoteRepository @Inject constructor(
     private val api : ApiServisFlow,
+    val apis : ApiServiceFlowable,
 ) {
 
     suspend fun fetchTopMovies(pageId :Int) : Flow<Result<MovieResponse>> {
@@ -26,6 +28,4 @@ class RemoteRepository @Inject constructor(
             emit(Result.success(api.loadPopular(API_KEY, pageId.toString())))
         }
     }
-
-
 }

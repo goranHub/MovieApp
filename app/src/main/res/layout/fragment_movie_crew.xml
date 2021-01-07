@@ -6,7 +6,7 @@
 
     <variable
         name="data"
-        type="com.sicoapp.movieapp.ui.movie.crew.CrewViewModel" />
+        type="com.sicoapp.movieapp.ui.movie.crew.CrewMovieFragment" />
 
     </data>
 

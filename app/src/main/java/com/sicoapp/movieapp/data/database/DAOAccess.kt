@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.sicoapp.movieapp.data.model.SmileyRatingTableModel
+import com.sicoapp.movieapp.data.database.SmileyRatingTableModel
 
 @Dao
 interface DAOAccess {

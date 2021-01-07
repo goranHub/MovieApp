@@ -1,5 +1,7 @@
 package com.sicoapp.movieapp.data.model.response.tvShow
 
+import com.google.gson.annotations.SerializedName
+
 data class TvResponse(
     val backdrop_path: Any,
     val created_by: List<CreatedBy>,
@@ -22,7 +24,8 @@ data class TvResponse(
     val original_name: String,
     val overview: String,
     val popularity: Double,
-    val poster_path: String,
+    @SerializedName("poster_path")
+    val posterPath: String,
     val production_companies: List<Any>,
     val production_countries: List<Any>,
     val seasons: List<Season>,

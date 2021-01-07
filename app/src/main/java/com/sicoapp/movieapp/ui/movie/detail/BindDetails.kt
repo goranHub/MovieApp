@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.utils
+package com.sicoapp.movieapp.ui.movie.detail
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
@@ -9,7 +9,7 @@ import kotlin.properties.Delegates
  * @author ll4
  * @date 12/19/2020
  */
-class DetailsObserver : BaseObservable() {
+class BindDetails : BaseObservable() {
 
     @get:Bindable
     var imageUrl by Delegates.observable("TEST imageUrl") { _, _, _ -> notifyPropertyChanged(BR.imageUrl) }

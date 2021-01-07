@@ -6,7 +6,7 @@
     <data>
         <variable
             name="data"
-            type="com.sicoapp.movieapp.ui.movie.topmovie.TopMovieViewModel" />
+            type="com.sicoapp.movieapp.ui.movie.topmovie.TopMovieFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

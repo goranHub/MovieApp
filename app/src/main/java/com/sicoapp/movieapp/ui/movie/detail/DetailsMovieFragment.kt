@@ -8,8 +8,7 @@ import androidx.fragment.app.Fragment
 import com.hsalf.smileyrating.SmileyRating
 import com.sicoapp.movieapp.data.api.ApiServiceFlowable
 import com.sicoapp.movieapp.databinding.FragmentMovieDetailsBinding
-import com.sicoapp.movieapp.repository.SmileyRepository
-import com.sicoapp.movieapp.utils.DetailsObserver
+import com.sicoapp.movieapp.data.repository.SmileyRepository
 import com.sicoapp.movieapp.utils.ITEM_ID
 import com.sicoapp.movieapp.utils.MEDIATYP
 import com.sicoapp.movieapp.utils.URL_IMAGE
@@ -25,7 +24,7 @@ class DetailsMovieFragment : Fragment() {
     var itemId = 0
     var mediaTyp = ""
 
-    var detailsObserver = DetailsObserver()
+    var bindDetails = BindDetails()
 
     @Inject
     lateinit var smileyRepository: SmileyRepository
@@ -33,7 +32,7 @@ class DetailsMovieFragment : Fragment() {
     @Inject
     lateinit var api: ApiServiceFlowable
 
-    private val viewModel by lazy { DetailsViewModel(api, itemId, mediaTyp, smileyRepository) }
+    private val viewModel by lazy { DetailsViewModel(api, itemId, smileyRepository) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,22 +42,22 @@ class DetailsMovieFragment : Fragment() {
         arguments?.getString(MEDIATYP, "")?.let{
             mediaTyp = it
         }
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         binding = FragmentMovieDetailsBinding.inflate(inflater)
 
-        if(mediaTyp.equals("movie") or mediaTyp.equals("") ){
+        if((mediaTyp == "movie") or (mediaTyp == "")){
             updateUIMovie()
         }else{
             updateUITv()
         }
 
-        binding.data = detailsObserver
+        binding.data = bindDetails
 
         binding.smiley.setSmileySelectedListener { type ->
             saveIntoDB(type, viewModel)
@@ -73,7 +72,6 @@ class DetailsMovieFragment : Fragment() {
         }
         return binding.root
     }
-
 
     private fun saveIntoDB(type: SmileyRating.Type, viewModelInstance : DetailsViewModel) {
         currentType = type.rating
@@ -95,20 +93,19 @@ class DetailsMovieFragment : Fragment() {
 
     private fun updateUIMovie(){
         viewModel.lifeDataMovie().observe(viewLifecycleOwner, {
-            detailsObserver.imageUrl = URL_IMAGE + it.posterPath
-            detailsObserver.overview = it.overview
-            detailsObserver.popularity = it.popularity
-            detailsObserver.releaseDate = it.releaseDate
+            bindDetails.imageUrl = URL_IMAGE + it.posterPath
+            bindDetails.overview = it.overview
+            bindDetails.popularity = it.popularity
+            bindDetails.releaseDate = it.releaseDate
         })
     }
 
     private fun updateUITv(){
         viewModel.lifeDataTv().observe(viewLifecycleOwner, {
-            detailsObserver.imageUrl = URL_IMAGE + it.poster_path
-            detailsObserver.overview = it.overview
-            detailsObserver.popularity = it.type
-            detailsObserver.releaseDate = it.first_air_date
+            bindDetails.imageUrl = URL_IMAGE + it.posterPath
+            bindDetails.overview = it.overview
+            bindDetails.popularity = it.type
+            bindDetails.releaseDate = it.first_air_date
         })
     }
-
 }

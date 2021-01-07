@@ -1,8 +1,8 @@
-package com.sicoapp.movieapp.repository
+package com.sicoapp.movieapp.data.repository
 
 import androidx.lifecycle.LiveData
 import com.sicoapp.movieapp.data.database.DAOAccess
-import com.sicoapp.movieapp.data.model.SmileyRatingTableModel
+import com.sicoapp.movieapp.data.database.SmileyRatingTableModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch

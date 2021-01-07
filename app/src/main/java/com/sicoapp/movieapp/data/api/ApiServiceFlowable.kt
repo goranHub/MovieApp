@@ -1,5 +1,6 @@
 package com.sicoapp.movieapp.data.api
 
+import com.sicoapp.movieapp.data.model.response.movie.IMovie
 import com.sicoapp.movieapp.data.model.response.multi.Multi
 import com.sicoapp.movieapp.data.model.response.movie.Movie
 import com.sicoapp.movieapp.data.model.response.movie.MovieResponse

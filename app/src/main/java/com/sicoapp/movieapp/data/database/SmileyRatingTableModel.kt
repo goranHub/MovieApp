@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.data.model
+package com.sicoapp.movieapp.data.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

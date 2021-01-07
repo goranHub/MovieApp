@@ -4,24 +4,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.ViewModel
 import com.sicoapp.movieapp.data.api.ApiServiceFlowable
-import com.sicoapp.movieapp.data.model.SmileyRatingTableModel
+import com.sicoapp.movieapp.data.database.SmileyRatingTableModel
+import com.sicoapp.movieapp.data.model.response.movie.IMovie
 import com.sicoapp.movieapp.data.model.response.movie.Movie
 import com.sicoapp.movieapp.data.model.response.tvShow.TvResponse
-import com.sicoapp.movieapp.repository.SmileyRepository
+import com.sicoapp.movieapp.data.repository.SmileyRepository
 import com.sicoapp.movieapp.utils.API_KEY
 import io.reactivex.schedulers.Schedulers
-
-
 /**
  * @author ll4
  * @date 12/6/2020
  */
 
-class DetailsViewModel
-    (
+class DetailsViewModel(
     val api: ApiServiceFlowable,
-    val itemId: Int,
-    val mediaTyp: String,
+    private val itemId: Int,
     private val SmileyRepository: SmileyRepository
 ) : ViewModel() {
 
@@ -40,21 +37,17 @@ class DetailsViewModel
     }
 
     fun lifeDataMovie() : LiveData<Movie> {
-        val source = LiveDataReactiveStreams.fromPublisher(
+        return LiveDataReactiveStreams.fromPublisher(
             api.getByMovieID(itemId, API_KEY)
                 .subscribeOn(Schedulers.io())
         )
-        return source
     }
 
     fun lifeDataTv() : LiveData<TvResponse> {
-
-        val sourceTv = LiveDataReactiveStreams.fromPublisher(
+        return LiveDataReactiveStreams.fromPublisher(
             api.getByTvID(itemId, API_KEY)
                 .subscribeOn(Schedulers.io())
         )
-        return sourceTv
     }
-
 }
 
