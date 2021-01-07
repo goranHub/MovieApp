@@ -25,7 +25,7 @@ class TopMovieFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieTopBinding
 
-    private var pageId = 10
+    private var pageId = 1
 
 
     lateinit var adapter: Adapter
