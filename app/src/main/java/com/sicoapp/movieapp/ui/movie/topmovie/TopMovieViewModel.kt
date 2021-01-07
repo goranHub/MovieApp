@@ -9,12 +9,13 @@ import com.sicoapp.movieapp.ui.movie.topmovie.adapter.Adapter
  * @date 12/6/2020
  */
 class TopMovieViewModel(
-    private val remoteRepository: RemoteRepository
+    private val remoteRepository: RemoteRepository,
+    val postId: (Int) -> Unit,
+    val crewID: (Int) -> Unit
+
 
 ) : ViewModel() {
 
-    val postId : (Int) -> Unit = {}
-    val crewID : (Int) -> Unit = {}
 
     val adapter =
         Adapter(

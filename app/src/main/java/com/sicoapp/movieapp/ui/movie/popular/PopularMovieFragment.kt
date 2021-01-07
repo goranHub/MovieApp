@@ -10,8 +10,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
-import com.sicoapp.movieapp.data.api.MovieApiService
+import com.sicoapp.movieapp.data.api.ApiServiceFlowable
 import com.sicoapp.movieapp.databinding.FragmentMoviePopularBinding
+import com.sicoapp.movieapp.repository.RemoteRepository
 import com.sicoapp.movieapp.utils.BindMovie
 import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
@@ -28,12 +29,15 @@ class PopularMovieFragment : Fragment() {
     private lateinit var binding: FragmentMoviePopularBinding
 
     @Inject
-    lateinit var api: MovieApiService
+    lateinit var api: ApiServiceFlowable
+
+    @Inject
+    lateinit var remoteRepository: RemoteRepository
 
     private val viewModel by lazy {
 
         PopularViewModel(
-            api,
+            remoteRepository,
             { postID ->
                 val bundleItemId = bundleOf(ITEM_ID to postID)
                 findNavController().navigate(
@@ -58,19 +62,25 @@ class PopularMovieFragment : Fragment() {
 
         binding.data = viewModel
 
-        init()
+        observePopular()
+
         scrollRecylerView()
 
         return binding.root
     }
 
 
-    private fun init() {
-        viewModel.rxToLiveData().observe(
-            viewLifecycleOwner, {
-                val movieResponse = it.results
-                val movieItemsList = movieResponse.map { BindMovie(it) }
-                viewModel.adapter.addMovies(movieItemsList)
+    private fun observePopular() {
+        viewModel.popularMovies().observe(
+            viewLifecycleOwner, Observer {
+
+                val movieResponse = it.getOrNull()
+
+                if (movieResponse != null) {
+
+                    val movieItemsList = movieResponse.results.map { BindMovie(it) }
+                    viewModel.adapter.addMovies(movieItemsList)
+                }
             }
         )
     }
@@ -82,11 +92,15 @@ class PopularMovieFragment : Fragment() {
                 super.onScrollStateChanged(recyclerView, newState)
 
                 if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    viewModel.rxToLiveData().observe(
+                    viewModel.  popularMovies().observe(
                         viewLifecycleOwner, {
-                            val movieResponse = it.results
-                            val movieItemsList = movieResponse.map { BindMovie(it) }
-                            viewModel.adapter.addMovies(movieItemsList)
+                            var movieResponse = it.getOrNull()
+
+                            if (movieResponse != null) {
+
+                                val movieItemsList = movieResponse.results.map { BindMovie(it) }
+                                viewModel.adapter.addMovies(movieItemsList)
+                            }
                         }
                     )
                 }

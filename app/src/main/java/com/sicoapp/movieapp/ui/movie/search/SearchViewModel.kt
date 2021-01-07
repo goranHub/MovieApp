@@ -1,7 +1,7 @@
 package com.sicoapp.movieapp.ui.movie.search
 
 import androidx.lifecycle.*
-import com.sicoapp.movieapp.data.api.MovieApiService
+import com.sicoapp.movieapp.data.api.ApiServiceFlowable
 import com.sicoapp.movieapp.data.model.response.multi.Multi
 import com.sicoapp.movieapp.data.model.response.movie.MovieResponse
 import com.sicoapp.movieapp.ui.movie.search.adapter.SearchAdapter
@@ -12,7 +12,7 @@ import io.reactivex.schedulers.Schedulers
  * @author ll4
  * @date 1/4/2021
  */
-class SearchViewModel( val api: MovieApiService, val postIdAndTyp: (Int, String) -> Unit) : ViewModel() {
+class SearchViewModel(val api: ApiServiceFlowable, val postIdAndTyp: (Int, String) -> Unit) : ViewModel() {
 
     val adapter = SearchAdapter {
             postId,mediaTyp-> postIdAndTyp(postId,mediaTyp)

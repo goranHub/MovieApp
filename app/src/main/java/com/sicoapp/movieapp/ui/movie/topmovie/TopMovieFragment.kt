@@ -4,13 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.FragmentMovieTopBinding
+import com.sicoapp.movieapp.repository.RemoteRepository
 import com.sicoapp.movieapp.ui.movie.topmovie.adapter.Adapter
 import com.sicoapp.movieapp.utils.BindMovie
+import com.sicoapp.movieapp.utils.CREW_ID
+import com.sicoapp.movieapp.utils.ITEM_ID
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -19,14 +25,39 @@ class TopMovieFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieTopBinding
 
-    private var pageId = 1
+    private var pageId = 10
 
-    lateinit var viewModel: TopMovieViewModel
 
     lateinit var adapter: Adapter
 
     @Inject
-    lateinit var viewModelFactory: TopMovieViewModelFactory
+    lateinit var remoteRepository: RemoteRepository
+
+    private val viewModel by lazy {
+        TopMovieViewModel(
+            remoteRepository,
+
+            {
+                    postID ->
+                val bundleItemId = bundleOf(ITEM_ID to postID)
+                findNavController().navigate(
+                    R.id.action_movieListFragment_to_movieDetailsFragment,
+                    bundleItemId
+                )
+            },
+            {
+                    crewID ->
+                val bundleCrewId = bundleOf(CREW_ID to crewID)
+                findNavController().navigate(
+                    R.id.action_movieListFragment_to_crewMovieFragment,
+                    bundleCrewId
+                )
+            },
+            )
+    }
+
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +66,7 @@ class TopMovieFragment : Fragment() {
 
         binding = FragmentMovieTopBinding.inflate(inflater)
 
-        setupViewModel()
+        binding.data = viewModel
 
         observeTopRated()
 
@@ -59,11 +90,6 @@ class TopMovieFragment : Fragment() {
         )
     }
 
-    private fun setupViewModel() {
-        viewModel = ViewModelProvider(this, viewModelFactory).get(TopMovieViewModel::class.java)
-
-        binding.data = viewModel
-    }
 
 
     private fun scrollRecylerView() {

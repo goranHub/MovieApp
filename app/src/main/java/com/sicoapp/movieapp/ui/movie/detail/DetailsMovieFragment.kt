@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.hsalf.smileyrating.SmileyRating
-import com.sicoapp.movieapp.data.api.MovieApiService
+import com.sicoapp.movieapp.data.api.ApiServiceFlowable
 import com.sicoapp.movieapp.databinding.FragmentMovieDetailsBinding
 import com.sicoapp.movieapp.repository.SmileyRepository
 import com.sicoapp.movieapp.utils.DetailsObserver
@@ -31,7 +31,7 @@ class DetailsMovieFragment : Fragment() {
     lateinit var smileyRepository: SmileyRepository
 
     @Inject
-    lateinit var api: MovieApiService
+    lateinit var api: ApiServiceFlowable
 
     private val viewModel by lazy { DetailsViewModel(api, itemId, mediaTyp, smileyRepository) }
 

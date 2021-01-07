@@ -3,7 +3,7 @@ package com.sicoapp.movieapp.ui.movie.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.ViewModel
-import com.sicoapp.movieapp.data.api.MovieApiService
+import com.sicoapp.movieapp.data.api.ApiServiceFlowable
 import com.sicoapp.movieapp.data.model.SmileyRatingTableModel
 import com.sicoapp.movieapp.data.model.response.movie.Movie
 import com.sicoapp.movieapp.data.model.response.tvShow.TvResponse
@@ -19,7 +19,7 @@ import io.reactivex.schedulers.Schedulers
 
 class DetailsViewModel
     (
-    val api: MovieApiService,
+    val api: ApiServiceFlowable,
     val itemId: Int,
     val mediaTyp: String,
     private val SmileyRepository: SmileyRepository

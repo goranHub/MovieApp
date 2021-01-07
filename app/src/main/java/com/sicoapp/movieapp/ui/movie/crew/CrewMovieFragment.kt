@@ -4,13 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.sicoapp.movieapp.R
-import com.sicoapp.movieapp.data.api.MovieApiService
+import com.sicoapp.movieapp.data.api.ApiServiceFlowable
 import com.sicoapp.movieapp.databinding.FragmentMovieCrewBinding
 import com.sicoapp.movieapp.utils.CREW_ID
-import com.sicoapp.movieapp.utils.URL_IMAGE
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 @AndroidEntryPoint
@@ -20,7 +17,7 @@ class CrewMovieFragment : Fragment() {
     var crewId = 0
 
     @Inject
-    lateinit var api: MovieApiService
+    lateinit var api: ApiServiceFlowable
 
     private val viewModel by lazy { CrewViewModel(crewId, api) }
 

@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
-import com.sicoapp.movieapp.data.api.MovieApiService
+import com.sicoapp.movieapp.data.api.ApiServiceFlowable
 import com.sicoapp.movieapp.databinding.FragmentMovieSearchBinding
 import com.sicoapp.movieapp.utils.BindMovie
 import com.sicoapp.movieapp.utils.BindMulti
@@ -29,7 +28,7 @@ import javax.inject.Inject
 class SearchFragment : Fragment() {
 
     @Inject
-    lateinit var api: MovieApiService
+    lateinit var api: ApiServiceFlowable
     lateinit var binding: FragmentMovieSearchBinding
     lateinit var response: List<BindMovie>
 
