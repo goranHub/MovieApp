@@ -1,9 +1,9 @@
 package com.sicoapp.movieapp.data.api
 
 import com.sicoapp.movieapp.data.model.response.multi.Multi
-import com.sicoapp.movieapp.data.model.movie.Movie
-import com.sicoapp.movieapp.data.model.movie.MovieResponse
-import com.sicoapp.movieapp.data.model.tvShow.TvResponse
+import com.sicoapp.movieapp.data.model.response.movie.Movie
+import com.sicoapp.movieapp.data.model.response.movie.MovieResponse
+import com.sicoapp.movieapp.data.model.response.tvShow.TvResponse
 import io.reactivex.Flowable
 import retrofit2.http.GET
 import retrofit2.http.Path

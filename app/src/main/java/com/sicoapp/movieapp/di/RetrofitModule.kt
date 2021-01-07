@@ -1,5 +1,6 @@
 package com.sicoapp.movieapp.di
 
+import com.sicoapp.movieapp.data.api.ApiServis
 import com.sicoapp.movieapp.data.api.MovieApiService
 import com.sicoapp.movieapp.utils.BASE_URL
 import dagger.Module
@@ -18,7 +19,6 @@ import javax.inject.Singleton
  * @date 1/3/2021
  */
 
-
 @Module
 @InstallIn(ApplicationComponent::class)
 class RetrofitModule {
@@ -27,7 +27,7 @@ class RetrofitModule {
     @Singleton
     fun provideOkHttpClient() : OkHttpClient {
         val logger = HttpLoggingInterceptor()
-        logger.level = HttpLoggingInterceptor.Level.BASIC
+        logger.level = HttpLoggingInterceptor.Level.BODY
         return OkHttpClient.Builder().addInterceptor(logger).build()
     }
 
@@ -42,6 +42,11 @@ class RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): MovieApiService =
+    fun provideApiService(retrofit: Retrofit): ApiServis =
+        retrofit.create(ApiServis::class.java)
+
+    @Provides
+    @Singleton
+    fun provideMovieApiService(retrofit: Retrofit): MovieApiService =
         retrofit.create(MovieApiService::class.java)
 }

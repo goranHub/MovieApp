@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.data.model.tvShow
+package com.sicoapp.movieapp.data.model.response.tvShow
 
 data class TvResponse(
     val backdrop_path: Any,
