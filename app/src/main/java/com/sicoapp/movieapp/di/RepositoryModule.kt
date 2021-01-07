@@ -1,7 +1,7 @@
 package com.sicoapp.movieapp.di
 
 import com.sicoapp.movieapp.data.database.DAOAccess
-import com.sicoapp.movieapp.repository.SmileyRepository
+import com.sicoapp.movieapp.data.repository.SmileyRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

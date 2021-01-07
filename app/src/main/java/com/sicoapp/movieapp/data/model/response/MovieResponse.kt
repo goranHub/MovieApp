@@ -5,6 +5,7 @@ package com.sicoapp.movieapp.data.model.response
  * @date 12/6/2020
  */
 data class MovieResponse (
+
     val page: Int,
-    val results: MutableList<Movie>
+    val results: List<Movie>
 )

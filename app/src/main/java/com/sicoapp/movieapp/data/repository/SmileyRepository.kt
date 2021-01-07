@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.repository
+package com.sicoapp.movieapp.data.repository
 
 import androidx.lifecycle.LiveData
 import com.sicoapp.movieapp.data.database.DAOAccess

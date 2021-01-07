@@ -4,17 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
-import androidx.lifecycle.Observer
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
-import com.sicoapp.movieapp.R
-import com.sicoapp.movieapp.data.api.MovieApiService
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.sicoapp.movieapp.databinding.FragmentMovieTopBinding
+import com.sicoapp.movieapp.ui.movie.topmovie.adapter.Adapter
 import com.sicoapp.movieapp.utils.BindMovie
-import com.sicoapp.movieapp.utils.CREW_ID
-import com.sicoapp.movieapp.utils.ITEM_ID
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -24,30 +19,14 @@ class TopMovieFragment : Fragment() {
     private lateinit var binding: FragmentMovieTopBinding
     private var pageId = 1
 
-    @Inject
-    lateinit var api: MovieApiService
 
-    private val viewModel by lazy {
-        TopMovieViewModel(
-            api,
-            pageId,
-            {
-                postID ->
-            val bundleItemId = bundleOf(ITEM_ID to postID)
-            findNavController().navigate(
-                R.id.action_movieListFragment_to_movieDetailsFragment,
-                bundleItemId
-            )
-            },
-            {
-                crewID ->
-            val bundleCrewId = bundleOf(CREW_ID to crewID)
-            findNavController().navigate(
-                R.id.action_movieListFragment_to_crewMovieFragment,
-                bundleCrewId
-            )
-        })
-    }
+    lateinit var viewModel: TopMovieViewModel
+
+    lateinit var adapter: Adapter
+
+    @Inject
+    lateinit var viewModelFactory: TopMovieViewModelFactory
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,24 +34,39 @@ class TopMovieFragment : Fragment() {
     ): View {
 
         binding = FragmentMovieTopBinding.inflate(inflater)
-        binding.data = viewModel
 
-        init()
-        scrollRecylerView()
+
+        setupViewModel()
+
+        observeTopRated()
+
+
+        //scrollRecylerView()
 
         return binding.root
     }
 
-    private fun init() {
-        viewModel.rxToLiveData().observe(
+    private fun observeTopRated() {
+        viewModel.topMovies(pageId).observe(
             viewLifecycleOwner, Observer {
-                val movieResponse = it.results
-                val movieItemsList = movieResponse.map { BindMovie(it) }
-                viewModel.adapter.addMovies(movieItemsList)
+
+                var movieResponse = it.getOrNull()
+
+                if (movieResponse != null) {
+
+                    val movieItemsList = movieResponse.results.map { BindMovie(it) }
+                    viewModel.adapter.addMovies(movieItemsList)
+                }
             }
         )
     }
 
+    private fun setupViewModel() {
+        viewModel = ViewModelProvider(this, viewModelFactory).get(TopMovieViewModel::class.java)
+        binding.data = viewModel
+    }
+
+/*
     private fun scrollRecylerView() {
         binding.recylerViewFragmentTopMovie.addOnScrollListener(object :
             RecyclerView.OnScrollListener() {
@@ -91,4 +85,7 @@ class TopMovieFragment : Fragment() {
             }
         })
     }
+
+ */
+
 }

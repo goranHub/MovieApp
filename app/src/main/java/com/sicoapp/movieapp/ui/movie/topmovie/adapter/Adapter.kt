@@ -8,9 +8,10 @@ package com.sicoapp.movieapp.ui.movie.topmovie.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
+import com.sicoapp.movieapp.data.model.response.Movie
+import com.sicoapp.movieapp.data.model.response.MovieResponse
 import com.sicoapp.movieapp.databinding.ItemMovieBinding
 import com.sicoapp.movieapp.utils.BindMovie
 import com.sicoapp.movieapp.utils.CardClickListener
@@ -59,5 +60,7 @@ class Adapter(private val postID: (Int) -> Unit, private val crewID: (Int) -> Un
         list.addAll(listItems)
         notifyDataSetChanged()
     }
+
+
 
 }
