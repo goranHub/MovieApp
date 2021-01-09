@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
+import com.sicoapp.movieapp.data.model.response.movie.MovieResponse
 import com.sicoapp.movieapp.data.repository.RemoteRepository
 import com.sicoapp.movieapp.databinding.FragmentMovieTopBinding
 import com.sicoapp.movieapp.ui.movie.popular.BindMovie
@@ -73,12 +74,7 @@ class TopMovieFragment : Fragment() {
     private fun observeTopRated() {
         viewModel.topMovies().observe(
             viewLifecycleOwner, Observer {
-                val movieResponse = it.getOrNull()
-                if (movieResponse != null) {
-                    val movieItemsList = movieResponse.results.map { BindMovie(it) }
-                    adapter.addMovies(movieItemsList)
-
-                }
+                lifeDataResponseVM(it)
             }
         )
     }
@@ -94,16 +90,20 @@ class TopMovieFragment : Fragment() {
                     //load popular top movies
                     viewModel.topMovies().observe(
                         viewLifecycleOwner, Observer {
-                            var movieResponse = it.getOrNull()
-
-                            if (movieResponse != null) {
-                                val movieItemsList = movieResponse.results.map { BindMovie(it) }
-                                adapter.addMovies(movieItemsList)
-                            }
+                            lifeDataResponseVM(it)
                         }
                     )
                 }
             }
         })
+    }
+
+    private fun lifeDataResponseVM(it: Result<MovieResponse>) {
+        val movieResponse = it.getOrNull()
+        if (movieResponse != null) {
+            val movieItemsList = movieResponse.results.map { BindMovie(it) }
+            adapter.addMovies(movieItemsList)
+
+        }
     }
 }

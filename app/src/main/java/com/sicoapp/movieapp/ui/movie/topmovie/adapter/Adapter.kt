@@ -20,19 +20,6 @@ class Adapter(private val postID: (Int) -> Unit, private val crewID: (Int) -> Un
 
     var list = mutableListOf<BindMovie>()
 
-    private val clickListener = object : CardClickListener {
-        // movie id predajemo postId lambdi
-        override fun cardClicked(id: Int?) {
-            id?.let { postID(it) }
-        }
-    }
-
-    private val crewListener = object : CrewClickListener {
-        override fun crewClicked(id: Int?) {
-            id?.let { crewID(it) }
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
             : ViewHolder {
         val binding: ItemMovieBinding = DataBindingUtil.inflate(
@@ -47,9 +34,20 @@ class Adapter(private val postID: (Int) -> Unit, private val crewID: (Int) -> Un
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dataModel = list[position]
         holder.bind(dataModel)
+
         //bind listener with layout
-        holder.itemRowBinding.itemClickListener = clickListener
-        holder.itemRowBinding.itemCrewClickListener = crewListener
+        holder.itemMovieBinding.itemClickListener = object : CardClickListener {
+            // movie id predajemo postId lambdi
+            override fun cardClicked(id: Int?) {
+                id?.let { postID(it) }
+            }
+        }
+
+        holder.itemMovieBinding.itemCrewClickListener  = object : CrewClickListener {
+            override fun crewClicked(id: Int?) {
+                id?.let { crewID(it) }
+            }
+        }
     }
 
     override fun getItemCount() = list.size
