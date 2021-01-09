@@ -8,11 +8,10 @@ package com.sicoapp.movieapp.ui.movie.topmovie.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.ItemMovieBinding
-import com.sicoapp.movieapp.utils.BindMovie
+import com.sicoapp.movieapp.ui.movie.popular.BindMovie
 import com.sicoapp.movieapp.utils.CardClickListener
 import com.sicoapp.movieapp.utils.CrewClickListener
 

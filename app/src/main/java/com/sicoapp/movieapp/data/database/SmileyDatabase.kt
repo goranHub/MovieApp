@@ -1,10 +1,8 @@
 package com.sicoapp.movieapp.data.database
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.sicoapp.movieapp.data.model.SmileyRatingTableModel
+import com.sicoapp.movieapp.data.database.SmileyRatingTableModel
 
 
 /**

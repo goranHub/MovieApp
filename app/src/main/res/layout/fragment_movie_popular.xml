@@ -6,7 +6,7 @@
     <data>
         <variable
             name="data"
-            type="com.sicoapp.movieapp.ui.movie.popular.PopularViewModel" />
+            type="com.sicoapp.movieapp.ui.movie.popular.PopularMovieFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

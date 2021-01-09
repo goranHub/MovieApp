@@ -3,24 +3,22 @@ package com.sicoapp.movieapp.ui.movie.crew
 import androidx.databinding.BaseObservable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
-import com.sicoapp.movieapp.data.api.MovieApiService
+import androidx.lifecycle.ViewModel
+import com.sicoapp.movieapp.data.api.ApiServiceFlowable
 import com.sicoapp.movieapp.data.model.response.movie.Movie
+import com.sicoapp.movieapp.data.repository.RemoteRepository
 import com.sicoapp.movieapp.ui.movie.crew.adapter.CrewAdapter
 import com.sicoapp.movieapp.utils.API_KEY
 import io.reactivex.schedulers.Schedulers
 
 class CrewViewModel (
-    val crewId: Int,
-    val api: MovieApiService
-) : BaseObservable() {
+    private val remoteRepository: RemoteRepository
+) : ViewModel() {
 
-    val adapter = CrewAdapter()
-
-    fun rxToLiveData() : LiveData<Movie> {
-        val source = LiveDataReactiveStreams.fromPublisher(
-            api.loadCrewBy( crewId , API_KEY,)
+    fun rxToLiveData(crewId : Int) : LiveData<Movie> {
+        return LiveDataReactiveStreams.fromPublisher(
+            remoteRepository.apis.loadCrewBy(crewId, API_KEY,)
                 .subscribeOn(Schedulers.io())
         )
-        return source
     }
 }

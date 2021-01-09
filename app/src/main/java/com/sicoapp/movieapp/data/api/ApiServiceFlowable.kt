@@ -1,5 +1,6 @@
 package com.sicoapp.movieapp.data.api
 
+import com.sicoapp.movieapp.data.model.response.movie.IMovie
 import com.sicoapp.movieapp.data.model.response.multi.Multi
 import com.sicoapp.movieapp.data.model.response.movie.Movie
 import com.sicoapp.movieapp.data.model.response.movie.MovieResponse
@@ -14,19 +15,8 @@ import retrofit2.http.Query
  * @date 12/6/2020
  */
 
-interface MovieApiService {
+interface ApiServiceFlowable {
 
-    @GET("movie/top_rated")
-    fun loadTopRated(
-        @Query("api_key") apiKey: String?,
-        @Query("page") page: String?
-    ): Flowable<MovieResponse>
-
-    @GET("movie/popular")
-    fun loadPopular(
-        @Query("api_key") apiKey: String?,
-        @Query("page") page: String?
-    ): Flowable<MovieResponse>
 
     @GET("movie/{id}?&append_to_response=credits")
     fun loadCrewBy(
