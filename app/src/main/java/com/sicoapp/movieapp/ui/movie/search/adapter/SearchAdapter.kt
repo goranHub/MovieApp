@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.databinding.ItemMovieSearchBinding
-import com.sicoapp.movieapp.utils.BindMulti
+import com.sicoapp.movieapp.ui.movie.search.BindMulti
 
 /**
  * @author ll4
@@ -13,9 +13,7 @@ import com.sicoapp.movieapp.utils.BindMulti
 class SearchAdapter(private val postIdAndTyp: (Int, String) -> Unit) : RecyclerView.Adapter<ViewHolder>() {
 
     private val TAG = this.javaClass.simpleName
-
     private var searchItems = mutableListOf<BindMulti>()
-
     lateinit var mediaTyp: String
 
     fun updateItems(newList: List<BindMulti>) {
@@ -28,8 +26,6 @@ class SearchAdapter(private val postIdAndTyp: (Int, String) -> Unit) : RecyclerV
         val binding = ItemMovieSearchBinding.inflate(
             layoutInflater, parent, false
         )
-
-        //holder.itemRowBinding.itemClickListener = clickListener
 
         binding.cardItemLayout.setOnClickListener{
             mediaTyp = binding.data?.movie?.media_type.toString()
@@ -45,7 +41,6 @@ class SearchAdapter(private val postIdAndTyp: (Int, String) -> Unit) : RecyclerV
     }
 
     override fun getItemCount() = searchItems.size
-
 }
 
 
