@@ -41,7 +41,8 @@ class SearchFragment : Fragment() {
         val bundlePostIdAndMediaTyp = bundleOf(ITEM_ID to postID, MEDIATYP to mediaTyp)
         findNavController().navigate(
             R.id.action_searchFragment_to_movieDetailsFragment,
-            bundlePostIdAndMediaTyp)
+            bundlePostIdAndMediaTyp
+        )
     }
 
     override fun onCreateView(
@@ -71,25 +72,30 @@ class SearchFragment : Fragment() {
     private fun setupSearchView() {
         binding.searchView.clickSubmitButton { query ->
 
-            viewModel.rxMulti(query).observe(viewLifecycleOwner, { multi ->
-                val movieResponse = multi.results
-                val movieItemsList = movieResponse.map { BindMulti(it) }
-                adapter.updateItems(movieItemsList)
+            loadMulti(query)
 
-                binding.recyclerView.addOnScrollListener(object :
-                    RecyclerView.OnScrollListener() {
-                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                        if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                            viewModel.rxMulti(query).observe(viewLifecycleOwner, { multi1 ->
-                                val movieResponse = multi1.results
-                                val movieItemsList = movieResponse.map { BindMulti(it) }
-                                adapter.updateItems(movieItemsList)
-                            })
-                        }
-                    }
-                })
-            })
+            scrollRecyclerView(query)
+
         }
+    }
+
+    private fun scrollRecyclerView(query: String) {
+        binding.recyclerView.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    loadMulti(query)
+                }
+            }
+        })
+    }
+
+    private fun loadMulti(query: String) {
+        viewModel.rxMulti(query).observe(viewLifecycleOwner, { multi1 ->
+            val movieResponse = multi1.results
+            val movieItemsList = movieResponse.map { BindMulti(it) }
+            adapter.updateItems(movieItemsList)
+        })
     }
 
     private fun SearchView.clickSubmitButton(clickedBlock: (String) -> Unit) {

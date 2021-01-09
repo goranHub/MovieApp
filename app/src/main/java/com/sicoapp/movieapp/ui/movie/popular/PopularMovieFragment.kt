@@ -69,7 +69,7 @@ class PopularMovieFragment : Fragment() {
 
         observePopular()
 
-        scrollRecylerView()
+        scrollRecyclerView()
 
         return binding.root
     }
@@ -89,14 +89,16 @@ class PopularMovieFragment : Fragment() {
         )
     }
 
-    private fun scrollRecylerView() {
+    private fun scrollRecyclerView() {
         binding.recylerViewFragmentTopMovie.addOnScrollListener(object :
             RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
 
                 if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    viewModel.  popularMovies().observe(
+
+                    //load popular movies
+                    viewModel.popularMovies().observe(
                         viewLifecycleOwner, {
                             var movieResponse = it.getOrNull()
 

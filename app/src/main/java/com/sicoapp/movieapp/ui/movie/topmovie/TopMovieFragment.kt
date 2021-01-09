@@ -59,14 +59,13 @@ class TopMovieFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(TopMovieViewModel::class.java)
 
-
         binding = FragmentMovieTopBinding.inflate(inflater)
 
         binding.data = this
 
         observeTopRated()
 
-        scrollRecylerView()
+        scrollRecyclerView()
 
         return binding.root
     }
@@ -84,13 +83,15 @@ class TopMovieFragment : Fragment() {
         )
     }
 
-    private fun scrollRecylerView() {
+    private fun scrollRecyclerView() {
         binding.recylerViewFragmentTopMovie.addOnScrollListener(object :
             RecyclerView.OnScrollListener() {
 
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+
+                    //load popular top movies
                     viewModel.topMovies().observe(
                         viewLifecycleOwner, Observer {
                             var movieResponse = it.getOrNull()
