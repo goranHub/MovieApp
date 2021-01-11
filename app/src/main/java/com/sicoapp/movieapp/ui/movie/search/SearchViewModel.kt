@@ -14,7 +14,7 @@ import io.reactivex.schedulers.Schedulers
  * @author ll4
  * @date 1/4/2021
  */
-class SearchViewModel(val remoteRepository: RemoteRepository) :
+class SearchViewModel(private val remoteRepository: RemoteRepository) :
     ViewModel() {
 
     var pageId = 1

@@ -1,13 +1,10 @@
 package com.sicoapp.movieapp.ui.movie.crew
 
-import androidx.databinding.BaseObservable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.ViewModel
-import com.sicoapp.movieapp.data.api.ApiServiceFlowable
 import com.sicoapp.movieapp.data.model.response.movie.Movie
 import com.sicoapp.movieapp.data.repository.RemoteRepository
-import com.sicoapp.movieapp.ui.movie.crew.adapter.CrewAdapter
 import com.sicoapp.movieapp.utils.API_KEY
 import io.reactivex.schedulers.Schedulers
 

@@ -57,8 +57,8 @@ class TopMovieFragment : Fragment() {
     ): View {
 
         viewModelFactory = ViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory)
-            .get(TopMovieViewModel::class.java)
+
+        viewModel = ViewModelProvider(this, viewModelFactory).get(TopMovieViewModel::class.java)
 
         binding = FragmentMovieTopBinding.inflate(inflater)
 
