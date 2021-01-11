@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -20,17 +21,13 @@ import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
 import com.sicoapp.movieapp.utils.factory.ViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class TopMovieFragment : Fragment() {
 
-    @Inject
-    lateinit var repository: RemoteRepository
-
-    private lateinit var viewModel: TopMovieViewModel
-
-    private lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel: TopMovieViewModel by viewModels()
 
     private lateinit var binding: FragmentMovieTopBinding
 
@@ -56,10 +53,6 @@ class TopMovieFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        viewModelFactory = ViewModelFactory(repository)
-
-        viewModel = ViewModelProvider(this, viewModelFactory).get(TopMovieViewModel::class.java)
-
         binding = FragmentMovieTopBinding.inflate(inflater)
 
         binding.data = this
@@ -72,11 +65,13 @@ class TopMovieFragment : Fragment() {
     }
 
     private fun observeTopRated() {
-        viewModel.topMovies().observe(
-            viewLifecycleOwner, Observer {
-                lifeDataResponseVM(it)
-            }
-        )
+        runBlocking {
+            viewModel.topMovies().observe(
+                viewLifecycleOwner, Observer {
+                    lifeDataResponseVM(it)
+                }
+            )
+        }
     }
 
     private fun scrollRecyclerView() {
@@ -86,13 +81,15 @@ class TopMovieFragment : Fragment() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    runBlocking {
+                        //load popular top movies
+                        viewModel.topMovies().observe(
+                            viewLifecycleOwner, Observer {
+                                lifeDataResponseVM(it)
+                            }
+                        )
+                    }
 
-                    //load popular top movies
-                    viewModel.topMovies().observe(
-                        viewLifecycleOwner, Observer {
-                            lifeDataResponseVM(it)
-                        }
-                    )
                 }
             }
         })
@@ -103,7 +100,6 @@ class TopMovieFragment : Fragment() {
         if (movieResponse != null) {
             val movieItemsList = movieResponse.results.map { BindMovie(it) }
             adapter.addMovies(movieItemsList)
-
         }
     }
 }

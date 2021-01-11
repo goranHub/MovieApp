@@ -14,9 +14,6 @@ class ViewModelFactory(
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
 
-        if (modelClass.isAssignableFrom(TopMovieViewModel::class.java)) {
-            return TopMovieViewModel(remoteRepository) as T
-        }
         if (modelClass.isAssignableFrom(SearchViewModel::class.java)) {
             return SearchViewModel(remoteRepository) as T
         }

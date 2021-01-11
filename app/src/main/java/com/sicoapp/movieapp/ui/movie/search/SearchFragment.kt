@@ -45,6 +45,7 @@ class SearchFragment : Fragment() {
         )
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,16 +59,13 @@ class SearchFragment : Fragment() {
 
         binding.imageButtonBack.setOnClickListener { findNavController().popBackStack() }
 
-        init()
+        binding.data = this
 
         setupSearchView()
 
         return binding.root
     }
 
-    private fun init() {
-        binding.recyclerView.adapter = this.adapter
-    }
 
     private fun setupSearchView() {
         binding.searchView.clickSubmitButton { query ->
