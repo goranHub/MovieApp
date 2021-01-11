@@ -27,16 +27,14 @@ class TopMovieFragment : Fragment() {
             val bundleItemId = bundleOf(ITEM_ID to movieId)
             findNavController().navigate(
                 R.id.action_movieListFragment_to_movieDetailsFragment,
-                bundleItemId
-            )
+                bundleItemId)
         }
 
         override fun openCrew(crewId: Long) {
             val bundleCrewId = bundleOf(CREW_ID to crewId)
             findNavController().navigate(
                 R.id.action_movieListFragment_to_crewMovieFragment,
-                bundleCrewId
-            )
+                bundleCrewId)
         }
     }
 
@@ -57,7 +55,6 @@ class TopMovieFragment : Fragment() {
     private fun scrollRecyclerView() {
         binding.recylerViewFragmentTopMovie.addOnScrollListener(object :
             RecyclerView.OnScrollListener() {
-
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
@@ -66,5 +63,4 @@ class TopMovieFragment : Fragment() {
             }
         })
     }
-
 }

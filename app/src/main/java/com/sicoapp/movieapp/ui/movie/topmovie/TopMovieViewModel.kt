@@ -35,19 +35,14 @@ class TopMovieViewModel @ViewModelInject constructor(
             .subscribe(
                 object : SingleObserver<MovieResponse> {
                     override fun onSubscribe(d: Disposable) {
-
                     }
-
                     override fun onSuccess(response: MovieResponse) {
                         val movieItemsList = response.results.map { BindMovie(it) }
                         adapter.addMovies(movieItemsList)
                         pageId++
                     }
-
                     override fun onError(e: Throwable) {
-
                     }
-
                 }
             )
     }
