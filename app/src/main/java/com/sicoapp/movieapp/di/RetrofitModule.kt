@@ -1,7 +1,6 @@
 package com.sicoapp.movieapp.di
 
 import com.sicoapp.movieapp.data.api.ApiServisFlow
-import com.sicoapp.movieapp.data.api.ApiServiceFlowable
 import com.sicoapp.movieapp.utils.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -42,11 +41,6 @@ class RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiServisFlow =
-        retrofit.create(ApiServisFlow::class.java)
+    fun provideApiService(retrofit: Retrofit) = retrofit.create(ApiServisFlow::class.java)
 
-    @Provides
-    @Singleton
-    fun provideMovieApiService(retrofit: Retrofit): ApiServiceFlowable =
-        retrofit.create(ApiServiceFlowable::class.java)
 }

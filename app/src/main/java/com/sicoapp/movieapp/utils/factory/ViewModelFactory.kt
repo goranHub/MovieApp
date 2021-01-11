@@ -14,13 +14,6 @@ class ViewModelFactory(
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
 
-        if (modelClass.isAssignableFrom(SearchViewModel::class.java)) {
-            return SearchViewModel(remoteRepository) as T
-        }
-        if (modelClass.isAssignableFrom(PopularViewModel::class.java)) {
-            return PopularViewModel(remoteRepository) as T
-        }
-
         if (modelClass.isAssignableFrom(CrewViewModel::class.java)) {
             return CrewViewModel(remoteRepository) as T
         }

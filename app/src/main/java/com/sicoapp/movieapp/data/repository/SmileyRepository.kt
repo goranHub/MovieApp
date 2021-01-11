@@ -6,13 +6,14 @@ import com.sicoapp.movieapp.data.database.SmileyRatingTableModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * @author ll4
  * @date 12/15/2020
  */
 
-class SmileyRepository (
+class SmileyRepository @Inject constructor(
     val dao: DAOAccess) {
 
         private var smileyRatingTableModel: LiveData<SmileyRatingTableModel>? = null

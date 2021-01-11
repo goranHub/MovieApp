@@ -35,7 +35,6 @@ class TopMovieViewModel @ViewModelInject constructor(
             .subscribe(
                 object : SingleObserver<MovieResponse> {
                     override fun onSubscribe(d: Disposable) {
-
                     }
 
                     override fun onSuccess(response: MovieResponse) {
@@ -45,7 +44,6 @@ class TopMovieViewModel @ViewModelInject constructor(
                     }
 
                     override fun onError(e: Throwable) {
-
                     }
 
                 }
