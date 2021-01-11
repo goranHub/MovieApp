@@ -7,22 +7,13 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
-import com.sicoapp.movieapp.data.model.response.movie.MovieResponse
-import com.sicoapp.movieapp.data.repository.RemoteRepository
 import com.sicoapp.movieapp.databinding.FragmentMovieTopBinding
-import com.sicoapp.movieapp.ui.movie.popular.BindMovie
-import com.sicoapp.movieapp.ui.movie.topmovie.adapter.Adapter
 import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
-import com.sicoapp.movieapp.utils.factory.ViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.runBlocking
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class TopMovieFragment : Fragment() {
@@ -31,22 +22,23 @@ class TopMovieFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieTopBinding
 
-    val adapter = Adapter(
-        { postID ->
-        val bundleItemId = bundleOf(ITEM_ID to postID)
-        findNavController().navigate(
-            R.id.action_movieListFragment_to_movieDetailsFragment,
-            bundleItemId
-        )
-    },
-        { crewID ->
-            val bundleCrewId = bundleOf(CREW_ID to crewID)
+    val callback = object : TopMovieCallback {
+        override fun openDetails(movieId: Long) {
+            val bundleItemId = bundleOf(ITEM_ID to movieId)
+            findNavController().navigate(
+                R.id.action_movieListFragment_to_movieDetailsFragment,
+                bundleItemId
+            )
+        }
+
+        override fun openCrew(crewId: Long) {
+            val bundleCrewId = bundleOf(CREW_ID to crewId)
             findNavController().navigate(
                 R.id.action_movieListFragment_to_crewMovieFragment,
                 bundleCrewId
             )
-        })
-
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,24 +46,12 @@ class TopMovieFragment : Fragment() {
     ): View {
 
         binding = FragmentMovieTopBinding.inflate(inflater)
-
-        binding.data = this
-
-        observeTopRated()
+        binding.data = viewModel
+        binding.callback = callback
 
         scrollRecyclerView()
 
         return binding.root
-    }
-
-    private fun observeTopRated() {
-        runBlocking {
-            viewModel.topMovies().observe(
-                viewLifecycleOwner, Observer {
-                    lifeDataResponseVM(it)
-                }
-            )
-        }
     }
 
     private fun scrollRecyclerView() {
@@ -81,25 +61,10 @@ class TopMovieFragment : Fragment() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    runBlocking {
-                        //load popular top movies
-                        viewModel.topMovies().observe(
-                            viewLifecycleOwner, Observer {
-                                lifeDataResponseVM(it)
-                            }
-                        )
-                    }
-
+                    viewModel.loadRemoteData()
                 }
             }
         })
     }
 
-    private fun lifeDataResponseVM(it: Result<MovieResponse>) {
-        val movieResponse = it.getOrNull()
-        if (movieResponse != null) {
-            val movieItemsList = movieResponse.results.map { BindMovie(it) }
-            adapter.addMovies(movieItemsList)
-        }
-    }
 }

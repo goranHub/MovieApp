@@ -9,9 +9,6 @@
             name="data"
             type="com.sicoapp.movieapp.ui.movie.search.BindMulti" />
 
-        <variable
-            name="itemClickListener"
-            type="com.sicoapp.movieapp.utils.CardClickListener" />
     </data>
 
 

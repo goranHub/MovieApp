@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.ItemMovieBinding
 import com.sicoapp.movieapp.ui.movie.popular.BindMovie
-import com.sicoapp.movieapp.utils.CardClickListener
-import com.sicoapp.movieapp.utils.CrewClickListener
+import com.sicoapp.movieapp.ui.movie.topmovie.TopMovieCallback
 
-class Adapter(private val postID: (Int) -> Unit, private val crewID: (Int) -> Unit) :
-    RecyclerView.Adapter<ViewHolder>(){
+class TopMovieAdapter : RecyclerView.Adapter<ViewHolder>(){
+
+    lateinit var callback: TopMovieCallback
 
     var list = mutableListOf<BindMovie>()
 
@@ -36,16 +36,17 @@ class Adapter(private val postID: (Int) -> Unit, private val crewID: (Int) -> Un
         holder.bind(dataModel)
 
         //bind listener with layout
-        holder.itemMovieBinding.itemClickListener = object : CardClickListener {
-            // movie id predajemo postId lambdi
-            override fun cardClicked(id: Int?) {
-                id?.let { postID(it) }
+        holder.itemMovieBinding.itemClickListener = object : ItemClickListener {
+            override fun openItem(itemId: Long) {
+                itemId.let {
+                    callback.openDetails(it)
+                }
             }
         }
 
-        holder.itemMovieBinding.itemCrewClickListener  = object : CrewClickListener {
-            override fun crewClicked(id: Int?) {
-                id?.let { crewID(it) }
+        holder.itemMovieBinding.itemCrewClickListener  = object : ItemClickListener {
+                override fun openItem(itemId: Long) {
+                    itemId.let { callback.openCrew(it) }
             }
         }
     }
@@ -56,5 +57,4 @@ class Adapter(private val postID: (Int) -> Unit, private val crewID: (Int) -> Un
         list.addAll(listItems)
         notifyDataSetChanged()
     }
-
 }

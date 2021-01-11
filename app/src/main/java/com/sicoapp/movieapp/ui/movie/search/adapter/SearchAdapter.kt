@@ -5,16 +5,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.databinding.ItemMovieSearchBinding
 import com.sicoapp.movieapp.ui.movie.search.BindMulti
+import com.sicoapp.movieapp.ui.movie.search.SearchCallback
 
 /**
  * @author ll4
  * @date 1/4/2021
  */
-class SearchAdapter(private val postIdAndTyp: (Int, String) -> Unit) : RecyclerView.Adapter<ViewHolder>() {
+class SearchAdapter : RecyclerView.Adapter<ViewHolder>() {
 
-    private val TAG = this.javaClass.simpleName
     private var searchItems = mutableListOf<BindMulti>()
+
     lateinit var mediaTyp: String
+
+    lateinit var callback: SearchCallback
 
     fun updateItems(newList: List<BindMulti>) {
         searchItems.addAll(newList)
@@ -27,9 +30,13 @@ class SearchAdapter(private val postIdAndTyp: (Int, String) -> Unit) : RecyclerV
             layoutInflater, parent, false
         )
 
-        binding.cardItemLayout.setOnClickListener{
+        binding.cardItemLayout.setOnClickListener {
+
             mediaTyp = binding.data?.movie?.media_type.toString()
-            binding.data?.movie?.id?.let { it1 -> postIdAndTyp(it1, mediaTyp) }
+
+            binding.data?.movie?.id?.let {
+                callback.openDetails(it, mediaTyp)
+            }
         }
 
         return ViewHolder(binding)

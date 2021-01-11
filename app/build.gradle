@@ -122,6 +122,8 @@ dependencies {
     // RxJava
     def rxjava_version = '2.1.1'
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'com.akaita.java:rxjava2-debug:1.4.0'
 
     // Rx-Retrofit Call Adapter
     def rxcalladapter_version = '2.5.0'
@@ -136,6 +138,7 @@ dependencies {
     implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02'
     // When using Kotlin.
     kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha02'
+
 
 
 

@@ -1,7 +1,9 @@
 package com.sicoapp.movieapp.data.api
 
 import com.sicoapp.movieapp.data.model.response.movie.MovieResponse
+import com.sicoapp.movieapp.data.model.response.multi.Multi
 import io.reactivex.Flowable
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -13,15 +15,22 @@ interface ApiServisFlow {
 
 
     @GET("movie/top_rated")
-    suspend fun loadTopRated(
+    fun loadTopRated(
         @Query("api_key") apiKey: String?,
         @Query("page") page: String?
-    ): MovieResponse
+    ): Single<MovieResponse>
 
 
     @GET("movie/popular")
-    suspend fun loadPopular(
+    fun loadPopular(
         @Query("api_key") apiKey: String?,
         @Query("page") page: String?
-    ): MovieResponse
+    ): Single<MovieResponse>
+
+    @GET("search/multi?")
+    fun searchMulti(
+        @Query(value = "api_key") apiKey: String,
+        @Query(value = "query") searchTitle: String,
+        @Query(value = "page") pageIndex: Int
+    ) : Single<Multi>
 }

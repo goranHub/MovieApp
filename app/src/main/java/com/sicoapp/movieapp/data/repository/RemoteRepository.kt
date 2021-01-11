@@ -3,9 +3,9 @@ package com.sicoapp.movieapp.data.repository
 import com.sicoapp.movieapp.data.api.ApiServiceFlowable
 import com.sicoapp.movieapp.data.api.ApiServisFlow
 import com.sicoapp.movieapp.data.model.response.movie.MovieResponse
+import com.sicoapp.movieapp.data.model.response.multi.Multi
 import com.sicoapp.movieapp.utils.API_KEY
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import io.reactivex.Single
 import javax.inject.Inject
 
 /**
@@ -17,15 +17,18 @@ class RemoteRepository @Inject constructor(
     val apis : ApiServiceFlowable,
 ) {
 
-    suspend fun fetchTopMovies(pageId :Int) : Flow<Result<MovieResponse>> {
-        return flow {
-            emit(Result.success(api.loadTopRated(API_KEY, pageId.toString())))
-        }
+    fun fetchTopMovies(pageId :Int) : Single<MovieResponse> {
+        return api.loadTopRated(API_KEY, pageId.toString())
     }
 
-    suspend fun fetchPopular(pageId :Int) : Flow<Result<MovieResponse>> {
-        return flow {
-            emit(Result.success(api.loadPopular(API_KEY, pageId.toString())))
+    fun fetchPopularMovies(pageId :Int) : Single<MovieResponse> {
+        return api.loadPopular(API_KEY, pageId.toString())
         }
-    }
+
+
+    fun fetchSearchMulti(query:String, pageId :Int) : Single<Multi> {
+        return api.searchMulti(API_KEY, query, pageId)
+        }
+
+
 }

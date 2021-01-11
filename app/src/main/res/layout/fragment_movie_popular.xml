@@ -4,9 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
+        <variable
+            name="callback"
+            type="com.sicoapp.movieapp.ui.movie.topmovie.TopMovieCallback" />
         <variable
             name="data"
-            type="com.sicoapp.movieapp.ui.movie.popular.PopularMovieFragment" />
+            type="com.sicoapp.movieapp.ui.movie.popular.PopularViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,6 +32,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:setAdapter="@{data.adapter}"
+            app:setCallback="@{callback}"
             tools:itemCount="20"
             tools:listitem="@layout/item_movie" />
 

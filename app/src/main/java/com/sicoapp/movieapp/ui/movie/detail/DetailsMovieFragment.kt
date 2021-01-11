@@ -36,8 +36,8 @@ class DetailsMovieFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.getInt(ITEM_ID, -1)?.let {
-            itemId = it
+        arguments?.getLong(ITEM_ID, -1)?.let {
+            itemId = it.toInt()
         }
         arguments?.getString(MEDIATYP, "")?.let{
             mediaTyp = it

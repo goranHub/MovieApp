@@ -11,11 +11,11 @@
 
         <variable
             name="itemClickListener"
-            type="com.sicoapp.movieapp.utils.CardClickListener" />
+            type="com.sicoapp.movieapp.ui.movie.topmovie.adapter.ItemClickListener" />
 
         <variable
             name="itemCrewClickListener"
-            type="com.sicoapp.movieapp.utils.CrewClickListener" />
+            type="com.sicoapp.movieapp.ui.movie.topmovie.adapter.ItemClickListener" />
     </data>
 
 
@@ -39,7 +39,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:loadImageUrl="@{data.imageUrl}"
             tools:srcCompat="@tools:sample/avatars"
-            android:onClick="@{() -> itemClickListener.cardClicked(data.movie.id)}"/>
+            android:onClick="@{() -> itemClickListener.openItem(data.movie.id)}"/>
 
         <TextView
             android:id="@+id/original_title"
@@ -61,7 +61,7 @@
             android:layout_width="161dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:onClick="@{() -> itemCrewClickListener.crewClicked(data.movie.id)}"
+            android:onClick="@{() -> itemCrewClickListener.openItem(data.movie.id)}"
             android:text="@string/explore_the_crew"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

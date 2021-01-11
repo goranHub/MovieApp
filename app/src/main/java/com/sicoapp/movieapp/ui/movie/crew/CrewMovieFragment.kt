@@ -33,8 +33,8 @@ class CrewMovieFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        arguments?.getInt(CREW_ID, -1)?.let {
-            crewId = it
+        arguments?.getLong(CREW_ID, -1)?.let {
+            crewId = it.toInt()
         }
     }
 
