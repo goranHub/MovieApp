@@ -1,5 +1,6 @@
 package com.sicoapp.movieapp.ui.movie.topmovie
 
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.sicoapp.movieapp.data.model.response.movie.MovieResponse
@@ -42,6 +43,7 @@ class TopMovieViewModel @ViewModelInject constructor(
                         pageId++
                     }
                     override fun onError(e: Throwable) {
+                        Log.d("error", "${e.stackTrace}")
                     }
                 }
             )

@@ -1,5 +1,7 @@
 package com.sicoapp.movieapp.ui.movie.popular
 
+import android.util.Log
+import android.widget.Toast
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.sicoapp.movieapp.data.model.response.movie.MovieResponse
@@ -36,15 +38,13 @@ class PopularViewModel @ViewModelInject constructor(
                     override fun onSubscribe(d: Disposable) {
 
                     }
-
                     override fun onSuccess(response: MovieResponse) {
                         val movieItemsList = response.results.map { BindMovie(it) }
                         adapter.addMovies(movieItemsList)
                         pageId++
                     }
-
                     override fun onError(e: Throwable) {
-
+                        Log.d("error", "${e.stackTrace}")
                     }
 
                 }

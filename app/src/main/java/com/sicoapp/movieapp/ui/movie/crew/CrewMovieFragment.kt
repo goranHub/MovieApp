@@ -20,7 +20,6 @@ class CrewMovieFragment : Fragment() {
     var crewId = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         arguments?.getLong(CREW_ID, -1)?.let {
             crewId = it
@@ -44,5 +43,4 @@ class CrewMovieFragment : Fragment() {
     private fun updateUI(crewId :Long){
         viewModel.loadRemoteDataCrew(crewId)
     }
-
 }

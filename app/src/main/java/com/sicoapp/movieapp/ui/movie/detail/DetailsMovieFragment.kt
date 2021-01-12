@@ -28,7 +28,7 @@ class DetailsMovieFragment : Fragment() {
         arguments?.getLong(ITEM_ID, -1)?.let {
             movieId = it
         }
-        arguments?.getString(MEDIATYP, "")?.let{
+        arguments?.getString(MEDIATYP, "")?.let {
             mediaTyp = it
         }
     }
@@ -40,20 +40,20 @@ class DetailsMovieFragment : Fragment() {
 
         binding = FragmentMovieDetailsBinding.inflate(inflater)
 
-        if((mediaTyp == "movie") or (mediaTyp == "")){
+        if ((mediaTyp == "movie") or (mediaTyp == "")) {
             updateUIMovie(movieId)
-        }else{
+        } else {
             updateUITv(movieId)
         }
 
         binding.data = viewModel.bindDetails
 
-        binding.smiley.setSmileySelectedListener { type ->
-            saveIntoDB(type, viewModel)
-        }
+
+            saveIntoDB()
+
 
         binding.btnCall.setOnClickListener {
-            callFromDB(viewModel)
+            callFromDB()
         }
 
         binding.btnDeleteAll.setOnClickListener {
@@ -62,17 +62,14 @@ class DetailsMovieFragment : Fragment() {
         return binding.root
     }
 
-    private fun saveIntoDB(type: SmileyRating.Type, viewModelInstance : DetailsViewModel) {
-        currentType = type.rating
-        binding.btnSave.setOnClickListener {
-            context?.let {
-                viewModelInstance.insertData(movieId.toInt(), currentType)
-            }
+    private fun saveIntoDB() {
+        binding.smiley.setSmileySelectedListener {
+            viewModel.insertData(movieId.toInt(), it.rating)
         }
     }
 
-    private fun callFromDB(viewModelInstance : DetailsViewModel){
-        viewModelInstance.getSavedSmileyDetails(movieId.toInt())
+    private fun callFromDB() {
+        viewModel.getSavedSmileyDetails(movieId.toInt())
             .observe(viewLifecycleOwner, { movieRatingTableModel ->
                 if (movieRatingTableModel != null) {
                     binding.smiley.setRating(movieRatingTableModel.rating)
@@ -80,11 +77,11 @@ class DetailsMovieFragment : Fragment() {
             })
     }
 
-    private fun updateUITv(movieId :Long){
+    private fun updateUITv(movieId: Long) {
         viewModel.loadRemoteDataTv(movieId)
     }
 
-    private fun updateUIMovie(movieId :Long){
+    private fun updateUIMovie(movieId: Long) {
         viewModel.loadRemoteDataMovie(movieId)
     }
 }

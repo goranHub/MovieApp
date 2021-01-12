@@ -1,5 +1,6 @@
 package com.sicoapp.movieapp.ui.movie.detail
 
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -56,6 +57,7 @@ class DetailsViewModel @ViewModelInject constructor(
                         bindDetails.releaseDate = response.releaseDate
                     }
                     override fun onError(e: Throwable) {
+                        Log.d("error", "${e.stackTrace}")
                     }
                 }
             )

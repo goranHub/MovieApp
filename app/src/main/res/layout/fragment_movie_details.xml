@@ -161,18 +161,6 @@
             app:layout_constraintTop_toBottomOf="@+id/popularity"
             app:layout_constraintVertical_bias="0.2" />
 
-        <Button
-            android:id="@+id/btnSave"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:text="save"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/btnCall"
-            app:layout_constraintEnd_toStartOf="@+id/btnDeleteAll"
-            app:layout_constraintHorizontal_bias="0.483"
-            app:layout_constraintStart_toEndOf="@+id/btnCall"
-            app:layout_constraintTop_toBottomOf="@+id/popularity"
-            app:layout_constraintVertical_bias="1.0" />
 
         <Button
             android:id="@+id/btnDeleteAll"
