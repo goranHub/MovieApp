@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -15,6 +16,7 @@ import com.sicoapp.movieapp.databinding.FragmentMovieSearchBinding
 import com.sicoapp.movieapp.utils.ITEM_ID
 import com.sicoapp.movieapp.utils.MEDIATYP
 import dagger.hilt.android.AndroidEntryPoint
+
 
 /**
  * @author ll4
@@ -29,7 +31,6 @@ class SearchFragment : Fragment() {
     lateinit var binding: FragmentMovieSearchBinding
 
     val callback = object : SearchCallback {
-
         override fun openDetails(movieId: Long, mediaTyp: String) {
             val bundlePostIdAndMediaTyp = bundleOf(ITEM_ID to movieId, MEDIATYP to mediaTyp)
             findNavController().navigate(
@@ -54,6 +55,16 @@ class SearchFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+    }
+
     private fun setupSearchView() {
         binding.searchView.clickSubmitButton { query ->
             viewModel.loadRemoteData(query)
@@ -71,7 +82,6 @@ class SearchFragment : Fragment() {
             }
         })
     }
-
 
     private fun SearchView.clickSubmitButton(clickedBlock: (String) -> Unit) {
         setOnQueryTextListener(object : SearchView.OnQueryTextListener {

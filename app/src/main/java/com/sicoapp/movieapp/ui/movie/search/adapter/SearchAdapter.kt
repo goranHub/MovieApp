@@ -20,6 +20,7 @@ class SearchAdapter : RecyclerView.Adapter<ViewHolder>() {
     lateinit var callback: SearchCallback
 
     fun updateItems(newList: List<BindMulti>) {
+        searchItems.clear()
         searchItems.addAll(newList)
         notifyDataSetChanged()
     }

@@ -75,7 +75,7 @@ class DetailsViewModel @ViewModelInject constructor(
                     override fun onSuccess(response: TvResponse) {
                         bindDetails.imageUrl = URL_IMAGE + response.posterPath
                         bindDetails.overview = response.overview
-                        bindDetails.popularity = response.type
+                        bindDetails.popularity = response.popularity.toString()
                         bindDetails.releaseDate = response.first_air_date
                     }
                     override fun onError(e: Throwable) {

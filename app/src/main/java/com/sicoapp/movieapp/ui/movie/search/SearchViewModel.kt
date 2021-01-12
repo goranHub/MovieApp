@@ -31,20 +31,15 @@ class SearchViewModel @ViewModelInject constructor(
             .subscribe(
                 object : SingleObserver<Multi> {
                     override fun onSubscribe(d: Disposable) {
-
                     }
-
                     override fun onSuccess(response: Multi) {
                         val movieResponse = response.results
                         val movieItemsList = movieResponse.map { BindMulti(it) }
                         adapter.updateItems(movieItemsList)
                         pageId++
                     }
-
                     override fun onError(e: Throwable) {
-
                     }
-
                 }
             )
     }
