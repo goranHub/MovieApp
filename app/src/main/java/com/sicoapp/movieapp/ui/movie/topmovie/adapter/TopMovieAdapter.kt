@@ -14,7 +14,7 @@ import com.sicoapp.movieapp.databinding.ItemMovieBinding
 import com.sicoapp.movieapp.ui.movie.popular.BindMovie
 import com.sicoapp.movieapp.ui.movie.topmovie.TopMovieCallback
 
-class TopMovieAdapter : RecyclerView.Adapter<ViewHolder>(){
+class TopMovieAdapter : RecyclerView.Adapter<ViewHolder>() {
 
     lateinit var callback: TopMovieCallback
 
@@ -35,6 +35,7 @@ class TopMovieAdapter : RecyclerView.Adapter<ViewHolder>(){
         val dataModel = list[position]
         holder.bind(dataModel)
 
+
         //bind listener with layout
         holder.itemMovieBinding.itemClickListener = object : ItemClickListener {
             override fun openItem(itemId: Long) {
@@ -44,9 +45,9 @@ class TopMovieAdapter : RecyclerView.Adapter<ViewHolder>(){
             }
         }
 
-        holder.itemMovieBinding.itemCrewClickListener  = object : ItemClickListener {
-                override fun openItem(itemId: Long) {
-                    itemId.let { callback.openCrew(it) }
+        holder.itemMovieBinding.itemCrewClickListener = object : ItemClickListener {
+            override fun openItem(itemId: Long) {
+                itemId.let { callback.openCrew(it) }
             }
         }
     }

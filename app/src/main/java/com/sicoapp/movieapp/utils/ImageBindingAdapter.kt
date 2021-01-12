@@ -1,8 +1,12 @@
 package com.sicoapp.movieapp.utils
 
+import android.content.Context
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.sicoapp.movieapp.R
 
 /**
  * @author ll4
@@ -18,8 +22,9 @@ import com.bumptech.glide.Glide
                 .into(view)
         }
     }
-/*
 
+
+/*
 fun getProgressDrawable(context: Context): CircularProgressDrawable {
     return CircularProgressDrawable(context).apply {
         strokeWidth = 5f
@@ -41,12 +46,12 @@ object ImageBindingAdapter {
         view.loadImage(url, getProgressDrawable(view.context))
     }
 }
-
-
-
-
-
  */
+
+
+
+
+
 
 
 

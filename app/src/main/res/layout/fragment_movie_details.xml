@@ -34,8 +34,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivImage"
-            android:layout_width="363dp"
-            android:layout_height="258dp"
+            android:layout_width="306dp"
+            android:layout_height="193dp"
             android:layout_marginTop="28dp"
             android:contentDescription="@null"
             android:scaleType="centerCrop"
@@ -60,7 +60,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/popularity"
-            app:layout_constraintVertical_bias="0.638"/>
+            app:layout_constraintVertical_bias="0.47" />
 
         <TextView
             android:id="@+id/textOverview"
@@ -144,48 +144,18 @@
             app:layout_constraintTop_toBottomOf="@+id/release_date_Text"
             tools:text="abcdefgh" />
 
-
-        <Button
-            android:id="@+id/btnCall"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="40dp"
-            android:text="call"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/smiley"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/popularity"
-            app:layout_constraintVertical_bias="0.2" />
-
-        <Button
-            android:id="@+id/btnSave"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:text="save"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/btnCall"
-            app:layout_constraintEnd_toStartOf="@+id/btnDeleteAll"
-            app:layout_constraintHorizontal_bias="0.483"
-            app:layout_constraintStart_toEndOf="@+id/btnCall"
-            app:layout_constraintTop_toBottomOf="@+id/popularity"
-            app:layout_constraintVertical_bias="1.0" />
-
         <Button
             android:id="@+id/btnDeleteAll"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_marginTop="4dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginEnd="156dp"
             android:text="delete"
             android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/smiley"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/release_date"
-            app:layout_constraintVertical_bias="0.2" />
+            app:layout_constraintVertical_bias="0.741" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
