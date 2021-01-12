@@ -61,11 +61,6 @@ class DetailsMovieFragment : Fragment() {
 
     private fun deleteFromDB() {
         viewModel.removeRatingForMovie(movieId.toInt())
-        binding.smiley.setFaceBackgroundColor(SmileyRating.Type.TERRIBLE, Color.BLACK)
-        binding.smiley.setFaceBackgroundColor(SmileyRating.Type.GOOD, Color.BLACK)
-        binding.smiley.setFaceBackgroundColor(SmileyRating.Type.GREAT, Color.BLACK)
-        binding.smiley.setFaceBackgroundColor(SmileyRating.Type.BAD, Color.BLACK)
-        binding.smiley.setFaceBackgroundColor(SmileyRating.Type.OKAY, Color.BLACK)
     }
 
     private fun saveIntoDB() {
@@ -89,35 +84,30 @@ class DetailsMovieFragment : Fragment() {
         rating: Int
     ) {
         lateinit var type: SmileyRating.Type
-        var color: Int
+        var color = Color.YELLOW
         if (rating == 1) {
             type = SmileyRating.Type.TERRIBLE
-            color = Color.YELLOW
-            binding.smiley.setRating(rating, true)
+            binding.smiley.setRating(rating, false)
             binding.smiley.setFaceBackgroundColor(type, color)
         }
         if (rating == 2) {
             type = SmileyRating.Type.BAD
-            color = Color.YELLOW
-            binding.smiley.setRating(rating, true)
+            binding.smiley.setRating(rating, false)
             binding.smiley.setFaceBackgroundColor(type, color)
         }
         if (rating == 3) {
             type = SmileyRating.Type.OKAY
-            color = Color.YELLOW
-            binding.smiley.setRating(rating, true)
+            binding.smiley.setRating(rating, false)
             binding.smiley.setFaceBackgroundColor(type, color)
         }
         if (rating == 4) {
             type = SmileyRating.Type.GOOD
-            color = Color.YELLOW
-            binding.smiley.setRating(rating, true)
+            binding.smiley.setRating(rating, false)
             binding.smiley.setFaceBackgroundColor(type, color)
         }
         if (rating == 5) {
             type = SmileyRating.Type.GREAT
-            color = Color.YELLOW
-            binding.smiley.setRating(rating, true)
+            binding.smiley.setRating(rating, false)
             binding.smiley.setFaceBackgroundColor(type, color)
         }
     }
