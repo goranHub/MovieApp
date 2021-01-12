@@ -80,11 +80,11 @@ class DetailsMovieFragment : Fragment() {
             })
     }
 
-    private fun updateUIMovie(movieId :Long){
+    private fun updateUITv(movieId :Long){
         viewModel.loadRemoteDataTv(movieId)
     }
 
-    private fun updateUITv(movieId :Long){
+    private fun updateUIMovie(movieId :Long){
         viewModel.loadRemoteDataMovie(movieId)
     }
 }
