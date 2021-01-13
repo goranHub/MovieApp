@@ -4,10 +4,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.BR
 import com.sicoapp.movieapp.databinding.ItemMovieBinding
 
-class ViewHolder(val itemMovieBinding: ItemMovieBinding) :
-    RecyclerView.ViewHolder(itemMovieBinding.root) {
+class ViewHolder(val binding: ItemMovieBinding) :
+    RecyclerView.ViewHolder(binding.root) {
     fun bind(obj: Any?) {
-        itemMovieBinding.setVariable(BR.data, obj)
-        itemMovieBinding.executePendingBindings()
+        binding.setVariable(BR.data, obj)
+        binding.executePendingBindings()
     }
 }

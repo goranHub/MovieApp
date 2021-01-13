@@ -22,7 +22,6 @@ class SearchViewModel @ViewModelInject constructor(
 
     var pageId = 1L
 
-
     fun loadRemoteData(query: String) {
         remoteRepository
             .fetchSearchMultiMovie(query, pageId)

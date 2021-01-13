@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/topMovieFragment"
-        android:title="Top Movie"
+        android:title="@string/topMovie"
         android:icon="@drawable/ic_menu_24dp"/>
 
     <item android:id="@+id/popularMovieFragment"
-        android:title="Popular"
+        android:title="@string/popular"
         android:icon="@drawable/ic_menu_24dp" />
 
     <item android:id="@+id/searchFragment"
-        android:title="Search"
+        android:title="@string/search"
         android:icon="@drawable/ic_menu_24dp" />
 </menu>

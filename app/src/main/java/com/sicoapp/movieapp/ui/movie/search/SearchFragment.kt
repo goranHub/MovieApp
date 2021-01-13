@@ -30,15 +30,15 @@ class SearchFragment : Fragment() {
 
     lateinit var binding: FragmentMovieSearchBinding
 
-    val callback = object : SearchCallback {
-        override fun openDetails(movieId: Long, mediaTyp: String) {
+    var callback = object : SearchCallback {
+        override fun openDetails(movieId: Long, mediaTyp: String)  {
             val bundlePostIdAndMediaTyp = bundleOf(ITEM_ID to movieId, MEDIATYP to mediaTyp)
             findNavController().navigate(
                 R.id.action_searchFragment_to_movieDetailsFragment,
-                bundlePostIdAndMediaTyp
-            )
+                bundlePostIdAndMediaTyp)
         }
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -89,6 +89,7 @@ class SearchFragment : Fragment() {
                 clickedBlock(query)
                 return true
             }
+
             override fun onQueryTextChange(query: String): Boolean {
                 return true
             }

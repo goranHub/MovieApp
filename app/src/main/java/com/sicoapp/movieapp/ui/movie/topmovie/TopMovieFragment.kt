@@ -22,6 +22,11 @@ class TopMovieFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieTopBinding
 
+    /*
+    instead use paramters in ViewModel constructor that are connect Adapter with Fragment
+    we connect now the callback with Adapter trough xml and BindigAdapter
+     */
+
     val callback = object : TopMovieCallback {
         override fun openDetails(movieId: Long) {
             val bundleItemId = bundleOf(ITEM_ID to movieId)
@@ -45,6 +50,7 @@ class TopMovieFragment : Fragment() {
 
         binding = FragmentMovieTopBinding.inflate(inflater)
         binding.data = viewModel
+
         binding.callback = callback
 
         scrollRecyclerView()

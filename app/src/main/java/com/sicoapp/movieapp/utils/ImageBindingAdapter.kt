@@ -13,18 +13,6 @@ import com.sicoapp.movieapp.R
  * @date 12/7/2020
  */
 
- object ImageBindingAdapter {
-        @JvmStatic
-        @BindingAdapter("loadImageUrl")
-        fun loadImage(view: ImageView, profileImage: String) {
-            Glide.with(view.context)
-                .load(profileImage)
-                .into(view)
-        }
-    }
-
-
-/*
 fun getProgressDrawable(context: Context): CircularProgressDrawable {
     return CircularProgressDrawable(context).apply {
         strokeWidth = 5f
@@ -33,7 +21,7 @@ fun getProgressDrawable(context: Context): CircularProgressDrawable {
     }
 }
 
-fun ImageView.loadImage(uri:String?, progressDrawable: CircularProgressDrawable){
+fun ImageView.loadImage(uri:String, progressDrawable: CircularProgressDrawable){
     val options = RequestOptions().placeholder(progressDrawable)
         .error(R.mipmap.ic_launcher)
     Glide.with(context).setDefaultRequestOptions(options).load(uri).into(this)
@@ -42,11 +30,11 @@ fun ImageView.loadImage(uri:String?, progressDrawable: CircularProgressDrawable)
 object ImageBindingAdapter {
     @JvmStatic
     @BindingAdapter("loadImageUrl")
-    fun loadImage(view:ImageView , url:String?){
+    fun loadImage(view:ImageView , url:String){
         view.loadImage(url, getProgressDrawable(view.context))
     }
 }
- */
+
 
 
 
