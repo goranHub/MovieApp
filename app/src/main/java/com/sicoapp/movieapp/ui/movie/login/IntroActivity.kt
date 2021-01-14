@@ -22,4 +22,14 @@ class IntroActivity : AppCompatActivity() {
             startActivity(Intent(this@IntroActivity, SignUpActivity::class.java))
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        this.supportActionBar!!.hide()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        this.supportActionBar!!.show()
+    }
 }

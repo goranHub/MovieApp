@@ -29,6 +29,16 @@ class SignUpActivity : BaseActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        this.supportActionBar!!.title = "SIGN UP"
+    }
+
+    override fun onStop() {
+        super.onStop()
+        this.supportActionBar!!.show()
+    }
+
     private fun registerUser() {
         val name: String = et_name.text.toString().trim { it <= ' ' }
         val email: String = et_email.text.toString().trim { it <= ' ' }

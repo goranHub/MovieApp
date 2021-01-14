@@ -12,28 +12,30 @@ import com.sicoapp.movieapp.data.firebase.FireStoreClass
  * @author ll4
  * @date 1/14/2021
  */
-class EntryActivity  : AppCompatActivity(){
+class EntryActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entry)
 
         Handler().postDelayed({
-
             val currentUserID = FireStoreClass().getCurrentUserID()
-
             if (currentUserID.isNotEmpty()) {
-
                 startActivity(Intent(this@EntryActivity, MainActivity::class.java))
             } else {
-
                 startActivity(Intent(this@EntryActivity, IntroActivity::class.java))
             }
             finish()
-        }, 2500)
-
-
+        }, 1000)
     }
 
+    override fun onResume() {
+        super.onResume()
+        this.supportActionBar!!.hide()
+    }
 
+    override fun onStop() {
+        super.onStop()
+        this.supportActionBar!!.show()
+    }
 }

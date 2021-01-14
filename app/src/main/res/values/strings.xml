@@ -19,7 +19,7 @@
     <string name="name">Name</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
-    <string name="please_wait">Please Wait;</string>
+    <string name="please_wait">Please Wait</string>
     <string name="my_profile">Profile</string>
     <string name="sign_out">Sign Out</string>
 </resources>
