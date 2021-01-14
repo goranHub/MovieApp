@@ -9,6 +9,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'com.google.gms.google-services'
 
 
 android {
@@ -133,5 +134,10 @@ dependencies {
     implementation "android.arch.lifecycle:reactivestreams:$reactivestreams_version"
 
     implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02'
+
+    // Firebase Authentication Dependency
+    implementation "com.google.firebase:firebase-auth:20.0.1"
+    // Firebase Cloud Firestore Dependency
+    implementation 'com.google.firebase:firebase-firestore:22.0.1'
 
 }
