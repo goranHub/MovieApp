@@ -46,4 +46,6 @@
             app:destination="@id/movieDetailsFragment" />
     </fragment>
 
+
 </navigation>
+

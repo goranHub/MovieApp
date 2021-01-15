@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.sicoapp.movieapp.MainActivity
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.firebase.FireStoreClass
@@ -14,19 +16,12 @@ import com.sicoapp.movieapp.data.firebase.FireStoreClass
  */
 class EntryActivity : AppCompatActivity(){
 
+    lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entry)
-
-        Handler().postDelayed({
-            val currentUserID = FireStoreClass().getCurrentUserID()
-            if (currentUserID.isNotEmpty()) {
-                startActivity(Intent(this@EntryActivity, MainActivity::class.java))
-            } else {
-                startActivity(Intent(this@EntryActivity, IntroActivity::class.java))
-            }
-            finish()
-        }, 1000)
+        navController = findNavController(R.id.nav_host_fragment_entry)
     }
 
     override fun onResume() {

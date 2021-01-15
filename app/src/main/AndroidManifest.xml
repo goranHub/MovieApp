@@ -20,11 +20,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.movie.login.IntroActivity"/>
-        <activity
-            android:name=".ui.movie.login.SignUpActivity" />
-        <activity android:name=".ui.movie.login.SignInActivity"/>
-        <activity
             android:name=".MainActivity" />
     </application>
 

@@ -5,8 +5,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.sicoapp.movieapp.data.firebase.model.User
-import com.sicoapp.movieapp.ui.movie.login.SignInActivity
-import com.sicoapp.movieapp.ui.movie.login.SignUpActivity
+import com.sicoapp.movieapp.ui.movie.login.SignInFragment
+import com.sicoapp.movieapp.ui.movie.login.SignUpFragment
 import com.sicoapp.movieapp.utils.USERS
 
 
@@ -14,7 +14,7 @@ class FireStoreClass {
 
     private val fireBase = FirebaseFirestore.getInstance()
 
-    fun registerUser(activity: SignUpActivity, userInfo: User) {
+    fun registerUser(activity: SignUpFragment, userInfo: User) {
 
         fireBase.collection(USERS)
                 .document(getCurrentUserID())
@@ -28,7 +28,7 @@ class FireStoreClass {
     }
 
 
-    fun signInUser(activity: SignInActivity) {
+    fun signInUser(activity: SignInFragment) {
 
         fireBase.collection(USERS)
                 // The document id to get the Fields of user.
@@ -38,7 +38,6 @@ class FireStoreClass {
                     Log.e(
                             activity.javaClass.simpleName, document.toString()
                     )
-
                     val loggedInUser = document.toObject(User::class.java)!!
                     activity.signInSuccess(loggedInUser)
                 }

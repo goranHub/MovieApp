@@ -1,37 +1,50 @@
 package com.sicoapp.movieapp.ui.movie.login
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.sicoapp.movieapp.MainActivity
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.firebase.FireStoreClass
 import com.sicoapp.movieapp.data.firebase.model.User
+import com.sicoapp.movieapp.databinding.ActivitySignUpBinding
+import com.sicoapp.movieapp.databinding.SignInBinding
+import com.sicoapp.movieapp.ui.movie.BaseFragment
 import kotlinx.android.synthetic.main.sign_in.*
 
-class SignInActivity : BaseActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+class SignInFragment : BaseFragment() {
 
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.sign_in)
+    lateinit var binding: SignInBinding
 
-        btn_sign_in.setOnClickListener {
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+
+        binding = SignInBinding.inflate(inflater)
+
+        binding.btnSignIn.setOnClickListener {
             signInRegisteredUser()
         }
+
+        return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        this.supportActionBar!!.title = "SIGN IN"
+        (activity as AppCompatActivity?)!!.supportActionBar?.setSubtitle("SIGN IN")
     }
 
     override fun onStop() {
         super.onStop()
-        this.supportActionBar!!.show()
+        (activity as AppCompatActivity?)!!.supportActionBar?.show()
     }
 
     private fun signInRegisteredUser() {
@@ -46,10 +59,10 @@ class SignInActivity : BaseActivity() {
                 .addOnCompleteListener { task ->
                     hideProgressDialog()
                     if (task.isSuccessful) {
-                        FireStoreClass().signInUser(this@SignInActivity)
+                        FireStoreClass().signInUser(this@SignInFragment)
                     } else {
                         Toast.makeText(
-                            this@SignInActivity,
+                            requireContext(),
                             task.exception!!.message,
                             Toast.LENGTH_LONG
                         ).show()
@@ -72,7 +85,9 @@ class SignInActivity : BaseActivity() {
 
     fun signInSuccess(user: User) {
         hideProgressDialog()
-        startActivity(Intent(this@SignInActivity, MainActivity::class.java))
-        this.finish()
+
+        findNavController().navigate(
+            R.id.action_signInFragment_to_mainActivity)
+        activity?.finish()
     }
 }

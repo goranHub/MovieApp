@@ -1,42 +1,62 @@
 package com.sicoapp.movieapp.ui.movie.login
 
+import android.app.Dialog
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.firebase.FireStoreClass
 import com.sicoapp.movieapp.data.firebase.model.User
+import com.sicoapp.movieapp.databinding.ActivitySignUpBinding
+import com.sicoapp.movieapp.databinding.FragmentEntryBinding
+import com.sicoapp.movieapp.databinding.SignInBinding
+import com.sicoapp.movieapp.ui.movie.BaseFragment
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import kotlinx.android.synthetic.main.dialog_progress.*
+import kotlinx.android.synthetic.main.fragment_item.*
 
 /**
  * @author ll4
  * @date 1/14/2021
  */
-class SignUpActivity : BaseActivity() {
+class SignUpFragment : BaseFragment() {
 
+    lateinit var binding: ActivitySignUpBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up)
+        binding = ActivitySignUpBinding.inflate(inflater)
 
-        btn_sign_up.setOnClickListener {
+        binding.btnSignUp.setOnClickListener {
             registerUser()
         }
+
+        return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        this.supportActionBar!!.title = "SIGN UP"
+        (activity as AppCompatActivity?)!!.supportActionBar?.subtitle = "SIGN UP"
     }
 
     override fun onStop() {
         super.onStop()
-        this.supportActionBar!!.show()
+        (activity as AppCompatActivity?)!!.supportActionBar?.show()
     }
 
     private fun registerUser() {
@@ -58,10 +78,10 @@ class SignUpActivity : BaseActivity() {
                                 firebaseUser.uid, name, registeredEmail
                             )
 
-                            FireStoreClass().registerUser(this@SignUpActivity, user)
+                            FireStoreClass().registerUser(this@SignUpFragment, user)
                         } else {
                             Toast.makeText(
-                                this@SignUpActivity,
+                                requireContext(),
                                 task.exception!!.message,
                                 Toast.LENGTH_SHORT
                             ).show()
@@ -91,14 +111,19 @@ class SignUpActivity : BaseActivity() {
     }
 
     fun userRegisteredSuccess() {
-
         Toast.makeText(
-            this@SignUpActivity,
+            requireContext(),
             "You have successfully registered.",
             Toast.LENGTH_SHORT
         ).show()
         hideProgressDialog()
         FirebaseAuth.getInstance().signOut()
-        finish()
+        //activity?.finish()
+        findNavController().navigate(
+            R.id.action_signUpFragment_to_mainActivity)
+    }
+
+   override fun hideProgressDialog() {
+        dialog.dismiss()
     }
 }
