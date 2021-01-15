@@ -9,8 +9,8 @@ import androidx.navigation.fragment.findNavController
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.firebase.FireStoreClass
 import com.sicoapp.movieapp.databinding.FragmentEntryBinding
-import com.sicoapp.movieapp.databinding.FragmentIntroBinding
 import com.sicoapp.movieapp.ui.movie.BaseFragment
+import com.sicoapp.movieapp.utils.USER_ID
 
 /**
  * @author ll4
@@ -18,28 +18,31 @@ import com.sicoapp.movieapp.ui.movie.BaseFragment
  */
 class EntryFragment : BaseFragment() {
 
-
     lateinit var binding: FragmentEntryBinding
-
+    var userId = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        arguments?.getString(USER_ID, "")?.let {
+            userId = it
+        }
+
         binding = FragmentEntryBinding.inflate(inflater)
 
         Handler().postDelayed({
+
             val currentUserID = FireStoreClass().getCurrentUserID()
-            if (currentUserID.isNotEmpty()) {
-                findNavController().navigate(R.id.action_entryFragment_to_mainActivity)
-            } else {
+
+            if (currentUserID == userId) {
                 findNavController().navigate(R.id.action_entryFragment_to_introFragment)
+            } else {
+                findNavController().navigate(R.id.action_entryFragment_to_mainActivity)
             }
-            activity?.finish()
         }, 1000)
 
         return binding.root
     }
-
-
 }

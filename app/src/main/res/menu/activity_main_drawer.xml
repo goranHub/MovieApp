@@ -7,6 +7,11 @@
             android:title="@string/my_profile" />
 
         <item
+            android:id="@+id/list_movie_saved"
+            android:icon="@drawable/ic_menu_24dp"
+            android:title="@string/saved" />
+
+        <item
             android:id="@+id/sign_out"
             android:icon="@drawable/ic_menu_24dp"
             android:title="@string/sign_out" />

@@ -12,34 +12,30 @@ import com.google.firebase.auth.FirebaseAuth
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.firebase.FireStoreClass
 import com.sicoapp.movieapp.data.firebase.model.User
-import com.sicoapp.movieapp.databinding.ActivitySignUpBinding
-import com.sicoapp.movieapp.databinding.SignInBinding
+import com.sicoapp.movieapp.databinding.FragmentSignInBinding
 import com.sicoapp.movieapp.ui.movie.BaseFragment
-import kotlinx.android.synthetic.main.sign_in.*
 
 
 class SignInFragment : BaseFragment() {
 
-    lateinit var binding: SignInBinding
-
+    lateinit var binding: FragmentSignInBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-        binding = SignInBinding.inflate(inflater)
+        binding = FragmentSignInBinding.inflate(inflater)
 
         binding.btnSignIn.setOnClickListener {
             signInRegisteredUser()
         }
-
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        (activity as AppCompatActivity?)!!.supportActionBar?.setSubtitle("SIGN IN")
+        (activity as AppCompatActivity?)!!.supportActionBar?.subtitle = "SIGN IN"
     }
 
     override fun onStop() {
@@ -48,9 +44,8 @@ class SignInFragment : BaseFragment() {
     }
 
     private fun signInRegisteredUser() {
-
-        val email: String = et_email.text.toString().trim { it <= ' ' }
-        val password: String = et_password.text.toString().trim { it <= ' ' }
+        val email: String = binding.etEmail.text.toString().trim { it <= ' ' }
+        val password: String = binding.etPassword.text.toString().trim { it <= ' ' }
 
         if (validateForm(email, password)) {
             showProgressDialog(resources.getString(R.string.please_wait))

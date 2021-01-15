@@ -26,7 +26,7 @@ open class BaseFragment : Fragment() {
 
     open fun showErrorSnackBar(message: String) {
         val snackBar =
-            Snackbar.make(content, message, Snackbar.LENGTH_LONG)
+            Snackbar.make(requireActivity().findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
         val snackBarView = snackBar.view
         snackBarView.setBackgroundColor(
             ContextCompat.getColor(
