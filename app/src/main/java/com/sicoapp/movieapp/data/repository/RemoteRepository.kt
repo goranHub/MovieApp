@@ -39,4 +39,9 @@ class RemoteRepository @Inject constructor(
     fun fetchCrew(movieId: Long): Single<Movie> {
         return api.loadCrewBy(movieId, API_KEY)
     }
+
+
+    fun fetchSearchMultiMovieRx(query: String, pageId: Long): Single<Multi> {
+        return api.searchMulti(API_KEY, query, pageId)
+    }
 }

@@ -46,6 +46,7 @@ class SearchAdapter : RecyclerView.Adapter<ViewHolder>() {
     override fun getItemCount() = searchItems.size
 
     fun updateItems(newList: List<BindMulti>) {
+        searchItems.clear()
         searchItems.addAll(newList)
         notifyDataSetChanged()
     }

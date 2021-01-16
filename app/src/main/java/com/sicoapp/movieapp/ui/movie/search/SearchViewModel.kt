@@ -5,6 +5,9 @@ import androidx.lifecycle.ViewModel
 import com.sicoapp.movieapp.data.model.response.multi.Multi
 import com.sicoapp.movieapp.data.repository.RemoteRepository
 import com.sicoapp.movieapp.ui.movie.search.adapter.SearchAdapter
+import io.reactivex.Observable
+import io.reactivex.ObservableEmitter
+import io.reactivex.ObservableOnSubscribe
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -32,6 +35,7 @@ class SearchViewModel @ViewModelInject constructor(
                     override fun onSubscribe(d: Disposable) {
                     }
                     override fun onSuccess(response: Multi) {
+                       // var movieResponse=    response.results.filter { it.poster_path.isNullOrBlank()}
                         val movieResponse = response.results
                         val movieItemsList = movieResponse.map { BindMulti(it) }
                         adapter.updateItems(movieItemsList)

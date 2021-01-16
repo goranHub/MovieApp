@@ -27,13 +27,23 @@ fun ImageView.loadImage(uri:String, progressDrawable: CircularProgressDrawable){
     Glide.with(context).setDefaultRequestOptions(options).load(uri).into(this)
 }
 
-object ImageBindingAdapter {
+/*object ImageBindingAdapter {
     @JvmStatic
     @BindingAdapter("loadImageUrl")
     fun loadImage(view:ImageView , url:String){
         view.loadImage(url, getProgressDrawable(view.context))
+    }*/
+
+    object ImageBindingAdapter {
+        @JvmStatic
+        @BindingAdapter("loadImageUrl")
+        fun loadImage(view: ImageView, profileImage: String) {
+            Glide.with(view.context)
+                .load(profileImage)
+                .into(view)
+        }
     }
-}
+/*}*/
 
 
 

@@ -1,6 +1,8 @@
 package com.sicoapp.movieapp.ui.movie.search
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +18,11 @@ import com.sicoapp.movieapp.databinding.FragmentMovieSearchBinding
 import com.sicoapp.movieapp.utils.ITEM_ID
 import com.sicoapp.movieapp.utils.MEDIATYP
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -31,11 +38,12 @@ class SearchFragment : Fragment() {
     lateinit var binding: FragmentMovieSearchBinding
 
     var callback = object : SearchCallback {
-        override fun openDetails(movieId: Long, mediaTyp: String)  {
+        override fun openDetails(movieId: Long, mediaTyp: String) {
             val bundlePostIdAndMediaTyp = bundleOf(ITEM_ID to movieId, MEDIATYP to mediaTyp)
             findNavController().navigate(
                 R.id.action_searchFragment_to_movieDetailsFragment,
-                bundlePostIdAndMediaTyp)
+                bundlePostIdAndMediaTyp
+            )
         }
     }
 
@@ -64,11 +72,23 @@ class SearchFragment : Fragment() {
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
     }
 
+    @SuppressLint("CheckResult")
     private fun setupSearchView() {
-        binding.searchView.clickSubmitButton { query ->
-            viewModel.loadRemoteData(query)
-            scrollRecyclerView(query)
-        }
+
+        fromView(binding.searchView)
+            .filter{
+                if (it.isEmpty()){
+                    Log.d("emptyString", "emptyString")
+                }
+                return@filter true}
+            .debounce(230, TimeUnit.MILLISECONDS)
+            .distinctUntilChanged()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                viewModel.loadRemoteData(it)
+                scrollRecyclerView(it)
+            }
     }
 
     private fun scrollRecyclerView(query: String) {
@@ -82,7 +102,23 @@ class SearchFragment : Fragment() {
         })
     }
 
-    private fun SearchView.clickSubmitButton(clickedBlock: (String) -> Unit) {
+    private fun fromView(searchView: SearchView): Observable<String> {
+        val subject = PublishSubject.create<String>()
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(s: String?): Boolean {
+                subject.onComplete()
+                return true
+            }
+
+            override fun onQueryTextChange(text: String): Boolean {
+                subject.onNext(text)
+                return true
+            }
+        })
+        return subject
+    }
+
+/*    private fun SearchView.clickSubmitButton(clickedBlock: (String) -> Unit) {
         setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 clickedBlock(query)
@@ -93,5 +129,5 @@ class SearchFragment : Fragment() {
                 return true
             }
         })
-    }
+    }*/
 }
