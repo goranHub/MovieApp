@@ -81,7 +81,7 @@ class SearchFragment : Fragment() {
                     Log.d("emptyString", "emptyString")
                 }
                 return@filter true}
-            .debounce(230, TimeUnit.MILLISECONDS)
+            .debounce(400, TimeUnit.MILLISECONDS)
             .distinctUntilChanged()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

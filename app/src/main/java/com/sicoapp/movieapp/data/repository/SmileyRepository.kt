@@ -14,25 +14,31 @@ import javax.inject.Inject
  */
 
 class SmileyRepository @Inject constructor(
-    val dao: DAOAccess) {
+    val dao: DAOAccess
+) {
 
-        private var smileyRatingTableModel: LiveData<SmileyRatingTableModel>? = null
+    private var smileyRatingTableModel: LiveData<SmileyRatingTableModel>? = null
+    private var smileyRatingTableModelList: LiveData<List<SmileyRatingTableModel>>? = null
 
-        fun insertData(itemId: Int, rating: Int) {
-            CoroutineScope(IO).launch {
-                val movieRatingDetails = SmileyRatingTableModel(itemId, rating)
-                dao.insert(movieRatingDetails)
-            }
-        }
-
-        fun getMovieRatingDetails(itemId: Int): LiveData<SmileyRatingTableModel> {
-            smileyRatingTableModel = dao.loadById(itemId)
-            return smileyRatingTableModel as LiveData<SmileyRatingTableModel>
-        }
-
-        fun removeDataForThatItem(itemId: Int) {
-            CoroutineScope(IO).launch {
-                dao.deleteByID(itemId)
-            }
+    fun insertData(itemId: Int, rating: Int) {
+        CoroutineScope(IO).launch {
+            val movieRatingDetails = SmileyRatingTableModel(itemId, rating)
+            dao.insert(movieRatingDetails)
         }
     }
+
+    suspend fun getSaved(): List<SmileyRatingTableModel> {
+        return dao.getSaved()
+    }
+
+    fun getMovieRatingDetails(itemId: Int): LiveData<SmileyRatingTableModel> {
+        smileyRatingTableModel = dao.loadById(itemId)
+        return smileyRatingTableModel as LiveData<SmileyRatingTableModel>
+    }
+
+    fun removeDataForThatItem(itemId: Int) {
+        CoroutineScope(IO).launch {
+            dao.deleteByID(itemId)
+        }
+    }
+}

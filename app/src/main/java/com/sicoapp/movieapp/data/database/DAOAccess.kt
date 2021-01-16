@@ -5,13 +5,16 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.sicoapp.movieapp.data.database.SmileyRatingTableModel
+
 
 @Dao
 interface DAOAccess {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(smileyRatingTableModel: SmileyRatingTableModel)
+
+    @Query("SELECT * FROM MovieRating")
+    suspend fun getSaved(): List<SmileyRatingTableModel>
 
     @Query("SELECT * FROM MovieRating WHERE itemId =:itemId")
     fun loadById(itemId: Int?): LiveData<SmileyRatingTableModel>

@@ -62,10 +62,9 @@
     <fragment
         android:id="@+id/itemFragment"
         android:name="com.sicoapp.movieapp.ui.movie.saved.ItemFragment"
-        android:label="fragment_item_list"
+        android:label="Saved Movies"
         tools:layout="@layout/fragment_item_list" />
     <include app:graph="@navigation/start_navigation" />
-
 
 </navigation>
 

@@ -110,4 +110,5 @@ class TopMovieFragment : BaseFragment(), NavigationView.OnNavigationItemSelected
         val navigationView = activity?.navigation_view
         navigationView?.setNavigationItemSelectedListener(this)
     }
+
 }

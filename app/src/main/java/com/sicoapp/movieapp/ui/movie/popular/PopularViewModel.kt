@@ -21,7 +21,6 @@ class PopularViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     var pageId = 1
-
     val adapter = TopMovieAdapter()
 
     init {
@@ -36,7 +35,6 @@ class PopularViewModel @ViewModelInject constructor(
             .subscribe(
                 object : SingleObserver<MovieResponse> {
                     override fun onSubscribe(d: Disposable) {
-
                     }
                     override fun onSuccess(response: MovieResponse) {
                         val movieItemsList = response.results.map { BindMovie(it) }
@@ -46,7 +44,6 @@ class PopularViewModel @ViewModelInject constructor(
                     override fun onError(e: Throwable) {
                         Log.d("error", "${e.stackTrace}")
                     }
-
                 }
             )
     }
