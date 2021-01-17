@@ -7,7 +7,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.sicoapp.movieapp.R
 import kotlinx.android.synthetic.main.dialog_progress.*
-import kotlinx.android.synthetic.main.fragment_item.*
 
 /**
  * @author ll4

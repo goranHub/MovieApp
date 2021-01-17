@@ -18,7 +18,6 @@ import com.sicoapp.movieapp.data.firebase.model.User
 import com.sicoapp.movieapp.databinding.FragmentSignUpBinding
 import com.sicoapp.movieapp.ui.movie.BaseFragment
 import kotlinx.android.synthetic.main.dialog_progress.*
-import kotlinx.android.synthetic.main.fragment_item.*
 
 /**
  * @author ll4
@@ -113,7 +112,7 @@ class SignUpFragment : BaseFragment() {
         FirebaseAuth.getInstance().signOut()
         //activity?.finish()
         findNavController().navigate(
-            R.id.action_signUpFragment_to_mainActivity)
+            R.id.action_signUpFragment_to_topMovieFragment)
     }
 
    override fun hideProgressDialog() {

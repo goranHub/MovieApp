@@ -8,8 +8,13 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.firebase.FireStoreClass
@@ -19,7 +24,6 @@ import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
 import com.sicoapp.movieapp.utils.USER_ID
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 
 @AndroidEntryPoint
 class TopMovieFragment : BaseFragment(), NavigationView.OnNavigationItemSelectedListener {
@@ -27,6 +31,7 @@ class TopMovieFragment : BaseFragment(), NavigationView.OnNavigationItemSelected
     private val viewModel: TopMovieViewModel by viewModels()
 
     private lateinit var binding: FragmentMovieTopBinding
+
 
     /*
     instead use paramters in ViewModel constructor that are connect Adapter with Fragment
@@ -38,14 +43,16 @@ class TopMovieFragment : BaseFragment(), NavigationView.OnNavigationItemSelected
             val bundleItemId = bundleOf(ITEM_ID to movieId)
             findNavController().navigate(
                 R.id.action_movieListFragment_to_movieDetailsFragment,
-                bundleItemId)
+                bundleItemId
+            )
         }
 
         override fun openCrew(crewId: Long) {
             val bundleCrewId = bundleOf(CREW_ID to crewId)
             findNavController().navigate(
                 R.id.action_movieListFragment_to_crewMovieFragment,
-                bundleCrewId)
+                bundleCrewId
+            )
         }
     }
 
@@ -84,25 +91,27 @@ class TopMovieFragment : BaseFragment(), NavigationView.OnNavigationItemSelected
             R.id.my_profile -> {
             }
 
-            R.id.list_movie_saved->{
+            R.id.list_movie_saved -> {
                 findNavController().navigate(
-                    R.id.action_topMovieFragment_to_itemFragment)
+                    R.id.action_topMovieFragment_to_itemFragment
+                )
             }
 
             R.id.sign_out -> {
+                //TODO signout function
                 val currentUserID = FireStoreClass().getCurrentUserID()
                 val userIdBundle = bundleOf(USER_ID to currentUserID)
                 findNavController().navigate(
-                    R.id.action_topMovieFragment_to_start_navigation, userIdBundle)
+                    R.id.action_topMovieFragment_to_introFragment, userIdBundle
+                )
             }
         }
-        activity?.drawer_layout?.closeDrawer(GravityCompat.START)
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 
     private fun setNavigationViewListener() {
-        val navigationView = activity?.navigation_view
-        navigationView?.setNavigationItemSelectedListener(this)
+        val navigationView = binding.navigationView
+        navigationView.setNavigationItemSelectedListener(this)
     }
-
 }

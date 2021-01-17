@@ -4,6 +4,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.sicoapp.movieapp.data.model.response.multi.Multi
 import com.sicoapp.movieapp.data.repository.RemoteRepository
+import com.sicoapp.movieapp.ui.movie.crew.CrewObservable
 import com.sicoapp.movieapp.ui.movie.search.adapter.SearchAdapter
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -46,10 +47,14 @@ class SearchViewModel @ViewModelInject constructor(
                     }
 
                     override fun onSuccess(response: Multi) {
-                        // var movieResponse=    response.results.filter { it.poster_path.isNullOrBlank()}
-                        val movieResponse = response.results
-                        val movieItemsList = movieResponse.map { BindMulti(it) }
-                        adapter.updateItems(movieItemsList)
+
+                        val movieResponse =
+                            response.results
+                                .filter { !it.poster_path.isNullOrBlank() }
+                                .distinctBy { it.poster_path }
+                                .map { BindMulti(it) }
+
+                        adapter.updateItems(movieResponse)
                         currentPageId++
                     }
 

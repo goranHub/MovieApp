@@ -14,7 +14,7 @@ import javax.inject.Inject
  * @date 1/7/2021
  */
 class RemoteRepository @Inject constructor(
-    private val api: ApiServisFlow
+    val api: ApiServisFlow
 ) {
     fun fetchTopMovies(pageId: Int): Single<MovieResponse> {
         return api.loadTopRated(API_KEY, pageId.toString())

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_movie_saved"
         android:name="com.sicoapp.movieapp.ui.movie.saved.ItemFragment"
         android:layout_width="match_parent"
@@ -10,5 +15,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context=".ui.movie.saved.ItemFragment"
-        tools:listitem="@layout/fragment_item"/>
+        tools:context=".ui.movie.saved.SavedFragment"
+        tools:listitem="@layout/fragment_saved" />
+</layout>

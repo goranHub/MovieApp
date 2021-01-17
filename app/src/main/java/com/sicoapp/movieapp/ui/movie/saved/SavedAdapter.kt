@@ -1,6 +1,5 @@
 package com.sicoapp.movieapp.ui.movie.saved
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,65 +9,51 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.sicoapp.movieapp.R
-import com.sicoapp.movieapp.data.api.ApiServisFlow
 import com.sicoapp.movieapp.data.database.SmileyRatingTableModel
 import com.sicoapp.movieapp.data.model.response.movie.Movie
-import com.sicoapp.movieapp.utils.API_KEY
 import com.sicoapp.movieapp.utils.URL_IMAGE
-import io.reactivex.SingleObserver
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 
-class SavedAdapter(
-    private val values: List<SmileyRatingTableModel>,
-    var api: ApiServisFlow
-) : RecyclerView.Adapter<SavedAdapter.ViewHolder>() {
+class SavedAdapter : RecyclerView.Adapter<SavedAdapter.ViewHolderSaved>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    var list = mutableListOf<Movie>()
+
+    lateinit var valuesList: List<SmileyRatingTableModel>
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderSaved {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_item, parent, false)
-        return ViewHolder(view)
+            .inflate(R.layout.fragment_saved, parent, false)
+        return ViewHolderSaved(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun getItemCount(): Int = list.size
 
-        val item = values[position]
-        holder.contentView.text = item.rating.toString()
+    override fun onBindViewHolder(holder: ViewHolderSaved, position: Int) {
 
-        val singleMovie = item.itemId?.let { api.getByMovieID(it.toLong(), API_KEY) }
+        val item = list[position]
 
-        singleMovie
-            ?.subscribeOn(Schedulers.io())
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribe(
-                object : SingleObserver<Movie> {
-                    override fun onSubscribe(d: Disposable) {
-                    }
+      /*  val item = valuesList[position]*/
 
-                    override fun onSuccess(response: Movie) {
-                        Glide.with(holder.idView.rootView.context)
-                            .load(URL_IMAGE + response.posterPath)
-                            .diskCacheStrategy(DiskCacheStrategy.NONE)
-                            .into(holder.idView)
-                    }
+      /*  holder.contentView.text = item.rating.toString()*/
 
-                    override fun onError(e: Throwable) {
-                        Log.d("error", "${e.stackTrace}")
-                    }
-                }
-            )
+        Glide.with(holder.idView.rootView.context)
+            .load(URL_IMAGE + item.posterPath)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .into(holder.idView)
+
     }
 
-    override fun getItemCount(): Int = values.size
+    fun addMovies(listItems: Movie) {
+        list.add(listItems)
+        notifyDataSetChanged()
+    }
+    fun addRating(values: List<SmileyRatingTableModel>) {
+        valuesList = values
+        notifyDataSetChanged()
+    }
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
+    class ViewHolderSaved(view: View) : RecyclerView.ViewHolder(view) {
         var idView: ImageView = view.findViewById(R.id.item_image)
         val contentView: TextView = view.findViewById(R.id.content)
-
-        override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
-        }
     }
 }

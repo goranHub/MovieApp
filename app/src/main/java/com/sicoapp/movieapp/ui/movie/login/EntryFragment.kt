@@ -5,14 +5,12 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.firebase.FireStoreClass
 import com.sicoapp.movieapp.databinding.FragmentEntryBinding
 import com.sicoapp.movieapp.ui.movie.BaseFragment
 import com.sicoapp.movieapp.utils.USER_ID
-import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * @author ll4
@@ -41,11 +39,11 @@ class EntryFragment : BaseFragment() {
             if (currentUserID == userId) {
                 findNavController().navigate(R.id.action_entryFragment_to_introFragment)
             } else {
-                findNavController().navigate(R.id.action_entryFragment_to_mainActivity)
+                findNavController().navigate(R.id.action_entryFragment_to_topMovieFragment)
             }
         }, 1000)
 
-        (activity as AppCompatActivity?)!!.bottom_navigation?.visibility = View.GONE
+        //(activity as AppCompatActivity?)!!.bottom_navigation?.visibility = View.GONE
         return binding.root
     }
 

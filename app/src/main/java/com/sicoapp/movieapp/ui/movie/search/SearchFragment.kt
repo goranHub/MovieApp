@@ -64,12 +64,10 @@ class SearchFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
     }
 
     override fun onStop() {
         super.onStop()
-        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
     }
 
     @SuppressLint("CheckResult")
@@ -82,7 +80,7 @@ class SearchFragment : Fragment() {
                     Log.d("emptyString", "emptyString")
                 }
                 return@filter true}
-            .debounce(400, TimeUnit.MILLISECONDS)
+            .debounce(500, TimeUnit.MILLISECONDS)
             .distinctUntilChanged()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -120,17 +118,4 @@ class SearchFragment : Fragment() {
         })
         return subject
     }
-
-/*    private fun SearchView.clickSubmitButton(clickedBlock: (String) -> Unit) {
-        setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                clickedBlock(query)
-                return true
-            }
-
-            override fun onQueryTextChange(query: String): Boolean {
-                return true
-            }
-        })
-    }*/
 }

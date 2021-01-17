@@ -82,7 +82,6 @@ class SignInFragment : BaseFragment() {
         hideProgressDialog()
 
         findNavController().navigate(
-            R.id.action_signInFragment_to_mainActivity)
-        activity?.finish()
+            R.id.action_signInFragment_to_topMovieFragment)
     }
 }

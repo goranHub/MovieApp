@@ -5,47 +5,48 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.sicoapp.movieapp.R
+import androidx.fragment.app.viewModels
 import com.sicoapp.movieapp.data.api.ApiServisFlow
 import com.sicoapp.movieapp.data.database.SmileyRatingTableModel
 import com.sicoapp.movieapp.data.repository.SmileyRepository
+import com.sicoapp.movieapp.databinding.FragmentSavedListBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ItemFragment : Fragment() {
+class SavedFragment : Fragment() {
 
     @Inject
     lateinit var smileyRepository: SmileyRepository
+
     @Inject
     lateinit var api: ApiServisFlow
+
+    private lateinit var binding: FragmentSavedListBinding
+
+
+    private val viewModel: SavedViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        val view = inflater.inflate(R.layout.fragment_item_list, container, false)
+        binding = FragmentSavedListBinding.inflate(inflater)
 
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = LinearLayoutManager(context)
-                adapter = SavedAdapter(
-                    runBlocking {
-                    getSaved()
-                },api)
-            }
+        binding.listMovieSaved.adapter = viewModel.adapter
+
+        runBlocking {
+            viewModel.loadRemoteData(getSaved())
         }
-        return view
+
+        return binding.root
     }
 
     private suspend fun getSaved(): List<SmileyRatingTableModel> {
-        var saved = smileyRepository.getSaved()
+        val saved = smileyRepository.getSaved()
         return saved.distinctBy { it.itemId }
     }
 }

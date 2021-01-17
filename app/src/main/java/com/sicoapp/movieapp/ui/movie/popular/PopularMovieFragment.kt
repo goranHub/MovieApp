@@ -59,8 +59,6 @@ class PopularMovieFragment : Fragment() {
         return binding.root
     }
 
-
-
     private fun scrollRecyclerView() {
         binding.recylerViewFragmentTopMovie.addOnScrollListener(object :
             RecyclerView.OnScrollListener() {
