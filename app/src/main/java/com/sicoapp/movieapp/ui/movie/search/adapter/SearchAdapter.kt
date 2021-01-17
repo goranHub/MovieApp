@@ -46,10 +46,17 @@ class SearchAdapter : RecyclerView.Adapter<ViewHolder>() {
     override fun getItemCount() = searchItems.size
 
     fun updateItems(newList: List<BindMulti>) {
-        searchItems.clear()
         searchItems.addAll(newList)
         notifyDataSetChanged()
     }
+
+    fun clearItems() {
+        searchItems.clear()
+        notifyDataSetChanged()
+    }
+
+    /*kad pageId =1 da radi clear()
+    * kasnije ne */
 }
 
 

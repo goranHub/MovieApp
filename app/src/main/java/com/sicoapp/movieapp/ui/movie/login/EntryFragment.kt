@@ -13,8 +13,6 @@ import com.sicoapp.movieapp.databinding.FragmentEntryBinding
 import com.sicoapp.movieapp.ui.movie.BaseFragment
 import com.sicoapp.movieapp.utils.USER_ID
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_movie_top.*
-import kotlinx.android.synthetic.main.fragment_movie_top.bottomNavigationView
 
 /**
  * @author ll4

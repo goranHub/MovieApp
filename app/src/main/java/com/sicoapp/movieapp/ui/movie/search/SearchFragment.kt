@@ -75,9 +75,10 @@ class SearchFragment : Fragment() {
     @SuppressLint("CheckResult")
     private fun setupSearchView() {
 
-        fromView(binding.searchView)
+        fromView()
             .filter{
                 if (it.isEmpty()){
+                    viewModel.clear()
                     Log.d("emptyString", "emptyString")
                 }
                 return@filter true}
@@ -86,6 +87,7 @@ class SearchFragment : Fragment() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
+                //znaci sa pageId ==1
                 viewModel.loadRemoteData(it)
                 scrollRecyclerView(it)
             }
@@ -96,15 +98,16 @@ class SearchFragment : Fragment() {
             RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    viewModel.loadRemoteData(query)
+                    //znaci sa pageId koji nije 1
+                    viewModel.loadMoreRemoteData(query)
                 }
             }
         })
     }
 
-    private fun fromView(searchView: SearchView): Observable<String> {
+    private fun fromView(): Observable<String> {
         val subject = PublishSubject.create<String>()
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(s: String?): Boolean {
                 subject.onComplete()
                 return true
