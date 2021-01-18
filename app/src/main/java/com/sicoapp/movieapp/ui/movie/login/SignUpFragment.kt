@@ -43,12 +43,21 @@ class SignUpFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        (activity as AppCompatActivity?)!!.supportActionBar?.subtitle = "SIGN UP"
+        (activity as AppCompatActivity?)!!.supportActionBar?.hide()
+        (activity as EntryActivity?)!!.bottomNav.visibility = View.GONE
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (activity as AppCompatActivity?)!!.supportActionBar?.hide()
+        (activity as EntryActivity?)!!.bottomNav.visibility = View.GONE
     }
 
     override fun onStop() {
         super.onStop()
-        (activity as AppCompatActivity?)!!.supportActionBar?.show()
+        (activity as AppCompatActivity?)!!.supportActionBar?.hide()
+        (activity as EntryActivity?)!!.bottomNav.visibility = View.GONE
     }
 
     private fun registerUser() {
@@ -118,4 +127,5 @@ class SignUpFragment : BaseFragment() {
    override fun hideProgressDialog() {
         dialog.dismiss()
     }
+
 }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.viewModels
@@ -20,10 +21,12 @@ import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.firebase.FireStoreClass
 import com.sicoapp.movieapp.databinding.FragmentMovieTopBinding
 import com.sicoapp.movieapp.ui.movie.BaseFragment
+import com.sicoapp.movieapp.ui.movie.login.EntryActivity
 import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
 import com.sicoapp.movieapp.utils.USER_ID
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_entry.*
 
 @AndroidEntryPoint
 class TopMovieFragment : BaseFragment(), NavigationView.OnNavigationItemSelectedListener {
@@ -31,12 +34,6 @@ class TopMovieFragment : BaseFragment(), NavigationView.OnNavigationItemSelected
     private val viewModel: TopMovieViewModel by viewModels()
 
     private lateinit var binding: FragmentMovieTopBinding
-
-
-    /*
-    instead use paramters in ViewModel constructor that are connect Adapter with Fragment
-    we connect now the callback with Adapter trough xml and BindigAdapter
-     */
 
     val callback = object : TopMovieCallback {
         override fun openDetails(movieId: Long) {
@@ -70,6 +67,7 @@ class TopMovieFragment : BaseFragment(), NavigationView.OnNavigationItemSelected
         scrollRecyclerView()
 
         setNavigationViewListener()
+
         return binding.root
     }
 
@@ -106,12 +104,23 @@ class TopMovieFragment : BaseFragment(), NavigationView.OnNavigationItemSelected
                 )
             }
         }
-        binding.drawerLayout.closeDrawer(GravityCompat.START)
+        (activity as EntryActivity).drawer_layout?.closeDrawer(GravityCompat.START)
         return true
     }
 
     private fun setNavigationViewListener() {
-        val navigationView = binding.navigationView
+        val navigationView = (activity as EntryActivity).navigation_view
         navigationView.setNavigationItemSelectedListener(this)
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        (activity as EntryActivity?)!!.supportActionBar?.show()
+        (activity as EntryActivity?)!!.bottomNav.visibility = View.VISIBLE
+    }
+
+    override fun onStop() {
+        super.onStop()
     }
 }

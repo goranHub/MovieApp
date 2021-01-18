@@ -11,6 +11,7 @@ import com.sicoapp.movieapp.data.firebase.FireStoreClass
 import com.sicoapp.movieapp.databinding.FragmentEntryBinding
 import com.sicoapp.movieapp.ui.movie.BaseFragment
 import com.sicoapp.movieapp.utils.USER_ID
+import kotlinx.android.synthetic.main.activity_entry.*
 
 /**
  * @author ll4
@@ -43,8 +44,20 @@ class EntryFragment : BaseFragment() {
             }
         }, 1000)
 
-        //(activity as AppCompatActivity?)!!.bottom_navigation?.visibility = View.GONE
+        bottomNavigationView?.visibility = View.GONE
         return binding.root
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        (activity as EntryActivity?)!!.supportActionBar?.hide()
+        (activity as EntryActivity?)!!.bottomNav.visibility = View.GONE
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as EntryActivity?)!!.supportActionBar?.show()
+        (activity as EntryActivity?)!!.bottomNav.visibility = View.VISIBLE
+    }
 }

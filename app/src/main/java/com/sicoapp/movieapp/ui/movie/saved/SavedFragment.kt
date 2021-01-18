@@ -10,13 +10,14 @@ import com.sicoapp.movieapp.data.api.ApiServisFlow
 import com.sicoapp.movieapp.data.database.SmileyRatingTableModel
 import com.sicoapp.movieapp.data.repository.SmileyRepository
 import com.sicoapp.movieapp.databinding.FragmentSavedListBinding
+import com.sicoapp.movieapp.ui.movie.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class SavedFragment : Fragment() {
+class SavedFragment : BaseFragment() {
 
     @Inject
     lateinit var smileyRepository: SmileyRepository

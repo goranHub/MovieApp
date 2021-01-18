@@ -30,9 +30,18 @@ class IntroFragment : Fragment() {
                 R.id.action_introFragment_to_signUpFragment)
         }
 
-       // (activity as AppCompatActivity?)!!.bottom_navigation?.visibility = View.GONE
-        //(activity as AppCompatActivity?)!!.navigation_view?.visibility = View.GONE
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        (activity as EntryActivity?)!!.supportActionBar?.hide()
+        (activity as EntryActivity?)!!.bottomNav.visibility = View.GONE
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as EntryActivity?)!!.supportActionBar?.show()
+        (activity as EntryActivity?)!!.bottomNav.visibility = View.VISIBLE
+    }
 }

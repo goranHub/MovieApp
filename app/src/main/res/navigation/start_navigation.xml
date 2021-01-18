@@ -54,7 +54,6 @@
             app:destination="@id/topMovieFragment" />
     </fragment>
 
-
     <fragment
         android:id="@+id/topMovieFragment"
         android:name="com.sicoapp.movieapp.ui.movie.topmovie.TopMovieFragment"
@@ -96,7 +95,14 @@
         <action
             android:id="@+id/action_popularMovieFragment_to_crewMovieFragment"
             app:destination="@id/crewMovieFragment" />
+        <action
+            android:id="@+id/action_popularMovieFragment_to_itemFragment"
+            app:destination="@id/itemFragment" />
+        <action
+            android:id="@+id/action_popularMovieFragment_to_introFragment"
+            app:destination="@id/introFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.sicoapp.movieapp.ui.movie.search.SearchFragment"
@@ -105,11 +111,21 @@
         <action
             android:id="@+id/action_searchFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_itemFragment"
+            app:destination="@id/itemFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_introFragment"
+            app:destination="@id/introFragment" />
     </fragment>
     <fragment
         android:id="@+id/itemFragment"
         android:name="com.sicoapp.movieapp.ui.movie.saved.SavedFragment"
         android:label="Saved Movies"
-        tools:layout="@layout/fragment_saved_list" />
+        tools:layout="@layout/fragment_saved_list" >
+        <action
+            android:id="@+id/action_itemFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
 
 </navigation>
