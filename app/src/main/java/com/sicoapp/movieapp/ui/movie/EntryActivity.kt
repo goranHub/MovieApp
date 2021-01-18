@@ -1,11 +1,10 @@
-package com.sicoapp.movieapp.ui.movie.login
+package com.sicoapp.movieapp.ui.movie
 
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -39,9 +38,10 @@ class EntryActivity : AppCompatActivity() {
 
         navController = findNavController(R.id.nav_host_fragment_entry)
 
+
+        setupNav()
+
         setupBottomNavigation()
-
-
 
         drawerLayout = binding.drawerLayout
 
@@ -51,16 +51,34 @@ class EntryActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(binding.navigationView, navController)
     }
 
+
+    private fun setupNav() {
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.topMovieFragment -> showBottomNav()
+                R.id.popularMovieFragment -> showBottomNav()
+                R.id.searchFragment -> showBottomNav()
+                else -> hideBottomNav()
+            }
+        }
+    }
+
+    private fun showBottomNav() {
+        bottomNav.visibility = View.VISIBLE
+    }
+
+    private fun hideBottomNav() {
+        bottomNav.visibility = View.GONE
+    }
+
     override fun onResume() {
         super.onResume()
         this.supportActionBar!!.hide()
-        this.bottomNav.visibility = View.GONE
     }
 
     override fun onStop() {
         super.onStop()
         this.supportActionBar!!.show()
-        this.bottomNav.visibility = View.VISIBLE
     }
 
     private fun setupBottomNavigation() {
@@ -70,5 +88,4 @@ class EntryActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return NavigationUI.navigateUp(navController, appBarConfiguration)
     }
-
 }

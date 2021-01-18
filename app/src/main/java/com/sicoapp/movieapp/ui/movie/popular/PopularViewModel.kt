@@ -1,7 +1,6 @@
 package com.sicoapp.movieapp.ui.movie.popular
 
 import android.util.Log
-import android.widget.Toast
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.sicoapp.movieapp.data.model.response.movie.MovieResponse

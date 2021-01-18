@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.sicoapp.movieapp.R
@@ -14,7 +13,6 @@ import com.sicoapp.movieapp.data.firebase.FireStoreClass
 import com.sicoapp.movieapp.data.firebase.model.User
 import com.sicoapp.movieapp.databinding.FragmentSignInBinding
 import com.sicoapp.movieapp.ui.movie.BaseFragment
-
 
 class SignInFragment : BaseFragment() {
 
@@ -30,27 +28,10 @@ class SignInFragment : BaseFragment() {
         binding.btnSignIn.setOnClickListener {
             signInRegisteredUser()
         }
+
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        (activity as AppCompatActivity?)!!.supportActionBar?.hide()
-        (activity as EntryActivity?)!!.bottomNav.visibility = View.GONE
-
-    }
-
-    override fun onStart() {
-        super.onStart()
-        (activity as AppCompatActivity?)!!.supportActionBar?.hide()
-        (activity as EntryActivity?)!!.bottomNav.visibility = View.GONE
-    }
-
-    override fun onStop() {
-        super.onStop()
-        (activity as AppCompatActivity?)!!.supportActionBar?.hide()
-        (activity as EntryActivity?)!!.bottomNav.visibility = View.GONE
-    }
 
     private fun signInRegisteredUser() {
         val email: String = binding.etEmail.text.toString().trim { it <= ' ' }

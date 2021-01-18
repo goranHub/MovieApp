@@ -5,19 +5,18 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.firebase.FireStoreClass
 import com.sicoapp.movieapp.databinding.FragmentMoviePopularBinding
 import com.sicoapp.movieapp.ui.movie.BaseFragment
-import com.sicoapp.movieapp.ui.movie.login.EntryActivity
+import com.sicoapp.movieapp.ui.movie.EntryActivity
 import com.sicoapp.movieapp.ui.movie.topmovie.TopMovieCallback
 import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
@@ -98,7 +97,7 @@ class PopularMovieFragment : BaseFragment(), NavigationView.OnNavigationItemSele
             }
 
             R.id.sign_out -> {
-                //TODO signout function
+                FirebaseAuth.getInstance().signOut()
                 val currentUserID = FireStoreClass().getCurrentUserID()
                 val userIdBundle = bundleOf(USER_ID to currentUserID)
                 findNavController().navigate(
@@ -119,8 +118,6 @@ class PopularMovieFragment : BaseFragment(), NavigationView.OnNavigationItemSele
     override fun onResume() {
         super.onResume()
         (activity as EntryActivity?)!!.supportActionBar?.show()
-        (activity as EntryActivity?)!!.bottomNav.visibility = View.VISIBLE
-
     }
 
     override fun onStop() {

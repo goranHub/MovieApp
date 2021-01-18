@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.FragmentIntroBinding
+import com.sicoapp.movieapp.ui.movie.EntryActivity
 
 class IntroFragment : Fragment() {
 

@@ -17,6 +17,7 @@ import com.sicoapp.movieapp.data.firebase.FireStoreClass
 import com.sicoapp.movieapp.data.firebase.model.User
 import com.sicoapp.movieapp.databinding.FragmentSignUpBinding
 import com.sicoapp.movieapp.ui.movie.BaseFragment
+import com.sicoapp.movieapp.ui.movie.EntryActivity
 import kotlinx.android.synthetic.main.dialog_progress.*
 
 /**
@@ -39,25 +40,6 @@ class SignUpFragment : BaseFragment() {
         }
 
         return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        (activity as AppCompatActivity?)!!.supportActionBar?.hide()
-        (activity as EntryActivity?)!!.bottomNav.visibility = View.GONE
-
-    }
-
-    override fun onStart() {
-        super.onStart()
-        (activity as AppCompatActivity?)!!.supportActionBar?.hide()
-        (activity as EntryActivity?)!!.bottomNav.visibility = View.GONE
-    }
-
-    override fun onStop() {
-        super.onStop()
-        (activity as AppCompatActivity?)!!.supportActionBar?.hide()
-        (activity as EntryActivity?)!!.bottomNav.visibility = View.GONE
     }
 
     private fun registerUser() {
@@ -119,7 +101,6 @@ class SignUpFragment : BaseFragment() {
         ).show()
         hideProgressDialog()
         FirebaseAuth.getInstance().signOut()
-        //activity?.finish()
         findNavController().navigate(
             R.id.action_signUpFragment_to_topMovieFragment)
     }

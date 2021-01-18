@@ -5,11 +5,13 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.firebase.FireStoreClass
 import com.sicoapp.movieapp.databinding.FragmentEntryBinding
 import com.sicoapp.movieapp.ui.movie.BaseFragment
+import com.sicoapp.movieapp.ui.movie.EntryActivity
 import com.sicoapp.movieapp.utils.USER_ID
 import kotlinx.android.synthetic.main.activity_entry.*
 
@@ -38,9 +40,20 @@ class EntryFragment : BaseFragment() {
             val currentUserID = FireStoreClass().getCurrentUserID()
 
             if (currentUserID == userId) {
-                findNavController().navigate(R.id.action_entryFragment_to_introFragment)
+                findNavController().navigate(R.id.action_entryFragment_to_introFragment,
+                    null,
+                    NavOptions.Builder()
+                        .setPopUpTo(R.id.entryFragment,
+                            true).build())
+
             } else {
-                findNavController().navigate(R.id.action_entryFragment_to_topMovieFragment)
+
+                findNavController().navigate(R.id.action_entryFragment_to_topMovieFragment,
+                    null,
+                    NavOptions.Builder()
+                        .setPopUpTo(R.id.entryFragment,
+                            true).build())
+
             }
         }, 1000)
 
