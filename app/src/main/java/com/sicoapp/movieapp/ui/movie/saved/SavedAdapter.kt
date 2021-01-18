@@ -15,10 +15,9 @@ import com.sicoapp.movieapp.utils.URL_IMAGE
 
 class SavedAdapter : RecyclerView.Adapter<SavedAdapter.ViewHolderSaved>() {
 
-    var list = mutableListOf<Movie>()
+    var listSaved = listOf<SmileyRatingTableModel>()
 
-    lateinit var valuesList: List<SmileyRatingTableModel>
-
+    var movieList = listOf<Movie>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderSaved {
         val view = LayoutInflater.from(parent.context)
@@ -26,29 +25,24 @@ class SavedAdapter : RecyclerView.Adapter<SavedAdapter.ViewHolderSaved>() {
         return ViewHolderSaved(view)
     }
 
-    override fun getItemCount(): Int = list.size
+    override fun getItemCount(): Int = movieList.size
 
     override fun onBindViewHolder(holder: ViewHolderSaved, position: Int) {
 
-        val item = list[position]
+        val dataModel = listSaved[position]
+        val dataMovie = movieList[position]
 
-      /*  val item = valuesList[position]*/
-
-      /*  holder.contentView.text = item.rating.toString()*/
+        holder.contentView.text = dataModel.rating.toString()
 
         Glide.with(holder.idView.rootView.context)
-            .load(URL_IMAGE + item.posterPath)
+            .load(URL_IMAGE + dataMovie.posterPath)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .into(holder.idView)
-
     }
 
-    fun addMovies(listItems: Movie) {
-        list.add(listItems)
-        notifyDataSetChanged()
-    }
-    fun addRating(values: List<SmileyRatingTableModel>) {
-        valuesList = values
+    fun addMovieWithRating(allElement: List<Movie>, list: List<SmileyRatingTableModel>) {
+        movieList = allElement
+        listSaved = list
         notifyDataSetChanged()
     }
 
