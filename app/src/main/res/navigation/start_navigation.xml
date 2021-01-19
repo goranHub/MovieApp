@@ -67,8 +67,8 @@
             android:id="@+id/action_movieListFragment_to_crewMovieFragment"
             app:destination="@id/crewMovieFragment" />
         <action
-            android:id="@+id/action_topMovieFragment_to_itemFragment"
-            app:destination="@id/itemFragment" />
+            android:id="@+id/action_topMovieFragment_to_saveFragment"
+            app:destination="@id/savedFragment" />
         <action
             android:id="@+id/action_topMovieFragment_to_introFragment"
             app:destination="@id/introFragment" />
@@ -78,7 +78,14 @@
         android:id="@+id/movieDetailsFragment"
         android:name="com.sicoapp.movieapp.ui.movie.detail.DetailsMovieFragment"
         android:label="@string/details"
-        tools:layout="@layout/fragment_movie_details" />
+        tools:layout="@layout/fragment_movie_details" >
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_introFragment"
+            app:destination="@id/introFragment" />
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_savedFragment"
+            app:destination="@id/savedFragment" />
+    </fragment>
     <fragment
         android:id="@+id/crewMovieFragment"
         android:name="com.sicoapp.movieapp.ui.movie.crew.CrewMovieFragment"
@@ -96,8 +103,8 @@
             android:id="@+id/action_popularMovieFragment_to_crewMovieFragment"
             app:destination="@id/crewMovieFragment" />
         <action
-            android:id="@+id/action_popularMovieFragment_to_itemFragment"
-            app:destination="@id/itemFragment" />
+            android:id="@+id/action_popularMovieFragment_to_saveFragment"
+            app:destination="@id/savedFragment" />
         <action
             android:id="@+id/action_popularMovieFragment_to_introFragment"
             app:destination="@id/introFragment" />
@@ -112,19 +119,19 @@
             android:id="@+id/action_searchFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
         <action
-            android:id="@+id/action_searchFragment_to_itemFragment"
-            app:destination="@id/itemFragment" />
+            android:id="@+id/action_searchFragment_to_saveFragment"
+            app:destination="@id/savedFragment" />
         <action
             android:id="@+id/action_searchFragment_to_introFragment"
             app:destination="@id/introFragment" />
     </fragment>
     <fragment
-        android:id="@+id/itemFragment"
+        android:id="@+id/savedFragment"
         android:name="com.sicoapp.movieapp.ui.movie.saved.SavedFragment"
         android:label="Saved Movies"
         tools:layout="@layout/fragment_saved_list" >
         <action
-            android:id="@+id/action_itemFragment_to_movieDetailsFragment"
+            android:id="@+id/action_saveFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
     </fragment>
 

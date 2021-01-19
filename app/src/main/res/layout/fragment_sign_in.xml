@@ -18,14 +18,15 @@
             android:id="@+id/et_email"
             android:layout_width="325dp"
             android:layout_height="50dp"
+            android:layout_marginTop="180dp"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/et_password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.333" />
+            app:layout_constraintVertical_bias="0.067" />
 
         <Button
             android:id="@+id/btn_sign_in"
@@ -50,6 +51,7 @@
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/btn_sign_in"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.488"
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

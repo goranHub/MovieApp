@@ -11,7 +11,7 @@ import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.firebase.FireStoreClass
 import com.sicoapp.movieapp.databinding.FragmentEntryBinding
 import com.sicoapp.movieapp.ui.movie.BaseFragment
-import com.sicoapp.movieapp.ui.movie.EntryActivity
+import com.sicoapp.movieapp.EntryActivity
 import com.sicoapp.movieapp.utils.USER_ID
 import kotlinx.android.synthetic.main.activity_entry.*
 

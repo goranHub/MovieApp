@@ -19,7 +19,7 @@ import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.firebase.FireStoreClass
 import com.sicoapp.movieapp.databinding.FragmentMovieSearchBinding
 import com.sicoapp.movieapp.ui.movie.BaseFragment
-import com.sicoapp.movieapp.ui.movie.EntryActivity
+import com.sicoapp.movieapp.EntryActivity
 import com.sicoapp.movieapp.utils.ITEM_ID
 import com.sicoapp.movieapp.utils.MEDIATYP
 import com.sicoapp.movieapp.utils.USER_ID
@@ -130,7 +130,7 @@ class SearchFragment : BaseFragment(), NavigationView.OnNavigationItemSelectedLi
 
             R.id.list_movie_saved -> {
                 findNavController().navigate(
-                    R.id.action_searchFragment_to_itemFragment
+                    R.id.action_searchFragment_to_saveFragment
                 )
             }
 

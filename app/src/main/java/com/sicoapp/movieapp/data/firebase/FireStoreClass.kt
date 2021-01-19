@@ -45,7 +45,7 @@ class FireStoreClass {
                     Log.e(activity.javaClass.simpleName,"Error while getting loggedIn user details",e)}
     }
 
-    open fun getCurrentUserID(): String {
+    fun getCurrentUserID(): String {
 
         val currentUser = FirebaseAuth.getInstance().currentUser
         var currentUserID = ""

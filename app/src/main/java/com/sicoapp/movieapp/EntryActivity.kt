@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.ui.movie
+package com.sicoapp.movieapp
 
 import android.os.Bundle
 import android.view.View
@@ -69,16 +69,6 @@ class EntryActivity : AppCompatActivity() {
 
     private fun hideBottomNav() {
         bottomNav.visibility = View.GONE
-    }
-
-    override fun onResume() {
-        super.onResume()
-        this.supportActionBar!!.hide()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        this.supportActionBar!!.show()
     }
 
     private fun setupBottomNavigation() {

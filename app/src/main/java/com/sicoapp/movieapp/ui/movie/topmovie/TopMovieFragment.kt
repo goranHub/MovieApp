@@ -16,7 +16,7 @@ import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.firebase.FireStoreClass
 import com.sicoapp.movieapp.databinding.FragmentMovieTopBinding
 import com.sicoapp.movieapp.ui.movie.BaseFragment
-import com.sicoapp.movieapp.ui.movie.EntryActivity
+import com.sicoapp.movieapp.EntryActivity
 import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
 import com.sicoapp.movieapp.utils.USER_ID
@@ -86,7 +86,7 @@ class TopMovieFragment : BaseFragment(), NavigationView.OnNavigationItemSelected
 
             R.id.list_movie_saved -> {
                 findNavController().navigate(
-                    R.id.action_topMovieFragment_to_itemFragment
+                    R.id.action_topMovieFragment_to_saveFragment
                 )
             }
 

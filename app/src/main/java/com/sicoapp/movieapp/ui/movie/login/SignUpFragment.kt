@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
@@ -17,7 +16,6 @@ import com.sicoapp.movieapp.data.firebase.FireStoreClass
 import com.sicoapp.movieapp.data.firebase.model.User
 import com.sicoapp.movieapp.databinding.FragmentSignUpBinding
 import com.sicoapp.movieapp.ui.movie.BaseFragment
-import com.sicoapp.movieapp.ui.movie.EntryActivity
 import kotlinx.android.synthetic.main.dialog_progress.*
 
 /**
