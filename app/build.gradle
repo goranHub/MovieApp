@@ -141,12 +141,9 @@ dependencies {
     implementation "com.google.firebase:firebase-auth:20.0.1"
     // Firebase Cloud Firestore Dependency
     implementation 'com.google.firebase:firebase-firestore:22.0.1'
+    // Firebase Storage Dependency
+    implementation 'com.google.firebase:firebase-storage:19.1.1'
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
-
-    //animation
-    implementation 'io.supercharge:shimmerlayout:2.1.0'
-
-
 
 }

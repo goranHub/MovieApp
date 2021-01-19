@@ -19,7 +19,6 @@ object BindingAdapters {
         adapterTop.callback = callback
     }
 
-
     @JvmStatic
     @BindingAdapter("setCallbackSearch")
     fun setCallbackSearch(view: RecyclerView, callback: SearchCallback) {

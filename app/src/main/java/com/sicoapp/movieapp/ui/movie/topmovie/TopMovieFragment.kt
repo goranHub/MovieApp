@@ -13,13 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.sicoapp.movieapp.R
-import com.sicoapp.movieapp.data.firebase.FireStoreClass
 import com.sicoapp.movieapp.databinding.FragmentMovieTopBinding
 import com.sicoapp.movieapp.ui.movie.BaseFragment
 import com.sicoapp.movieapp.EntryActivity
 import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
-import com.sicoapp.movieapp.utils.USER_ID
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_entry.*
 
@@ -82,6 +80,9 @@ class TopMovieFragment : BaseFragment(), NavigationView.OnNavigationItemSelected
         when (item.itemId) {
 
             R.id.my_profile -> {
+                findNavController().navigate(
+                    R.id.action_topMovieFragment_to_myProfileFragment
+                )
             }
 
             R.id.list_movie_saved -> {
@@ -92,11 +93,8 @@ class TopMovieFragment : BaseFragment(), NavigationView.OnNavigationItemSelected
 
             R.id.sign_out -> {
                 FirebaseAuth.getInstance().signOut()
-                val currentUserID = FireStoreClass().getCurrentUserID()
-                val userIdBundle = bundleOf(USER_ID to currentUserID)
                 findNavController().navigate(
-                    R.id.action_topMovieFragment_to_introFragment, userIdBundle
-                )
+                    R.id.action_topMovieFragment_to_introFragment)
             }
         }
         (activity as EntryActivity).drawer_layout?.closeDrawer(GravityCompat.START)
@@ -107,7 +105,6 @@ class TopMovieFragment : BaseFragment(), NavigationView.OnNavigationItemSelected
         val navigationView = (activity as EntryActivity).navigation_view
         navigationView.setNavigationItemSelectedListener(this)
     }
-
 
     override fun onResume() {
         super.onResume()

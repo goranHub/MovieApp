@@ -37,7 +37,7 @@ class EntryFragment : BaseFragment() {
 
         Handler().postDelayed({
 
-            val currentUserID = FireStoreClass().getCurrentUserID()
+            val currentUserID = FireStoreClass().currentUserID()
 
             if (currentUserID == userId) {
                 findNavController().navigate(R.id.action_entryFragment_to_introFragment,

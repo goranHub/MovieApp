@@ -22,7 +22,8 @@ fun getProgressDrawable(context: Context): CircularProgressDrawable {
 }
 
 fun ImageView.loadImage(uri: String, progressDrawable: CircularProgressDrawable) {
-    val options = RequestOptions().placeholder(progressDrawable)
+    val options = RequestOptions()
+        .placeholder(progressDrawable)
         .error(R.mipmap.ic_launcher)
     Glide.with(context)
         .setDefaultRequestOptions(options)
@@ -48,7 +49,7 @@ object ImageBindingAdapter {
     fun loadImage(view: ImageView, url: String) {
         view.loadImage(url, getProgressDrawable(view.context))
     }
-
+}
 
 /*    object ImageBindingAdapterDetails {
         @JvmStatic
@@ -57,7 +58,7 @@ object ImageBindingAdapter {
             view.loadImageDetails(url, getProgressDrawable(view.context))
         }
     }*/
-}
+
 
     object ImageBindingAdapterDetails {
         @JvmStatic

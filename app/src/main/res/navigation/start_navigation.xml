@@ -72,6 +72,9 @@
         <action
             android:id="@+id/action_topMovieFragment_to_introFragment"
             app:destination="@id/introFragment" />
+        <action
+            android:id="@+id/action_topMovieFragment_to_myProfileFragment"
+            app:destination="@id/myProfileFragment" />
     </fragment>
 
     <fragment
@@ -134,5 +137,9 @@
             android:id="@+id/action_saveFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/myProfileFragment"
+        android:name="com.sicoapp.movieapp.ui.movie.login.MyProfileFragment"
+        android:label="MyProfileFragment" />
 
 </navigation>

@@ -136,7 +136,7 @@ class SearchFragment : BaseFragment(), NavigationView.OnNavigationItemSelectedLi
 
             R.id.sign_out -> {
                 FirebaseAuth.getInstance().signOut()
-                val currentUserID = FireStoreClass().getCurrentUserID()
+                val currentUserID = FireStoreClass().currentUserID()
                 val userIdBundle = bundleOf(USER_ID to currentUserID)
                 findNavController().navigate(
                     R.id.action_searchFragment_to_introFragment, userIdBundle
