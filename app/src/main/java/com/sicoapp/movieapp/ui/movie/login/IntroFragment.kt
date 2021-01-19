@@ -34,15 +34,4 @@ class IntroFragment : Fragment() {
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        (activity as EntryActivity?)!!.supportActionBar?.hide()
-        (activity as EntryActivity?)!!.bottomNav.visibility = View.GONE
-    }
-
-    override fun onStop() {
-        super.onStop()
-        (activity as EntryActivity?)!!.supportActionBar?.show()
-        (activity as EntryActivity?)!!.bottomNav.visibility = View.VISIBLE
-    }
 }

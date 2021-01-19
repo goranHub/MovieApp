@@ -65,7 +65,7 @@
             app:destination="@id/movieDetailsFragment" />
         <action
             android:id="@+id/action_movieListFragment_to_crewMovieFragment"
-            app:destination="@id/crewMovieFragment" />
+            app:destination="@id/crewMovieFragment"/>
         <action
             android:id="@+id/action_topMovieFragment_to_saveFragment"
             app:destination="@id/savedFragment" />

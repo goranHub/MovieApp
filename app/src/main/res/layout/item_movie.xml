@@ -40,6 +40,16 @@
         app:strokeColor="@color/colorPrimary"
         app:strokeWidth="1dp">
 
+        <io.supercharge.shimmerlayout.ShimmerLayout
+            android:id="@+id/shimmer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="30dp"
+            tools:context="io.supercharge.shimmeringlayout.MainActivity">
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -90,7 +100,7 @@
                 app:layout_constraintStart_toEndOf="@+id/imageViewItem"
                 tools:text="@string/crew" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
+        </io.supercharge.shimmerlayout.ShimmerLayout>
     </com.google.android.material.card.MaterialCardView>
 
 </layout>

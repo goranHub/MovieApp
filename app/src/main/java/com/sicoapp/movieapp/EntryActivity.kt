@@ -11,7 +11,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.ActivityEntryBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,8 +35,8 @@ class EntryActivity : AppCompatActivity() {
 
         bottomNav = binding.bottomNavigationView
 
-        navController = findNavController(R.id.nav_host_fragment_entry)
 
+        navController = findNavController(R.id.nav_host_fragment_entry)
 
         setupNav()
 
@@ -49,8 +48,9 @@ class EntryActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
         NavigationUI.setupWithNavController(binding.navigationView, navController)
-    }
 
+
+    }
 
     private fun setupNav() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -78,4 +78,5 @@ class EntryActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return NavigationUI.navigateUp(navController, appBarConfiguration)
     }
+
 }
