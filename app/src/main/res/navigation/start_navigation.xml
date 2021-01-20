@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/entryFragment"
-        android:name="com.sicoapp.movieapp.ui.movie.login.EntryFragment"
+        android:name="com.sicoapp.movieapp.ui.login.EntryFragment"
         android:label="EntryFragment"
         tools:layout="@layout/fragment_entry">
         <action
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/introFragment"
-        android:name="com.sicoapp.movieapp.ui.movie.login.IntroFragment"
+        android:name="com.sicoapp.movieapp.ui.login.IntroFragment"
         android:label="IntroFragment"
         tools:layout="@layout/fragment_intro">
         <action
@@ -36,7 +36,7 @@
 
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.sicoapp.movieapp.ui.movie.login.SignInFragment"
+        android:name="com.sicoapp.movieapp.ui.login.SignInFragment"
         android:label="SignInFragment"
         tools:layout="@layout/fragment_sign_in">
         <action
@@ -46,7 +46,7 @@
 
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.sicoapp.movieapp.ui.movie.login.SignUpFragment"
+        android:name="com.sicoapp.movieapp.ui.login.SignUpFragment"
         android:label="SignUpFragment"
         tools:layout="@layout/fragment_sign_up">
         <action
@@ -56,7 +56,7 @@
 
     <fragment
         android:id="@+id/topMovieFragment"
-        android:name="com.sicoapp.movieapp.ui.movie.topmovie.TopMovieFragment"
+        android:name="com.sicoapp.movieapp.ui.topmovie.TopMovieFragment"
         android:label="@string/topMovie"
         tools:layout="@layout/fragment_movie_top">
 
@@ -79,7 +79,7 @@
 
     <fragment
         android:id="@+id/movieDetailsFragment"
-        android:name="com.sicoapp.movieapp.ui.movie.detail.DetailsMovieFragment"
+        android:name="com.sicoapp.movieapp.ui.detail.DetailsMovieFragment"
         android:label="@string/details"
         tools:layout="@layout/fragment_movie_details" >
         <action
@@ -91,12 +91,12 @@
     </fragment>
     <fragment
         android:id="@+id/crewMovieFragment"
-        android:name="com.sicoapp.movieapp.ui.movie.crew.CrewMovieFragment"
+        android:name="com.sicoapp.movieapp.ui.crew.CrewMovieFragment"
         android:label="@string/crew"
         tools:layout="@layout/fragment_movie_crew"/>
     <fragment
         android:id="@+id/popularMovieFragment"
-        android:name="com.sicoapp.movieapp.ui.movie.popular.PopularMovieFragment"
+        android:name="com.sicoapp.movieapp.ui.popular.PopularMovieFragment"
         android:label="@string/popular"
         tools:layout="@layout/fragment_movie_popular">
         <action
@@ -115,7 +115,7 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.sicoapp.movieapp.ui.movie.search.SearchFragment"
+        android:name="com.sicoapp.movieapp.ui.search.SearchFragment"
         android:label="@string/search"
         tools:layout="@layout/fragment_movie_search">
         <action
@@ -130,7 +130,7 @@
     </fragment>
     <fragment
         android:id="@+id/savedFragment"
-        android:name="com.sicoapp.movieapp.ui.movie.saved.SavedFragment"
+        android:name="com.sicoapp.movieapp.ui.saved.SavedFragment"
         android:label="Saved Movies"
         tools:layout="@layout/fragment_saved_list" >
         <action
@@ -139,7 +139,7 @@
     </fragment>
     <fragment
         android:id="@+id/myProfileFragment"
-        android:name="com.sicoapp.movieapp.ui.movie.login.MyProfileFragment"
+        android:name="com.sicoapp.movieapp.ui.login.MyProfileFragment"
         android:label="MyProfileFragment" />
 
 </navigation>

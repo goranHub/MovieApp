@@ -1,7 +1,7 @@
 package com.sicoapp.movieapp.di
 
-import com.sicoapp.movieapp.data.database.DAOAccess
-import com.sicoapp.movieapp.data.repository.SmileyRepository
+import com.sicoapp.movieapp.data.database.DataBaseDataSource
+import com.sicoapp.movieapp.data.database.SmileyDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,8 +20,8 @@ object DAOModule {
     @Provides
     @Singleton
     fun provideSmileyRepository(
-        dao: DAOAccess
-    ): SmileyRepository {
-        return SmileyRepository(dao)
+        dao: SmileyDao
+    ): DataBaseDataSource {
+        return DataBaseDataSource(dao)
     }
 }

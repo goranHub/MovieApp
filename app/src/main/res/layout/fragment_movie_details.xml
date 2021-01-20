@@ -6,11 +6,11 @@
 
         <variable
             name="data"
-            type="com.sicoapp.movieapp.ui.movie.detail.BindDetails" />
+            type="com.sicoapp.movieapp.ui.detail.BindDetails" />
 
         <variable
             name="save"
-            type="com.sicoapp.movieapp.ui.movie.detail.DetailsMovieFragment" />
+            type="com.sicoapp.movieapp.ui.detail.DetailsMovieFragment" />
     </data>
 
     <ScrollView
@@ -21,7 +21,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:context=".ui.movie.detail.DetailsMovieFragment">
+            tools:context=".ui.detail.DetailsMovieFragment">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guidelineLeft"

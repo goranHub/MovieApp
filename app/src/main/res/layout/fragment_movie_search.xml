@@ -9,11 +9,11 @@
 
         <variable
             name="callback"
-            type="com.sicoapp.movieapp.ui.movie.search.SearchCallback" />
+            type="com.sicoapp.movieapp.ui.search.SearchCallback" />
 
         <variable
             name="data"
-            type="com.sicoapp.movieapp.ui.movie.search.SearchViewModel" />
+            type="com.sicoapp.movieapp.ui.search.SearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

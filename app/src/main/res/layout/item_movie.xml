@@ -7,15 +7,15 @@
     <data>
         <variable
             name="data"
-            type="com.sicoapp.movieapp.ui.movie.popular.BindMovie" />
+            type="com.sicoapp.movieapp.ui.popular.BindMovie" />
 
         <variable
             name="itemClickListener"
-            type="com.sicoapp.movieapp.ui.movie.topmovie.adapter.ItemClickListener" />
+            type="com.sicoapp.movieapp.ui.topmovie.adapter.ItemClickListener" />
 
         <variable
             name="itemCrewClickListener"
-            type="com.sicoapp.movieapp.ui.movie.topmovie.adapter.ItemClickListener" />
+            type="com.sicoapp.movieapp.ui.topmovie.adapter.ItemClickListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

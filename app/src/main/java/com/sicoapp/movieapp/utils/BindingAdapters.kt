@@ -2,10 +2,10 @@ package com.sicoapp.movieapp.utils
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.sicoapp.movieapp.ui.movie.search.SearchCallback
-import com.sicoapp.movieapp.ui.movie.search.adapter.SearchAdapter
-import com.sicoapp.movieapp.ui.movie.topmovie.TopMovieCallback
-import com.sicoapp.movieapp.ui.movie.topmovie.adapter.TopMovieAdapter
+import com.sicoapp.movieapp.ui.search.SearchCallback
+import com.sicoapp.movieapp.ui.search.adapter.SearchAdapter
+import com.sicoapp.movieapp.ui.topmovie.TopMovieCallback
+import com.sicoapp.movieapp.ui.topmovie.adapter.TopMovieAdapter
 
 /**
  * @author ll4

@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="com.sicoapp.movieapp.ui.movie.search.BindMulti" />
+            type="com.sicoapp.movieapp.ui.search.BindMulti" />
 
     </data>
 

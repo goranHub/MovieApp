@@ -6,14 +6,14 @@
 
     <variable
         name="data"
-        type="com.sicoapp.movieapp.ui.movie.crew.CrewViewModel" />
+        type="com.sicoapp.movieapp.ui.crew.CrewViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.movie.crew.CrewMovieFragment">
+        tools:context=".ui.crew.CrewMovieFragment">
 
 
         <androidx.recyclerview.widget.RecyclerView

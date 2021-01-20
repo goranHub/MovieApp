@@ -7,16 +7,16 @@
 
         <variable
             name="callback"
-            type="com.sicoapp.movieapp.ui.movie.topmovie.TopMovieCallback" />
+            type="com.sicoapp.movieapp.ui.topmovie.TopMovieCallback" />
         <variable
             name="data"
-            type="com.sicoapp.movieapp.ui.movie.popular.PopularViewModel" />
+            type="com.sicoapp.movieapp.ui.popular.PopularViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.movie.popular.PopularMovieFragment">
+        tools:context=".ui.popular.PopularMovieFragment">
 
 
         <androidx.recyclerview.widget.RecyclerView

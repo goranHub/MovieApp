@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.movie.login.SignUpFragment">
+        tools:context=".ui.login.SignUpFragment">
 
         <Button
             android:id="@+id/btn_sign_up"
