@@ -37,5 +37,4 @@ class DataBaseDataSource @Inject constructor(
             smileyDao.deleteByID(itemId)
         }
     }
-
 }
