@@ -8,7 +8,7 @@ data class Movie(
     @SerializedName("original_title")
     val originalTitle: String,
     val genres: List<Genre>,
-    val credits: Credits,
+    val credits: Credits?,
     val overview: String,
     @SerializedName("poster_path")
     val posterPath: String,

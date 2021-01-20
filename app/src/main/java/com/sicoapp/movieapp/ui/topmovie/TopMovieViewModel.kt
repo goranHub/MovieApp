@@ -45,11 +45,10 @@ class TopMovieViewModel @ViewModelInject constructor(
                     }
 
                     override fun onError(e: Throwable) {
-                        Log.d("error", "${e.stackTrace}")
+                        Log.d("errorTopMovie", "${e.stackTrace}")
                     }
 
                     override fun onComplete() {
-                        TODO("Not yet implemented")
                     }
                 }
             )

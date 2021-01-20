@@ -39,7 +39,10 @@ class PopularViewModel @ViewModelInject constructor(
                     }
 
                     override fun onNext(response: MovieResponse) {
-                        val movieItemsList = response.results.map { BindMovie(it) }
+                        val movieItemsList =
+                            response
+                                .results
+                                .map { BindMovie(it) }
                         adapter.addMovies(movieItemsList)
                         pageId++
                     }

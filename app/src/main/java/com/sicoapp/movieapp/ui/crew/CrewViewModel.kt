@@ -29,10 +29,10 @@ class CrewViewModel @ViewModelInject constructor(
                     }
 
                     override fun onNext(response: Movie) {
-                        val list = response.credits.cast
-                            .filter { !response.posterPath.isNullOrBlank() }
-                            .distinctBy { it.profilePath }
-                            .map { CrewObservable(it) }
+                        val list = response.credits?.cast
+                            ?.filter { !response.posterPath.isNullOrBlank() }
+                            ?.distinctBy { it.profilePath }
+                            ?.map { CrewObservable(it) }
                         adapter.addCast(list)
                     }
 

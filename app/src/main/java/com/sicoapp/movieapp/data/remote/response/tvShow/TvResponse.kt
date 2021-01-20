@@ -7,5 +7,5 @@ data class TvResponse(
     val overview: String,
     val popularity: Double,
     @SerializedName("poster_path")
-    val posterPath: String,
+    val posterPath: String
 )

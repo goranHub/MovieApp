@@ -10,7 +10,6 @@ import com.sicoapp.movieapp.data.remote.response.tvShow.TvResponse
 import com.sicoapp.movieapp.domain.Repository
 import com.sicoapp.movieapp.utils.URL_IMAGE
 import io.reactivex.Observer
-import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -76,8 +75,8 @@ class DetailsViewModel @ViewModelInject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-
                 object : Observer<TvResponse>{
+
                     override fun onSubscribe(d: Disposable) {
                     }
 

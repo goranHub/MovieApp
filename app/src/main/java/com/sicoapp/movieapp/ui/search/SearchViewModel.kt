@@ -49,7 +49,8 @@ class SearchViewModel @ViewModelInject constructor(
 
                     override fun onNext(response: Multi) {
                         val movieResponse =
-                            response.results
+                            response
+                                .results
                                 .filter { !it.poster_path.isNullOrBlank() }
                                 .distinctBy { it.poster_path }
                                 .map { BindMulti(it) }

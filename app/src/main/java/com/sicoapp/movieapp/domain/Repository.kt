@@ -17,16 +17,12 @@ class Repository @Inject constructor(
     private val networkDataSource: NetworkDataSource,
     val databaseDataSource: DataBaseDataSource
 ) {
-
     fun fetchTopRatedMovies(pageId: Long): Observable<MovieResponse> {
         return networkDataSource
             .fetchTopRatedMovies(pageId)
             .toObservable()
             .map { movieResponse ->
-                movieResponse.results.map { movie ->
-                    movie.mapToMovie()
-                }
-                movieResponse
+                movieResponse.mapToMovieResponse()
             }
     }
 
@@ -53,12 +49,8 @@ class Repository @Inject constructor(
             .fetchPopularMovies(pageId)
             .toObservable()
             .map { movieResponse ->
-                movieResponse.results.map { movie ->
-                    movie.mapToMovie()
-                }
-                movieResponse
+                movieResponse.mapToMovieResponse()
             }
-
     }
 
     fun fetchSearchMulti(query: String, pageId: Long): Observable<Multi> {
@@ -70,13 +62,12 @@ class Repository @Inject constructor(
             }
     }
 
-
     fun fetchSearchMultiTv(movieId: Long): Observable<TvResponse> {
         return networkDataSource
             .fetchSearchMultiTv(movieId)
             .toObservable()
-            .map { movieResponse ->
-                movieResponse.mapToTvResponse()
+            .map { tvResponse ->
+                tvResponse.mapToTvResponse()
             }
     }
 }

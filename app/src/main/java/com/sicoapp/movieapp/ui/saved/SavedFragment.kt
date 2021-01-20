@@ -38,16 +38,8 @@ class SavedFragment : BaseFragment() {
 
         binding.listMovieSaved.adapter = viewModel.adapter
 
-        runBlocking {
-            viewModel.loadRemoteData(getSaved())
-        }
-
         return binding.root
     }
 
-    private suspend fun getSaved(): List<SmileyRatingEntity> {
-        //TODO without databaseDataSource
-        val saved = repository.databaseDataSource.getSaved()
-        return saved.distinctBy { it.itemId }
-    }
+
 }

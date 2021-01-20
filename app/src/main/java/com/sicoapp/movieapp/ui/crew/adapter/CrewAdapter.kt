@@ -33,8 +33,8 @@ class CrewAdapter: RecyclerView.Adapter<ViewHolder>(){
 
     override fun getItemCount() = list.size
 
-    fun addCast(crewItems: List<CrewObservable>) {
-        list.addAll(crewItems)
+    fun addCast(crewItems: List<CrewObservable>?) {
+        list.addAll(crewItems!!)
         notifyDataSetChanged()
     }
 }
