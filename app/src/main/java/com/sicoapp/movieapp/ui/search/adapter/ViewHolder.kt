@@ -15,6 +15,5 @@ class ViewHolder(val binding: ItemMovieSearchBinding) :
         binding.setVariable(BR.data, obj)
         binding.executePendingBindings()
     }
-
 }
 

@@ -111,7 +111,6 @@ class MyProfileFragment() : BaseFragment() {
 
     fun setUserDataInUI(user: User) {
         userRemote = user
-
         binding.data  = user.image
         binding.etName.setText(user.name)
         binding.etEmail.setText(user.email)

@@ -64,6 +64,8 @@ class DetailsMovieFragment : Fragment(), NavigationView.OnNavigationItemSelected
             deleteFromDB()
         }
 
+        setNavigationViewListener()
+
         return binding.root
     }
 
@@ -155,7 +157,6 @@ class DetailsMovieFragment : Fragment(), NavigationView.OnNavigationItemSelected
         val navigationView = (activity as EntryActivity).navigation_view
         navigationView.setNavigationItemSelectedListener(this)
     }
-
 }
 
 

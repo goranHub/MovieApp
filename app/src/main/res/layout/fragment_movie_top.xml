@@ -8,7 +8,6 @@
             type="com.sicoapp.movieapp.ui.topmovie.TopMovieViewModel" />
     </data>
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         tools:context=".ui.topmovie.TopMovieFragment"
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,8 +15,6 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recylerViewFragmentTopMovie"

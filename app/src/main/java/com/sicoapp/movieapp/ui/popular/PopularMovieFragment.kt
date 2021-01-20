@@ -80,8 +80,6 @@ class PopularMovieFragment : BaseFragment(), NavigationView.OnNavigationItemSele
         })
     }
 
-
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
 
@@ -108,15 +106,5 @@ class PopularMovieFragment : BaseFragment(), NavigationView.OnNavigationItemSele
     private fun setNavigationViewListener() {
         val navigationView = (activity as EntryActivity).navigation_view
         navigationView.setNavigationItemSelectedListener(this)
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-       // (activity as EntryActivity?)!!.supportActionBar?.show()
-    }
-
-    override fun onStop() {
-        super.onStop()
     }
 }

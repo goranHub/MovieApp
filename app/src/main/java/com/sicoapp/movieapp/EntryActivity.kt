@@ -48,8 +48,6 @@ class EntryActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
         NavigationUI.setupWithNavController(binding.navigationView, navController)
-
-
     }
 
     private fun setupNav() {

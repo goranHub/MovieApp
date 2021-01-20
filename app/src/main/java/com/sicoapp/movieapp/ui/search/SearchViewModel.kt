@@ -5,7 +5,6 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.sicoapp.movieapp.data.remote.response.multi.Multi
 import com.sicoapp.movieapp.domain.Repository
-import com.sicoapp.movieapp.ui.popular.BindMovie
 import com.sicoapp.movieapp.ui.search.adapter.SearchAdapter
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers

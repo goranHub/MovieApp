@@ -2,13 +2,11 @@ package com.sicoapp.movieapp.ui.popular
 
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
-import com.sicoapp.movieapp.data.remote.response.movie.Movie
+import androidx.lifecycle.ViewModel
 import com.sicoapp.movieapp.data.remote.response.movie.MovieResponse
 import com.sicoapp.movieapp.domain.Repository
 import com.sicoapp.movieapp.ui.topmovie.adapter.TopMovieAdapter
 import io.reactivex.Observer
-import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers

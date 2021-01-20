@@ -38,8 +38,4 @@ open class BaseFragment : Fragment() {
     open fun hideProgressDialog() {
         dialog.dismiss()
     }
-
-    open fun getCurrentUserID(): String {
-        return FirebaseAuth.getInstance().currentUser!!.uid
-    }
 }

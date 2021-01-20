@@ -33,16 +33,6 @@ fun ImageView.loadImage(uri: String, progressDrawable: CircularProgressDrawable)
 }
 
 
-fun ImageView.loadImageDetails(uri: String, progressDrawable: CircularProgressDrawable) {
-    val options = RequestOptions().placeholder(progressDrawable)
-        .error(R.mipmap.ic_launcher)
-    Glide.with(context)
-        .setDefaultRequestOptions(options)
-        .load(uri)
-        .circleCrop()
-        .into(this)
-}
-
 object ImageBindingAdapter {
     @JvmStatic
     @BindingAdapter("loadImageUrl")
@@ -51,25 +41,16 @@ object ImageBindingAdapter {
     }
 }
 
-/*    object ImageBindingAdapterDetails {
-        @JvmStatic
-        @BindingAdapter("loadImageDetails")
-        fun loadImageDetails(view: ImageView, url: String) {
-            view.loadImageDetails(url, getProgressDrawable(view.context))
-        }
-    }*/
-
-
-    object ImageBindingAdapterDetails {
-        @JvmStatic
-        @BindingAdapter("loadImageDetails")
-        fun loadImageDetails(view: ImageView, profileImage: String?) {
-            Glide.with(view.context)
-                .load(profileImage)
-                .fitCenter()
-                .into(view)
-        }
+object ImageBindingAdapterDetails {
+    @JvmStatic
+    @BindingAdapter("loadImageDetails")
+    fun loadImageDetails(view: ImageView, profileImage: String?) {
+        Glide.with(view.context)
+            .load(profileImage)
+            .fitCenter()
+            .into(view)
     }
+}
 
 
 

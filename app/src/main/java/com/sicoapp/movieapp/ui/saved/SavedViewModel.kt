@@ -23,7 +23,6 @@ class SavedViewModel @ViewModelInject constructor(
     val adapter = SavedAdapter()
     var allElement = mutableListOf<Movie>()
 
-
     init {
         runBlocking {
             loadRemoteData(getSaved())

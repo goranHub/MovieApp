@@ -26,7 +26,6 @@ class SavedFragment : BaseFragment() {
 
     private lateinit var binding: FragmentSavedListBinding
 
-
     private val viewModel: SavedViewModel by viewModels()
 
     override fun onCreateView(
@@ -40,6 +39,4 @@ class SavedFragment : BaseFragment() {
 
         return binding.root
     }
-
-
 }

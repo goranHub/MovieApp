@@ -53,9 +53,6 @@ class SearchAdapter : RecyclerView.Adapter<ViewHolder>() {
         searchItems.clear()
         notifyDataSetChanged()
     }
-
-    /*kad pageId =1 da radi clear()
-    * kasnije ne */
 }
 
 

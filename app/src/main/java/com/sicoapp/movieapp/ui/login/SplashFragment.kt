@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_entry.*
  * @author ll4
  * @date 1/15/2021
  */
-class EntryFragment : BaseFragment() {
+class SplashFragment : BaseFragment() {
 
     lateinit var binding: FragmentEntryBinding
     var userId = ""
@@ -43,7 +43,7 @@ class EntryFragment : BaseFragment() {
                 findNavController().navigate(R.id.action_entryFragment_to_introFragment,
                     null,
                     NavOptions.Builder()
-                        .setPopUpTo(R.id.entryFragment,
+                        .setPopUpTo(R.id.splashFragment,
                             true).build())
 
             } else {
@@ -51,7 +51,7 @@ class EntryFragment : BaseFragment() {
                 findNavController().navigate(R.id.action_entryFragment_to_topMovieFragment,
                     null,
                     NavOptions.Builder()
-                        .setPopUpTo(R.id.entryFragment,
+                        .setPopUpTo(R.id.splashFragment,
                             true).build())
 
             }

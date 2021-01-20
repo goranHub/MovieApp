@@ -10,7 +10,6 @@ import com.sicoapp.movieapp.ui.login.SignInFragment
 import com.sicoapp.movieapp.ui.login.SignUpFragment
 import com.sicoapp.movieapp.utils.USERS
 
-
 class FireStoreClass {
 
     private val fireBase = FirebaseFirestore.getInstance()

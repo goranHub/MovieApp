@@ -159,8 +159,4 @@ class SearchFragment : BaseFragment(), NavigationView.OnNavigationItemSelectedLi
         (activity as EntryActivity?)!!.bottomNav.visibility = View.VISIBLE
 
     }
-
-    override fun onStop() {
-        super.onStop()
-    }
 }
