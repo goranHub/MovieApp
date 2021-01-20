@@ -35,6 +35,7 @@ open class BaseFragment : Fragment() {
         )
         snackBar.show()
     }
+
     open fun hideProgressDialog() {
         dialog.dismiss()
     }

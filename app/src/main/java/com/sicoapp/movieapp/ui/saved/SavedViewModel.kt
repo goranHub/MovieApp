@@ -5,7 +5,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.sicoapp.movieapp.data.database.SmileyRatingEntity
 import com.sicoapp.movieapp.data.remote.response.movie.Movie
-import com.sicoapp.movieapp.domain.Repository
+import com.sicoapp.movieapp.domain.IRepository
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -17,7 +17,7 @@ import kotlinx.coroutines.runBlocking
  * @date 12/6/2020
  */
 class SavedViewModel @ViewModelInject constructor(
-    private val repository: Repository
+    private val repository: IRepository
 ) : ViewModel() {
 
     val adapter = SavedAdapter()
@@ -30,8 +30,7 @@ class SavedViewModel @ViewModelInject constructor(
     }
 
     private suspend fun getSaved(): List<SmileyRatingEntity> {
-        //TODO without databaseDataSource
-        val saved = repository.databaseDataSource.getSaved()
+        val saved = repository.getSaved()
         return saved.distinctBy { it.itemId }
     }
 

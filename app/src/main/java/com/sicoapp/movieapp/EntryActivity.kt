@@ -35,7 +35,6 @@ class EntryActivity : AppCompatActivity() {
 
         bottomNav = binding.bottomNavigationView
 
-
         navController = findNavController(R.id.nav_host_fragment_entry)
 
         setupNav()
@@ -76,5 +75,4 @@ class EntryActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return NavigationUI.navigateUp(navController, appBarConfiguration)
     }
-
 }

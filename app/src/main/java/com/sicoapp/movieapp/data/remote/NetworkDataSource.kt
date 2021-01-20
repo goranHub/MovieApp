@@ -1,5 +1,6 @@
 package com.sicoapp.movieapp.data.remote
 
+import com.sicoapp.movieapp.data.database.SmileyRatingEntity
 import com.sicoapp.movieapp.data.remote.response.movie.Movie
 import com.sicoapp.movieapp.data.remote.response.movie.MovieResponse
 import com.sicoapp.movieapp.data.remote.response.multi.Multi
@@ -39,5 +40,4 @@ class NetworkDataSource @Inject constructor(
     fun fetchCrew(movieId: Long): Single<Movie> {
         return movieService.loadCrewBy(movieId, API_KEY)
     }
-
 }

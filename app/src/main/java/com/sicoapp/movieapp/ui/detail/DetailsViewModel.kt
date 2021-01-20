@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.sicoapp.movieapp.data.database.SmileyRatingEntity
 import com.sicoapp.movieapp.data.remote.response.movie.Movie
 import com.sicoapp.movieapp.data.remote.response.tvShow.TvResponse
-import com.sicoapp.movieapp.domain.Repository
+import com.sicoapp.movieapp.domain.IRepository
 import com.sicoapp.movieapp.utils.URL_IMAGE
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,26 +20,23 @@ import io.reactivex.schedulers.Schedulers
  */
 
 class DetailsViewModel @ViewModelInject constructor(
-    private var repository: Repository,
+    private var repository: IRepository,
 ) : ViewModel() {
 
     var bindDetails = BindDetails()
 
     fun insertData(itemID: Int, rating: Int) {
-        //TODO without databaseDataSource
-        repository.databaseDataSource.insertData(itemID, rating)
+        repository.insertData(itemID, rating)
     }
 
     fun getSavedSmileyDetails(
         itemId: Int
     ): LiveData<SmileyRatingEntity> {
-        //TODO without databaseDataSource
-        return repository.databaseDataSource.getMovieRatingDetails(itemId)
+        return repository.getMovieRatingDetails(itemId)
     }
 
     fun removeRatingForMovie(itemId: Int) {
-        //TODO without databaseDataSource
-        repository.databaseDataSource.removeDataForThatItem(itemId)
+        repository.removeDataForThatItem(itemId)
     }
 
     fun loadRemoteDataMovie(movieId :Long) {
