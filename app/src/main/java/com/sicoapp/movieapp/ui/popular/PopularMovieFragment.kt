@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.activity_entry.*
  * @date 1/1/2021
  */
 @AndroidEntryPoint
-class PopularMovieFragment : BaseFragment(), NavigationView.OnNavigationItemSelectedListener {
+class PopularMovieFragment : BaseFragment() {
 
     private lateinit var binding: FragmentMoviePopularBinding
 
@@ -62,8 +62,6 @@ class PopularMovieFragment : BaseFragment(), NavigationView.OnNavigationItemSele
 
         scrollRecyclerView()
 
-        setNavigationViewListener()
-
         return binding.root
     }
 
@@ -78,33 +76,5 @@ class PopularMovieFragment : BaseFragment(), NavigationView.OnNavigationItemSele
                 }
             }
         })
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-
-            R.id.my_profile -> {
-            }
-
-            R.id.list_movie_saved -> {
-                findNavController().navigate(
-                    R.id.action_popularMovieFragment_to_saveFragment
-                )
-            }
-
-            R.id.sign_out -> {
-                FirebaseAuth.getInstance().signOut()
-                findNavController().navigate(
-                    R.id.action_popularMovieFragment_to_introFragment)
-            }
-        }
-
-        (activity as EntryActivity).drawer_layout?.closeDrawer(GravityCompat.START)
-        return true
-    }
-
-    private fun setNavigationViewListener() {
-        val navigationView = (activity as EntryActivity).navigation_view
-        navigationView.setNavigationItemSelectedListener(this)
     }
 }

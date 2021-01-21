@@ -58,7 +58,8 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0"
                 app:loadImageUrl="@{data.imageUrl}"
-                tools:srcCompat="@tools:sample/avatars" />
+                tools:srcCompat="@tools:sample/avatars"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@+id/original_title"

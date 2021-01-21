@@ -4,25 +4,18 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
-import androidx.core.view.GravityCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.navigation.NavigationView
-import com.google.firebase.auth.FirebaseAuth
 import com.sicoapp.movieapp.R
-import com.sicoapp.movieapp.data.remote.firebase.FireStoreClass
 import com.sicoapp.movieapp.databinding.FragmentMovieSearchBinding
 import com.sicoapp.movieapp.ui.BaseFragment
-import com.sicoapp.movieapp.EntryActivity
 import com.sicoapp.movieapp.utils.ITEM_ID
 import com.sicoapp.movieapp.utils.MEDIATYP
-import com.sicoapp.movieapp.utils.USER_ID
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -38,7 +31,7 @@ import java.util.concurrent.TimeUnit
  */
 
 @AndroidEntryPoint
-class SearchFragment : BaseFragment(), NavigationView.OnNavigationItemSelectedListener {
+class SearchFragment : BaseFragment(){
 
     private val viewModel: SearchViewModel by viewModels()
 
@@ -60,13 +53,12 @@ class SearchFragment : BaseFragment(), NavigationView.OnNavigationItemSelectedLi
     ): View {
 
         binding = FragmentMovieSearchBinding.inflate(inflater)
-        binding.imageButtonBack.setOnClickListener { findNavController().popBackStack() }
+
         binding.data = viewModel
+
         binding.callback = callback
 
         setupSearchView()
-
-        setNavigationViewListener()
 
         return binding.root
     }
@@ -82,7 +74,7 @@ class SearchFragment : BaseFragment(), NavigationView.OnNavigationItemSelectedLi
                     Log.d("emptyString", "emptyString")
                 }
                 return@filter true}
-            .debounce(500, TimeUnit.MILLISECONDS)
+            .debounce(700, TimeUnit.MILLISECONDS)
             .distinctUntilChanged()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -119,44 +111,5 @@ class SearchFragment : BaseFragment(), NavigationView.OnNavigationItemSelectedLi
             }
         })
         return subject
-    }
-
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-
-            R.id.my_profile -> {
-            }
-
-            R.id.list_movie_saved -> {
-                findNavController().navigate(
-                    R.id.action_searchFragment_to_saveFragment
-                )
-            }
-
-            R.id.sign_out -> {
-                FirebaseAuth.getInstance().signOut()
-                val currentUserID = FireStoreClass().currentUserID()
-                val userIdBundle = bundleOf(USER_ID to currentUserID)
-                findNavController().navigate(
-                    R.id.action_searchFragment_to_introFragment, userIdBundle
-                )
-            }
-        }
-        (activity as EntryActivity).drawer_layout?.closeDrawer(GravityCompat.START)
-        return true
-    }
-
-    private fun setNavigationViewListener() {
-        val navigationView = (activity as EntryActivity).navigation_view
-        navigationView.setNavigationItemSelectedListener(this)
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-        (activity as EntryActivity?)!!.supportActionBar?.show()
-        (activity as EntryActivity?)!!.bottomNav.visibility = View.VISIBLE
-
     }
 }

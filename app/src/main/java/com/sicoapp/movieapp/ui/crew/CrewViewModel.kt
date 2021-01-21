@@ -23,7 +23,6 @@ class CrewViewModel @ViewModelInject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-
                 object : Observer<Movie> {
                     override fun onSubscribe(d: Disposable) {
                     }
@@ -42,7 +41,6 @@ class CrewViewModel @ViewModelInject constructor(
 
                     override fun onComplete() {
                     }
-
                 }
             )
     }

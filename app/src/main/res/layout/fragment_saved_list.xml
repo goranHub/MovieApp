@@ -7,14 +7,22 @@
 
     </data>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_movie_saved"
-        android:name="com.sicoapp.movieapp.ui.movie.saved.ItemFragment"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        app:layoutManager="LinearLayoutManager"
-        tools:context=".ui.saved.SavedFragment"
-        tools:listitem="@layout/fragment_saved" />
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_movie_saved"
+            android:name="com.sicoapp.movieapp.ui.movie.saved.ItemFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="80dp"
+            android:layout_marginRight="16dp"
+            app:layoutManager="LinearLayoutManager"
+            tools:context=".ui.saved.SavedFragment"
+            tools:listitem="@layout/fragment_saved" />
+    </LinearLayout>
 </layout>

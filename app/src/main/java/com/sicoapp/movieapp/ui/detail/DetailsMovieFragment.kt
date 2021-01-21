@@ -3,31 +3,23 @@ package com.sicoapp.movieapp.ui.detail
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import com.google.android.material.navigation.NavigationView
-import com.google.firebase.auth.FirebaseAuth
 import com.hsalf.smileyrating.SmileyRating
-import com.sicoapp.movieapp.EntryActivity
-import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.FragmentMovieDetailsBinding
 import com.sicoapp.movieapp.utils.ITEM_ID
 import com.sicoapp.movieapp.utils.MEDIATYP
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_entry.*
+
 
 @AndroidEntryPoint
-class DetailsMovieFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener {
+class DetailsMovieFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieDetailsBinding
     var movieId = 0L
     var mediaTyp = ""
-
 
     private val viewModel: DetailsViewModel by viewModels()
 
@@ -64,8 +56,6 @@ class DetailsMovieFragment : Fragment(), NavigationView.OnNavigationItemSelected
             deleteFromDB()
         }
 
-        setNavigationViewListener()
-
         return binding.root
     }
 
@@ -94,7 +84,7 @@ class DetailsMovieFragment : Fragment(), NavigationView.OnNavigationItemSelected
         rating: Int
     ) {
         lateinit var type: SmileyRating.Type
-        var color = Color.YELLOW
+        val color = Color.YELLOW
         if (rating == 1) {
             type = SmileyRating.Type.TERRIBLE
             binding.smiley.setRating(rating, false)
@@ -128,34 +118,6 @@ class DetailsMovieFragment : Fragment(), NavigationView.OnNavigationItemSelected
 
     private fun updateUIMovie(movieId: Long) {
         viewModel.loadRemoteDataMovie(movieId)
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-
-            R.id.my_profile -> {
-            }
-
-            R.id.list_movie_saved -> {
-                findNavController().navigate(
-                    R.id.action_movieDetailsFragment_to_savedFragment
-                )
-            }
-
-            R.id.sign_out -> {
-                FirebaseAuth.getInstance().signOut()
-                findNavController().navigate(
-                    R.id.action_movieDetailsFragment_to_introFragment)
-            }
-        }
-
-        (activity as EntryActivity).drawer_layout?.closeDrawer(GravityCompat.START)
-        return true
-    }
-
-    private fun setNavigationViewListener() {
-        val navigationView = (activity as EntryActivity).navigation_view
-        navigationView.setNavigationItemSelectedListener(this)
     }
 }
 

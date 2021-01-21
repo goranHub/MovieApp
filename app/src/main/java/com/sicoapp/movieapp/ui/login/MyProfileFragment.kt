@@ -81,7 +81,6 @@ class MyProfileFragment() : BaseFragment() {
                 && requestCode == PICK_IMAGE_REQUEST_CODE
                 && intent!!.data != null
         ) {
-
             selectedImageUri = intent.data!!
             binding.data  = selectedImageUri.toString()
 

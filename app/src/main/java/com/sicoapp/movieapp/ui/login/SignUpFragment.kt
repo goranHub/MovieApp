@@ -11,6 +11,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.sicoapp.movieapp.EntryActivity
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.remote.firebase.FireStoreClass
 import com.sicoapp.movieapp.data.remote.firebase.model.User
@@ -106,5 +107,4 @@ class SignUpFragment : BaseFragment() {
    override fun hideProgressDialog() {
         dialog.dismiss()
     }
-
 }

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="data"
             type="String" />
-
     </data>
 
     <LinearLayout
@@ -20,6 +19,8 @@
             android:id="@+id/iv_profile_user_image"
             android:layout_width="200dp"
             android:layout_height="280dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="100dp"
             android:src="@drawable/ic_launcher_background"
             loadImageDetails="@{data}"/>
 

@@ -18,13 +18,12 @@
         android:layout_height="match_parent"
         tools:context=".ui.popular.PopularMovieFragment">
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recylerViewFragmentTopMovie"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="70dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:layoutAnimation="@anim/layout_animation_fall_down"
@@ -37,7 +36,6 @@
             app:setCallback="@{callback}"
             tools:itemCount="20"
             tools:listitem="@layout/item_movie" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -8,7 +8,12 @@
             android:title="@string/my_profile" />
 
         <item
-            android:id="@+id/list_movie_saved"
+            android:id="@+id/movies"
+            android:icon="@drawable/ic_baseline_movie_24"
+            android:title="@string/my_profile" />
+
+        <item
+            android:id="@+id/saved"
             android:icon="@drawable/ic_baseline_save_24"
             android:title="@string/saved" />
 
