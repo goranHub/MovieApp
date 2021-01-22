@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.sicoapp.movieapp.data.remote.response.movie.MovieResponse
-import com.sicoapp.movieapp.domain.IRepository
+import com.sicoapp.movieapp.domain.Repository
 import com.sicoapp.movieapp.ui.topmovie.adapter.TopMovieAdapter
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,7 +16,7 @@ import io.reactivex.schedulers.Schedulers
  * @date 12/6/2020
  */
 class PopularViewModel @ViewModelInject constructor(
-    private val remoteRepository: IRepository
+    private val remoteRepository: Repository
 ) : ViewModel() {
 
     var pageId = 1L

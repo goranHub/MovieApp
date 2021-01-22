@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.sicoapp.movieapp.data.database.SmileyRatingEntity
 import com.sicoapp.movieapp.data.remote.response.movie.Movie
 import com.sicoapp.movieapp.data.remote.response.tvShow.TvResponse
-import com.sicoapp.movieapp.domain.IRepository
+import com.sicoapp.movieapp.domain.Repository
 import com.sicoapp.movieapp.utils.URL_IMAGE
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,7 +20,7 @@ import io.reactivex.schedulers.Schedulers
  */
 
 class DetailsViewModel @ViewModelInject constructor(
-    private var repository: IRepository,
+    private var repository: Repository,
 ) : ViewModel() {
 
     var bindDetails = BindDetails()

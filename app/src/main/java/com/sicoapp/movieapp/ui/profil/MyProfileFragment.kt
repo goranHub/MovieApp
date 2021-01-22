@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.ui.login
+package com.sicoapp.movieapp.ui.profil
 
 import android.Manifest
 import android.app.Activity
@@ -19,23 +19,31 @@ import com.google.firebase.storage.StorageReference
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.remote.firebase.FireStoreClass
 import com.sicoapp.movieapp.data.remote.firebase.model.User
+import com.sicoapp.movieapp.databinding.DrawerHeaderBinding
 import com.sicoapp.movieapp.databinding.FragmentMyProfileBinding
+import com.sicoapp.movieapp.domain.Repository
 import com.sicoapp.movieapp.ui.BaseFragment
 import com.sicoapp.movieapp.utils.PICK_IMAGE_REQUEST_CODE
 import com.sicoapp.movieapp.utils.READ_STORAGE_PERMISSION_CODE
 import com.sicoapp.movieapp.utils.USER_IMAGE
 import com.sicoapp.movieapp.utils.USER_NAME
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_my_profile.*
+import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
-class MyProfileFragment() : BaseFragment() {
+@AndroidEntryPoint
+class MyProfileFragment : BaseFragment() {
+
+    @Inject
+    lateinit var repository: Repository
 
     var selectedImageUri: Uri? = null
-
     private lateinit var userRemote: User
-
     private var profileImageURL: String = ""
-
     private lateinit var binding: FragmentMyProfileBinding
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,13 +52,18 @@ class MyProfileFragment() : BaseFragment() {
 
         binding = FragmentMyProfileBinding.inflate(inflater)
 
-        FireStoreClass().loadUserData(this)
+
+        FireStoreClass().loadUserDataMyProfile(this)
 
         binding.ivProfileUserImage.setOnClickListener {
 
             if (context?.let { context ->
-                    ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) }
-                    == PackageManager.PERMISSION_GRANTED
+                    ContextCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
+                }
+                == PackageManager.PERMISSION_GRANTED
             ) {
                 imageChooser()
             } else {
@@ -78,19 +91,20 @@ class MyProfileFragment() : BaseFragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
         if (resultCode == Activity.RESULT_OK
-                && requestCode == PICK_IMAGE_REQUEST_CODE
-                && intent!!.data != null
+            && requestCode == PICK_IMAGE_REQUEST_CODE
+            && intent!!.data != null
         ) {
             selectedImageUri = intent.data!!
-            binding.data  = selectedImageUri.toString()
+            //from device
+            binding.data = selectedImageUri.toString()
 
         }
     }
 
     override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == READ_STORAGE_PERMISSION_CODE) {
@@ -100,67 +114,69 @@ class MyProfileFragment() : BaseFragment() {
             } else {
                 //Displaying another toast if permission is not granted
                 Toast.makeText(
-                        context,
-                        "you denied the permission",
-                        Toast.LENGTH_LONG
+                    context,
+                    "you denied the permission",
+                    Toast.LENGTH_LONG
                 ).show()
             }
         }
     }
 
-    fun setUserDataInUI(user: User) {
+    fun loadFromRemote(user: User) {
         userRemote = user
-        binding.data  = user.image
-        binding.etName.setText(user.name)
-        binding.etEmail.setText(user.email)
+        val currentUserID = FireStoreClass().currentUserID()
+
+        repository.insertDataUser(user)
+
+        runBlocking {
+            val listUser = repository.getSavedUsers()
+            listUser.map {
+
+                if(it.id == currentUserID){
+                    binding.data = it.image
+                    binding.etName.setText(it.name)
+                    binding.etEmail.setText(it.email)
+
+                }
+            }
+        }
     }
 
     private fun uploadUserImage() {
-
         showProgressDialog(resources.getString(R.string.please_wait))
-
         if (selectedImageUri != null) {
-
             val storageReference: StorageReference = FirebaseStorage.getInstance().reference.child(
-                    "USER_IMAGE" + System.currentTimeMillis() + "."
-                            + fileExtension( selectedImageUri)
+                "USER_IMAGE" + System.currentTimeMillis() + "."
+                        + fileExtension(selectedImageUri)
             )
-
             storageReference.putFile(selectedImageUri!!)
-                    .addOnSuccessListener {
-                            snapshot ->
-
-                        // Get the downloadable url from the snapshot
-                        snapshot.metadata!!.reference!!.downloadUrl
-                                .addOnSuccessListener { uri ->
-                                    profileImageURL = uri.toString()
-                                    updateUserProfile()
-                                }
-                    }
-                    .addOnFailureListener { exception ->
-                        Toast.makeText(
-                                context,
-                                exception.message,
-                                Toast.LENGTH_LONG
-                        ).show()
-
-                        hideProgressDialog()
-                    }
+                .addOnSuccessListener { snapshot ->
+                    // Get the downloadable url from the snapshot
+                    snapshot.metadata!!.reference!!.downloadUrl
+                        .addOnSuccessListener { uri ->
+                            profileImageURL = uri.toString()
+                            updateUserProfile()
+                        }
+                }
+                .addOnFailureListener { exception ->
+                    Toast.makeText(
+                        context,
+                        exception.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+                    hideProgressDialog()
+                }
         }
     }
 
     private fun updateUserProfile() {
-
         val userHashMap = HashMap<String, Any>()
-
         if (profileImageURL.isNotEmpty() && profileImageURL != userRemote.image) {
             userHashMap[USER_IMAGE] = profileImageURL
         }
-
         if (binding.etName.text.toString() != userRemote.name) {
             userHashMap[USER_NAME] = binding.etName.text.toString()
         }
-
         // Update the database
         FireStoreClass()
             .updateUserProfileData(this@MyProfileFragment, userHashMap)

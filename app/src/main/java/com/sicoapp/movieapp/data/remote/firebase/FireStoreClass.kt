@@ -5,12 +5,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.sicoapp.movieapp.data.remote.firebase.model.User
-import com.sicoapp.movieapp.ui.login.MyProfileFragment
+import com.sicoapp.movieapp.ui.profil.MyProfileFragment
 import com.sicoapp.movieapp.ui.login.SignInFragment
 import com.sicoapp.movieapp.ui.login.SignUpFragment
 import com.sicoapp.movieapp.utils.USERS
+import javax.inject.Inject
 
-class FireStoreClass {
+class FireStoreClass  @Inject constructor() {
 
     private val fireBase = FirebaseFirestore.getInstance()
 
@@ -51,27 +52,23 @@ class FireStoreClass {
         return currentUserID
     }
 
-
-    fun loadUserData(myProfileFragment: MyProfileFragment) {
+    fun loadUserDataMyProfile(myProfileFragment: MyProfileFragment) {
         fireBase.collection(USERS)
             .document(currentUserID())
             .get()
             .addOnSuccessListener { document ->
-
-                Log.e(myProfileFragment.javaClass.simpleName, document.toString())
                 val loggedInUser = document.toObject(User::class.java)!!
-                myProfileFragment.setUserDataInUI(loggedInUser)
-                }
-
-            .addOnFailureListener { msg ->
+                myProfileFragment.loadFromRemote(loggedInUser)
+            }
+            .addOnFailureListener {
                 myProfileFragment.hideProgressDialog()
-                Log.e(
-                    myProfileFragment.javaClass.simpleName,
-                    "Error while fetching user from cloud",msg)
             }
     }
 
-    fun updateUserProfileData(myProfileFragment: MyProfileFragment, userHashMap: HashMap<String, Any>) {
+    fun updateUserProfileData(
+        myProfileFragment: MyProfileFragment,
+        userHashMap: HashMap<String, Any>
+    ) {
         fireBase.collection(USERS)
             .document(currentUserID())
             .update(userHashMap)
@@ -80,11 +77,11 @@ class FireStoreClass {
                 myProfileFragment.profileUpdateSuccess()
             }
             .addOnFailureListener { msg ->
-
                 myProfileFragment.hideProgressDialog()
                 Log.e(
                     myProfileFragment.javaClass.simpleName,
-                    "Error while updating user",msg)
+                    "Error while updating user", msg
+                )
             }
     }
 }

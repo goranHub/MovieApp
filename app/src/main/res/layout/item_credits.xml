@@ -31,7 +31,7 @@
             app:layout_constraintHorizontal_bias="0.056"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:loadImageUrl="@{data.imageActorUrl}"
+            app:loadImage="@{data.imageActorUrl}"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView

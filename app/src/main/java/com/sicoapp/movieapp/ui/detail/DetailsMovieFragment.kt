@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.hsalf.smileyrating.SmileyRating
+import com.sicoapp.movieapp.EntryActivity
 import com.sicoapp.movieapp.databinding.FragmentMovieDetailsBinding
 import com.sicoapp.movieapp.utils.ITEM_ID
 import com.sicoapp.movieapp.utils.MEDIATYP
@@ -25,6 +26,7 @@ class DetailsMovieFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         arguments?.getLong(ITEM_ID, -1)?.let {
             movieId = it
         }
@@ -70,7 +72,6 @@ class DetailsMovieFragment : Fragment() {
     }
 
     private fun callFromDB() {
-
         viewModel.getSavedSmileyDetails(movieId.toInt())
             .observe(viewLifecycleOwner, { response ->
                 if (response != null) {

@@ -2,8 +2,7 @@ package com.sicoapp.movieapp.di
 
 import com.sicoapp.movieapp.data.database.DataBaseDataSource
 import com.sicoapp.movieapp.data.remote.NetworkDataSource
-import com.sicoapp.movieapp.domain.IRepository
-import com.sicoapp.movieapp.domain.RepositoryImpl
+import com.sicoapp.movieapp.domain.Repository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,8 +22,8 @@ object RepositoryModule {
     fun provideMovieRepository(
         networkDataSource: NetworkDataSource,
         databaseDataSource: DataBaseDataSource
-    ): IRepository {
-        return RepositoryImpl(
+    ): Repository {
+        return Repository(
             networkDataSource = networkDataSource,
             databaseDataSource = databaseDataSource
         )

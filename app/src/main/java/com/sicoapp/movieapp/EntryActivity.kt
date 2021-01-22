@@ -3,6 +3,7 @@ package com.sicoapp.movieapp
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -13,10 +14,16 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import com.sicoapp.movieapp.data.remote.firebase.FireStoreClass
 import com.sicoapp.movieapp.databinding.ActivityEntryBinding
+import com.sicoapp.movieapp.databinding.DrawerHeaderBinding
+import com.sicoapp.movieapp.domain.Repository
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
 
 /**
@@ -26,11 +33,17 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class EntryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    @Inject
+    lateinit var repository: Repository
+
+
     lateinit var navController: NavController
     lateinit var bottomNav: BottomNavigationView
     lateinit var binding: ActivityEntryBinding
     lateinit var drawerLayout: DrawerLayout
     lateinit var toolbar: Toolbar
+    lateinit var headerProfilImageView: View
+    lateinit var drawerHeaderBinding: DrawerHeaderBinding
 
     private val appBarConfiguration by lazy {
         AppBarConfiguration(
@@ -62,6 +75,25 @@ class EntryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         setupNav()
 
         setupNavigation()
+
+        headerProfilImageView = binding.navigationView.getHeaderView(0)
+
+        runBlocking {
+            val currentUserID = FireStoreClass().currentUserID()
+            val listUser = repository.getSavedUsers()
+            listUser.map {
+
+                if (it.id == currentUserID) {
+
+                    Glide
+                        .with(this@EntryActivity)
+                        .load(it.image)
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_baseline_local_movies_24)
+                        .into(headerProfilImageView.findViewById(R.id.header_imageView) as ImageView)
+                }
+            }
+        }
     }
 
     private fun setupNavigation() {
@@ -107,11 +139,12 @@ class EntryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
     private fun showBottomNav() {
+        toolbar.visibility = View.VISIBLE
         bottomNav.visibility = View.VISIBLE
     }
 
     private fun hideBottomNav() {
+        toolbar.visibility = View.GONE
         bottomNav.visibility = View.GONE
     }
-
 }

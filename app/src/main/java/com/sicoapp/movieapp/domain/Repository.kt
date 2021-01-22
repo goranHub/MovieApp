@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.sicoapp.movieapp.data.database.DataBaseDataSource
 import com.sicoapp.movieapp.data.database.SmileyRatingEntity
 import com.sicoapp.movieapp.data.remote.NetworkDataSource
+import com.sicoapp.movieapp.data.remote.firebase.model.User
 import com.sicoapp.movieapp.data.remote.response.movie.Movie
 import com.sicoapp.movieapp.data.remote.response.movie.MovieResponse
 import com.sicoapp.movieapp.data.remote.response.multi.Multi
@@ -15,12 +16,12 @@ import io.reactivex.Observable
  * @date 1/7/2021
  */
 
-class RepositoryImpl(
+class Repository(
     private val networkDataSource: NetworkDataSource,
     private val databaseDataSource: DataBaseDataSource
-) : IRepository {
+) {
 
-    override fun fetchTopRatedMovies(pageId: Long): Observable<MovieResponse> {
+     fun fetchTopRatedMovies(pageId: Long): Observable<MovieResponse> {
         return networkDataSource
             .fetchTopRatedMovies(pageId)
             .toObservable()
@@ -29,7 +30,7 @@ class RepositoryImpl(
             }
     }
 
-    override fun fetchCrew(movieId: Long): Observable<Movie> {
+     fun fetchCrew(movieId: Long): Observable<Movie> {
         return networkDataSource
             .fetchCrew(movieId)
             .toObservable()
@@ -38,7 +39,7 @@ class RepositoryImpl(
             }
     }
 
-    override fun fetchDetailsMovie(movieId: Long): Observable<Movie> {
+     fun fetchDetailsMovie(movieId: Long): Observable<Movie> {
         return networkDataSource
             .fetchDetailsMovie(movieId)
             .toObservable()
@@ -47,7 +48,7 @@ class RepositoryImpl(
             }
     }
 
-    override fun fetchPopularMovies(pageId: Long): Observable<MovieResponse> {
+     fun fetchPopularMovies(pageId: Long): Observable<MovieResponse> {
         return networkDataSource
             .fetchPopularMovies(pageId)
             .toObservable()
@@ -56,7 +57,7 @@ class RepositoryImpl(
             }
     }
 
-    override fun fetchSearchMulti(query: String, pageId: Long): Observable<Multi> {
+     fun fetchSearchMulti(query: String, pageId: Long): Observable<Multi> {
         return networkDataSource
             .fetchDetailsMovie(query, pageId)
             .toObservable()
@@ -65,7 +66,7 @@ class RepositoryImpl(
             }
     }
 
-    override fun fetchSearchMultiTv(movieId: Long): Observable<TvResponse> {
+     fun fetchSearchMultiTv(movieId: Long): Observable<TvResponse> {
         return networkDataSource
             .fetchSearchMultiTv(movieId)
             .toObservable()
@@ -74,19 +75,31 @@ class RepositoryImpl(
             }
     }
 
-    override fun insertData(itemId: Int, rating: Int) {
+     fun insertDataUser(user: User) {
+        databaseDataSource.insertDataUser(user)
+    }
+
+     suspend fun getSavedUsers():  List<User> {
+        return databaseDataSource.getSavedUsers()
+    }
+
+     fun insertData(itemId: Int, rating: Int) {
         databaseDataSource.insertData(itemId, rating)
     }
 
-    override suspend fun getSaved(): List<SmileyRatingEntity> {
-        return databaseDataSource.getSaved()
+     suspend fun getSaved(): List<SmileyRatingEntity> {
+        return databaseDataSource.getSavedSmileys()
     }
 
-    override fun getMovieRatingDetails(itemId: Int): LiveData<SmileyRatingEntity> {
+     fun getMovieRatingDetails(itemId: Int): LiveData<SmileyRatingEntity> {
         return databaseDataSource.getMovieRatingDetails(itemId)
     }
 
-    override fun removeDataForThatItem(itemId: Int) {
+     fun removeDataForThatItem(itemId: Int) {
         return databaseDataSource.removeDataForThatItem(itemId)
+    }
+
+    fun fromDatabase(){
+
     }
 }

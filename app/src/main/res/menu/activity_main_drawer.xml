@@ -10,7 +10,7 @@
         <item
             android:id="@+id/movies"
             android:icon="@drawable/ic_baseline_movie_24"
-            android:title="@string/my_profile" />
+            android:title="@string/movies" />
 
         <item
             android:id="@+id/saved"

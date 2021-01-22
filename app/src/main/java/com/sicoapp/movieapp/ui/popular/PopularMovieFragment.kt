@@ -2,25 +2,20 @@ package com.sicoapp.movieapp.ui.popular
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.core.view.GravityCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.navigation.NavigationView
-import com.google.firebase.auth.FirebaseAuth
+import com.sicoapp.movieapp.EntryActivity
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.FragmentMoviePopularBinding
 import com.sicoapp.movieapp.ui.BaseFragment
-import com.sicoapp.movieapp.EntryActivity
 import com.sicoapp.movieapp.ui.topmovie.TopMovieCallback
 import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_entry.*
 
 /**
  * @author ll4

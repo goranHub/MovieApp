@@ -112,7 +112,7 @@
 
     <fragment
         android:id="@+id/myProfileFragment"
-        android:name="com.sicoapp.movieapp.ui.login.MyProfileFragment"
+        android:name="com.sicoapp.movieapp.ui.profil.MyProfileFragment"
         android:label="My Profile" />
 
 </navigation>

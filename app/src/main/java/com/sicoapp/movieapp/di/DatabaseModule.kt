@@ -2,7 +2,7 @@ package com.sicoapp.movieapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.sicoapp.movieapp.data.database.SmileyDatabase
+import com.sicoapp.movieapp.data.database.Database
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,13 +20,13 @@ object DatabaseModule {
         @ApplicationContext app: Context
     ) = Room.databaseBuilder(
         app,
-        SmileyDatabase::class.java,
+        Database::class.java,
         "smiley_db"
     ).build()
 
     @Singleton
     @Provides
-    fun provideRunDao(db: SmileyDatabase) = db.movieDao()
+    fun provideRunDao(db: Database) = db.movieDao()
 }
 
 

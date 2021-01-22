@@ -23,6 +23,7 @@ class TopMovieFragment : BaseFragment() {
 
     private lateinit var binding: FragmentMovieTopBinding
 
+
     val callback = object : TopMovieCallback {
         override fun openDetails(movieId: Long) {
             val bundleItemId = bundleOf(ITEM_ID to movieId)
@@ -45,6 +46,7 @@ class TopMovieFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
 
         binding = FragmentMovieTopBinding.inflate(inflater)
 
@@ -69,8 +71,4 @@ class TopMovieFragment : BaseFragment() {
         })
     }
 
-    override fun onResume() {
-        super.onResume()
-        (activity as EntryActivity?)!!.supportActionBar?.show()
-    }
 }

@@ -37,7 +37,7 @@
             android:layout_width="140dp"
             android:layout_height="150dp"
             android:scaleType="centerCrop"
-            app:loadImageUrl="@{data.imageUrl}"
+            app:loadImage="@{data.imageUrl}"
             app:layout_constraintEnd_toEndOf="@+id/guideline"
             app:layout_constraintHorizontal_bias="0.3"
             app:layout_constraintStart_toStartOf="parent"

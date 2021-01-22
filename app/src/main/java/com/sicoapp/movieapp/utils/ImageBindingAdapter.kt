@@ -35,7 +35,7 @@ fun ImageView.loadImage(uri: String, progressDrawable: CircularProgressDrawable)
 
 object ImageBindingAdapter {
     @JvmStatic
-    @BindingAdapter("loadImageUrl")
+    @BindingAdapter("loadImage")
     fun loadImage(view: ImageView, url: String) {
         view.loadImage(url, getProgressDrawable(view.context))
     }
