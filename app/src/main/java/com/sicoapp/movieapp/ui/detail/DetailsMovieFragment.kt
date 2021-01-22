@@ -8,11 +8,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.hsalf.smileyrating.SmileyRating
-import com.sicoapp.movieapp.EntryActivity
+import com.sicoapp.movieapp.data.database.SmileyRatingEntity
 import com.sicoapp.movieapp.databinding.FragmentMovieDetailsBinding
 import com.sicoapp.movieapp.utils.ITEM_ID
 import com.sicoapp.movieapp.utils.MEDIATYP
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.SingleObserver
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
 
 @AndroidEntryPoint
@@ -57,7 +61,6 @@ class DetailsMovieFragment : Fragment() {
         binding.btnDeleteAll.setOnClickListener {
             deleteFromDB()
         }
-
         return binding.root
     }
 
@@ -72,14 +75,28 @@ class DetailsMovieFragment : Fragment() {
     }
 
     private fun callFromDB() {
-        viewModel.getSavedSmileyDetails(movieId.toInt())
-            .observe(viewLifecycleOwner, { response ->
-                if (response != null) {
-                    val rating = response.rating
-                    setFaceBackgroundColor(rating)
+        viewModel
+            .getSavedSmileyDetails(movieId.toInt())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                object : SingleObserver<SmileyRatingEntity> {
+                    override fun onSubscribe(d: Disposable) {
+                    }
+
+                    override fun onSuccess(response: SmileyRatingEntity) {
+                        if (response != null) {
+                            val rating = response.rating
+                            setFaceBackgroundColor(rating)
+                        }
+                    }
+
+                    override fun onError(e: Throwable) {
+                    }
                 }
-            })
+            )
     }
+
 
     private fun setFaceBackgroundColor(
         rating: Int

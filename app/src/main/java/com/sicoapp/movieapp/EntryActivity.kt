@@ -40,10 +40,9 @@ class EntryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     lateinit var navController: NavController
     lateinit var bottomNav: BottomNavigationView
     lateinit var binding: ActivityEntryBinding
+    lateinit var bindingDrawerHeader: DrawerHeaderBinding
     lateinit var drawerLayout: DrawerLayout
     lateinit var toolbar: Toolbar
-    lateinit var headerProfilImageView: View
-    lateinit var drawerHeaderBinding: DrawerHeaderBinding
 
     private val appBarConfiguration by lazy {
         AppBarConfiguration(
@@ -76,24 +75,6 @@ class EntryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         setupNavigation()
 
-        headerProfilImageView = binding.navigationView.getHeaderView(0)
-
-        runBlocking {
-            val currentUserID = FireStoreClass().currentUserID()
-            val listUser = repository.getSavedUsers()
-            listUser.map {
-
-                if (it.id == currentUserID) {
-
-                    Glide
-                        .with(this@EntryActivity)
-                        .load(it.image)
-                        .centerCrop()
-                        .placeholder(R.drawable.ic_baseline_local_movies_24)
-                        .into(headerProfilImageView.findViewById(R.id.header_imageView) as ImageView)
-                }
-            }
-        }
     }
 
     private fun setupNavigation() {

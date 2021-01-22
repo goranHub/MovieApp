@@ -1,12 +1,11 @@
 package com.sicoapp.movieapp.data.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.sicoapp.movieapp.data.database.UserEntity
 import com.sicoapp.movieapp.data.remote.firebase.model.User
+import io.reactivex.Single
 
 @Dao
 interface Dao {
@@ -18,13 +17,13 @@ interface Dao {
     suspend fun insertUser(userEntity: UserEntity)
 
     @Query("SELECT * FROM MovieRating")
-    suspend fun getSaved(): List<SmileyRatingEntity>
+    fun getSaved(): Single<List<SmileyRatingEntity>>
 
     @Query("SELECT * FROM UserFromFirebase")
-    suspend fun getSavedUser(): List<User>
+    fun getSavedUser(): Single<List<User>>
 
     @Query("SELECT * FROM MovieRating WHERE itemId =:itemId")
-    fun loadById(itemId: Int?): LiveData<SmileyRatingEntity>
+    fun loadById(itemId: Int?): Single<SmileyRatingEntity>
 
     @Query("DELETE FROM MovieRating  WHERE itemId =:itemId")
     suspend fun deleteByID(itemId: Int)

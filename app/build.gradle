@@ -127,6 +127,8 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:2.2.19"
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'com.akaita.java:rxjava2-debug:1.4.0'
+    implementation 'androidx.room:room-rxjava2:2.2.6'
+
 
     // Rx-Retrofit Call Adapter
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.9.0" // Retrofit call adapter
@@ -139,8 +141,10 @@ dependencies {
 
     // Firebase Authentication Dependency
     implementation "com.google.firebase:firebase-auth:20.0.1"
+
     // Firebase Cloud Firestore Dependency
     implementation 'com.google.firebase:firebase-firestore:22.0.1'
+
     // Firebase Storage Dependency
     implementation 'com.google.firebase:firebase-storage:19.1.1'
 

@@ -7,10 +7,10 @@ import com.sicoapp.movieapp.data.database.SmileyRatingEntity
 import com.sicoapp.movieapp.data.remote.response.movie.Movie
 import com.sicoapp.movieapp.domain.Repository
 import io.reactivex.Observer
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.runBlocking
 
 /**
  * @author ll4
@@ -23,21 +23,12 @@ class SavedViewModel @ViewModelInject constructor(
     val adapter = SavedAdapter()
     var allElement = mutableListOf<Movie>()
 
-    init {
-        runBlocking {
-            loadRemoteData(getSaved())
-        }
+    fun singleSavedList() : Single<List<SmileyRatingEntity>>{
+        return repository.getSaved()
     }
 
-    private suspend fun getSaved(): List<SmileyRatingEntity> {
-        val saved = repository.getSaved()
-        return saved.distinctBy { it.itemId }
-    }
-
-    private fun loadRemoteData(valuesList: List<SmileyRatingEntity>) {
-
+    fun loadRemoteData(valuesList: List<SmileyRatingEntity>) {
         for (element in valuesList) {
-
             val singleMovie =
                 repository
                     .fetchDetailsMovie(element.itemId.let { it!!.toLong() })

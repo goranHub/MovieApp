@@ -7,15 +7,19 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.MimeTypeMap
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.sicoapp.movieapp.EntryActivity
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.remote.firebase.FireStoreClass
 import com.sicoapp.movieapp.data.remote.firebase.model.User
@@ -28,8 +32,12 @@ import com.sicoapp.movieapp.utils.READ_STORAGE_PERMISSION_CODE
 import com.sicoapp.movieapp.utils.USER_IMAGE
 import com.sicoapp.movieapp.utils.USER_NAME
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.SingleObserver
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_entry.*
 import kotlinx.android.synthetic.main.fragment_my_profile.*
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -39,11 +47,18 @@ class MyProfileFragment : BaseFragment() {
     lateinit var repository: Repository
 
     var selectedImageUri: Uri? = null
-    private lateinit var userRemote: User
     private var profileImageURL: String = ""
+    private lateinit var userRemote: User
     private lateinit var binding: FragmentMyProfileBinding
+    private lateinit var drawerBinding: DrawerHeaderBinding
+    private lateinit var headerProfilImageView: View
 
+    private val currentUserID = FireStoreClass().currentUserID()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        FireStoreClass().loadUserDataMyProfile(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,9 +67,6 @@ class MyProfileFragment : BaseFragment() {
 
         binding = FragmentMyProfileBinding.inflate(inflater)
 
-
-        FireStoreClass().loadUserDataMyProfile(this)
-
         binding.ivProfileUserImage.setOnClickListener {
 
             if (context?.let { context ->
@@ -62,8 +74,7 @@ class MyProfileFragment : BaseFragment() {
                         context,
                         Manifest.permission.READ_EXTERNAL_STORAGE
                     )
-                }
-                == PackageManager.PERMISSION_GRANTED
+                } == PackageManager.PERMISSION_GRANTED
             ) {
                 imageChooser()
             } else {
@@ -85,8 +96,83 @@ class MyProfileFragment : BaseFragment() {
                 updateUserProfile()
             }
         }
+
+        drawerBinding = DrawerHeaderBinding.inflate(inflater)
+
         return binding.root
     }
+
+    fun loadFromRemote(user: User) {
+        userRemote = user
+        repository.insertDataUser(user)
+        loadFromDBupdateProfilData(currentUserID)
+        loadImageFromDBIntoDrawerHeader()
+    }
+
+
+    fun loadFromDBupdateProfilData(currentUserID: String) {
+        repository
+            .getSavedUsers()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                object : SingleObserver<List<User>> {
+                    override fun onSubscribe(d: Disposable) {
+                    }
+
+                    override fun onSuccess(response: List<User>) {
+                        response.map {
+                            if (it.id == currentUserID) {
+                                binding.data = it.image
+                                binding.etName.setText(it.name)
+                                binding.etEmail.setText(it.email)
+                            }
+                        }
+                    }
+
+                    override fun onError(e: Throwable) {
+                        Log.d("error", "${e.stackTrace}")
+                    }
+                }
+            )
+    }
+
+    private fun loadImageFromDBIntoDrawerHeader() {
+        repository
+            .getSavedUsers()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                object : SingleObserver<List<User>> {
+                    override fun onSubscribe(d: Disposable) {
+                    }
+                    override fun onSuccess(response: List<User>) {
+                        response.map {
+                            if (it.id == currentUserID) {
+
+                                //drawerBinding.data = it.image
+
+                                headerProfilImageView =
+                                    (activity as EntryActivity).navigation_view.getHeaderView(0)
+
+                                context?.let { context ->
+                                    Glide
+                                        .with(context)
+                                        .load(it.image)
+                                        .centerCrop()
+                                        .placeholder(R.drawable.ic_baseline_local_movies_24)
+                                        .into(headerProfilImageView.findViewById(R.id.header_imageView) as ImageView)
+                                }
+                            }
+                        }
+                    }
+                    override fun onError(e: Throwable) {
+                        Log.d("error", "${e.stackTrace}")
+                    }
+                }
+            )
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
@@ -122,25 +208,6 @@ class MyProfileFragment : BaseFragment() {
         }
     }
 
-    fun loadFromRemote(user: User) {
-        userRemote = user
-        val currentUserID = FireStoreClass().currentUserID()
-
-        repository.insertDataUser(user)
-
-        runBlocking {
-            val listUser = repository.getSavedUsers()
-            listUser.map {
-
-                if(it.id == currentUserID){
-                    binding.data = it.image
-                    binding.etName.setText(it.name)
-                    binding.etEmail.setText(it.email)
-
-                }
-            }
-        }
-    }
 
     private fun uploadUserImage() {
         showProgressDialog(resources.getString(R.string.please_wait))
