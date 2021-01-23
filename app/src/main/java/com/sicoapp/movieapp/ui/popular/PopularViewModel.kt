@@ -23,12 +23,12 @@ class PopularViewModel @ViewModelInject constructor(
     val adapter = TopMovieAdapter()
 
     init {
-        loadRemoteData()
+        getPopular()
     }
 
-     fun loadRemoteData() {
+     fun getPopular() {
         remoteRepository
-            .fetchPopularMovies(pageId)
+            .getPopular(pageId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

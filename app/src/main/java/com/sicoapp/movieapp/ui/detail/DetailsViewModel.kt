@@ -25,23 +25,27 @@ class DetailsViewModel @ViewModelInject constructor(
 
     var bindDetails = BindDetails()
 
-    fun insertData(itemID: Int, rating: Int) {
-        repository.insertData(itemID, rating)
+  /*  fun insertSmiley(itemID: Int, rating: Int) {
+        repository.insertSmiley(itemID, rating)
+    }*/
+
+    fun insertUserMovieRatingCrossRef(itemID: Int, id: String, rating: Int) {
+        repository.insertUserMovieRatingCrossRef(itemID, id, rating)
     }
 
-    fun getSavedSmileyDetails(
+    fun getSmileyByMovieId(
         itemId: Int
     ): Single<SmileyRatingEntity> {
-        return repository.getMovieRatingDetails(itemId)
+        return repository.getSmileyByMovieId(itemId)
     }
 
-    fun removeRatingForMovie(itemId: Int) {
-        repository.removeDataForThatItem(itemId)
+    fun deleteSmileyByMovieId(itemId: Int) {
+        repository.deleteSmileyByMovieId(itemId)
     }
 
-    fun loadRemoteDataMovie(movieId: Long) {
+    fun getMovieByID(movieId: Long) {
         repository
-            .fetchDetailsMovie(movieId)
+            .getMovieByID(movieId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -66,9 +70,9 @@ class DetailsViewModel @ViewModelInject constructor(
             )
     }
 
-    fun loadRemoteDataTv(movieId: Long) {
+    fun getTvShowById(movieId: Long) {
         repository
-            .fetchSearchMultiTv(movieId)
+            .getTvShowById(movieId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

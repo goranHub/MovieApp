@@ -1,6 +1,6 @@
 package com.sicoapp.movieapp.di
 
-import com.sicoapp.movieapp.data.remote.MovieServis
+import com.sicoapp.movieapp.data.remote.MovieDao
 import com.sicoapp.movieapp.utils.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -41,6 +41,6 @@ class RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit) = retrofit.create(MovieServis::class.java)
+    fun provideApiService(retrofit: Retrofit): MovieDao = retrofit.create(MovieDao::class.java)
 
 }

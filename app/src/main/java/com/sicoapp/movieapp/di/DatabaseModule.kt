@@ -21,7 +21,7 @@ object DatabaseModule {
     ) = Room.databaseBuilder(
         app,
         Database::class.java,
-        "smiley_db"
+        "user_db"
     ).build()
 
     @Singleton

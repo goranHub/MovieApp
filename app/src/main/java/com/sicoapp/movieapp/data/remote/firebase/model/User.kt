@@ -10,8 +10,11 @@ data class User(
     val image: String = "",
     val movieId: String = "",
     val movieRating: String = "",
-    val fcmToken: String = ""
+    val fcmToken: String = "",
+    val itemId: Int = -1,
+    val rating: Int = -1
 ) : Parcelable {
+
     constructor(source: Parcel) : this(
         source.readString()!!,
         source.readString()!!,
@@ -19,7 +22,9 @@ data class User(
         source.readString()!!,
         source.readString()!!,
         source.readString()!!,
-        source.readString()!!
+        source.readString()!!,
+        source.readInt(),
+        source.readInt()
     )
 
     override fun describeContents() = 0
@@ -32,6 +37,8 @@ data class User(
         writeString(movieId)
         writeString(movieRating)
         writeString(fcmToken)
+        writeInt(itemId)
+        writeInt(rating)
     }
 
     companion object {

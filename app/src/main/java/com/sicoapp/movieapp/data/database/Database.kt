@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
  * @author ll4
  * @date 12/15/2020
  */
-@Database(entities = [SmileyRatingEntity::class, UserEntity::class], version = 1, exportSchema = false)
+@Database(entities = [SmileyRatingEntity::class, UserEntity::class, UserRatingCrossRef::class], version = 1, exportSchema = false)
 abstract class Database : RoomDatabase() {
-    abstract fun movieDao() : Dao
+    abstract fun movieDao() : DatabaseDao
 }

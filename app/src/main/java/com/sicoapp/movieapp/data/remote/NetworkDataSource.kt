@@ -13,30 +13,30 @@ import javax.inject.Inject
  * @date 1/20/2021
  */
 class NetworkDataSource @Inject constructor(
-    private val movieService: MovieServis
+    private val movieService: MovieDao
 ) {
 
-    fun fetchTopRatedMovies(pageId: Long): Single<MovieResponse> {
-        return movieService.loadTopRated(API_KEY, pageId.toString())
+    fun getTopRated(pageId: Long): Single<MovieResponse> {
+        return movieService.getTopRated(API_KEY, pageId.toString())
     }
 
-    fun fetchPopularMovies(pageId: Long): Single<MovieResponse> {
-        return movieService.loadPopular(API_KEY, pageId.toString())
+    fun getPopular(pageId: Long): Single<MovieResponse> {
+        return movieService.getPopular(API_KEY, pageId.toString())
     }
 
-    fun fetchDetailsMovie(query: String, pageId: Long): Single<Multi> {
-        return movieService.searchMulti(API_KEY, query, pageId)
+    fun getMulti(query: String, pageId: Long): Single<Multi> {
+        return movieService.getMulti(API_KEY, query, pageId)
     }
 
-    fun fetchDetailsMovie(movieId: Long): Single<Movie> {
-        return movieService.getByMovieID(movieId, API_KEY)
+    fun getMovieByID(movieId: Long): Single<Movie> {
+        return movieService.getMovieByID(movieId, API_KEY)
     }
 
-    fun fetchSearchMultiTv(movieId: Long): Single<TvResponse> {
-        return movieService.getByTvID(movieId, API_KEY)
+    fun getTvShowById(movieId: Long): Single<TvResponse> {
+        return movieService.getTvShowById(movieId, API_KEY)
     }
 
-    fun fetchCrew(movieId: Long): Single<Movie> {
-        return movieService.loadCrewBy(movieId, API_KEY)
+    fun getCrewByMovieId(movieId: Long): Single<Movie> {
+        return movieService.getCrewByMovieId(movieId, API_KEY)
     }
 }

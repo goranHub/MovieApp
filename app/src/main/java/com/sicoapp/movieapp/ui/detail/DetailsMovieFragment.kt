@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.hsalf.smileyrating.SmileyRating
 import com.sicoapp.movieapp.data.database.SmileyRatingEntity
+import com.sicoapp.movieapp.data.remote.firebase.FireStoreClass
 import com.sicoapp.movieapp.databinding.FragmentMovieDetailsBinding
 import com.sicoapp.movieapp.utils.ITEM_ID
 import com.sicoapp.movieapp.utils.MEDIATYP
@@ -49,34 +50,42 @@ class DetailsMovieFragment : Fragment() {
         if ((mediaTyp == "movie") or (mediaTyp == "")) {
             updateUIMovie(movieId)
         } else {
-            updateUITv(movieId)
+            getTvShowById(movieId)
         }
 
         binding.data = viewModel.bindDetails
 
-        saveIntoDB()
+        insertUserMovieRatingCrossRef()
 
-        callFromDB()
+        getSmileyByMovieId()
 
         binding.btnDeleteAll.setOnClickListener {
-            deleteFromDB()
+            deleteSmileyByMovieId()
         }
         return binding.root
     }
 
-    private fun deleteFromDB() {
-        viewModel.removeRatingForMovie(movieId.toInt())
+    private fun deleteSmileyByMovieId() {
+        viewModel.deleteSmileyByMovieId(movieId.toInt())
     }
 
-    private fun saveIntoDB() {
+/*    private fun insertSmiley() {
         binding.smiley.setSmileySelectedListener {
-            viewModel.insertData(movieId.toInt(), it.rating)
+            viewModel.insertSmiley(movieId.toInt(), it.rating)
+        }
+    }*/
+
+
+    private fun insertUserMovieRatingCrossRef() {
+        binding.smiley.setSmileySelectedListener {
+            viewModel.insertUserMovieRatingCrossRef(movieId.toInt(), FireStoreClass().currentUserID(),it.rating)
         }
     }
 
-    private fun callFromDB() {
+
+    private fun getSmileyByMovieId() {
         viewModel
-            .getSavedSmileyDetails(movieId.toInt())
+            .getSmileyByMovieId(movieId.toInt())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -130,12 +139,12 @@ class DetailsMovieFragment : Fragment() {
         }
     }
 
-    private fun updateUITv(movieId: Long) {
-        viewModel.loadRemoteDataTv(movieId)
+    private fun getTvShowById(movieId: Long) {
+        viewModel.getTvShowById(movieId)
     }
 
     private fun updateUIMovie(movieId: Long) {
-        viewModel.loadRemoteDataMovie(movieId)
+        viewModel.getMovieByID(movieId)
     }
 }
 

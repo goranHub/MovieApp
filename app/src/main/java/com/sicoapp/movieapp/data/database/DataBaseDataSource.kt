@@ -1,7 +1,7 @@
 package com.sicoapp.movieapp.data.database
 
-import android.os.AsyncTask
 import androidx.lifecycle.LiveData
+import com.sicoapp.movieapp.data.remote.firebase.FireStoreClass
 import com.sicoapp.movieapp.data.remote.firebase.model.User
 import io.reactivex.Single
 import kotlinx.coroutines.CoroutineScope
@@ -15,23 +15,35 @@ import javax.inject.Inject
  * @date 1/20/2021
  */
 class DataBaseDataSource @Inject constructor(
-    private val dao: Dao
+    private val dao: DatabaseDao
 ) {
 
     private var smileyRatingTableModel: LiveData<SmileyRatingEntity>? = null
 
-    fun insertData(itemId: Int, rating: Int) {
+/*    fun insertSmiley(itemId: Int, rating: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             val movieRatingDetails = SmileyRatingEntity(itemId, rating)
-            dao.insert(movieRatingDetails)
+            dao.insertSmiley(movieRatingDetails)
+        }
+    } */
+
+
+    fun insertUserMovieRatingCrossRef(itemId: Int, id: String, rating : Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val userRatingCrossRef = UserRatingCrossRef(itemId, id, rating)
+            dao.insertUserMovieRatingCrossRef(userRatingCrossRef)
         }
     }
 
-    fun getSavedSmileys(): Single<List<SmileyRatingEntity>> {
-        return dao.getSaved()
+   /* fun getSavedSmileys(): Single<List<SmileyRatingEntity>> {
+        return dao.getSavedSmiley()
+    } */
+
+    suspend fun getRatingsOfUser():  List<UserWithRatings> {
+        return dao.getRatingsOfUser(FireStoreClass().currentUserID())
     }
 
-    fun insertDataUser(
+    fun insertUser(
         user: User
     ) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -42,20 +54,21 @@ class DataBaseDataSource @Inject constructor(
                 image = user.image,
                 movieId = user.movieId,
                 movieRating = user.movieRating,
-                fcmToken = user.fcmToken
+                fcmToken = user.fcmToken,
+                itemId = user.itemId,
+                rating = user.rating
             )
             dao.insertUser(userDetails)
         }
     }
 
-    fun getSavedUsers(): Single<List<User>> {
-        return dao.getSavedUser()
+    fun getAuthUserDB(): Single<List<User>> {
+        return dao.getAuthUserDB()
     }
 
-    fun getMovieRatingDetails(itemId: Int): Single<SmileyRatingEntity> {
-        return dao.loadById(itemId)
+    fun getSmileyByMovieId(itemId: Int): Single<SmileyRatingEntity> {
+        return dao.getSmileyByMovieId(itemId)
     }
-
 
  /*   fun removeDataForThatItem(itemId: Int) {
         AsyncTask.execute {
@@ -64,11 +77,9 @@ class DataBaseDataSource @Inject constructor(
     }
 */
 
-
-      fun removeDataForThatItem(itemId: Int) {
+      fun deleteSmileyByMovieId(itemId: Int) {
        CoroutineScope(Dispatchers.IO).launch {
-           dao.deleteByID(itemId)
+           dao.deleteSmileyByMovieId(itemId)
        }
    }
-
 }

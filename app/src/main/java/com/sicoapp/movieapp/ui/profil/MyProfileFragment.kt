@@ -104,15 +104,15 @@ class MyProfileFragment : BaseFragment() {
 
     fun loadFromRemote(user: User) {
         userRemote = user
-        repository.insertDataUser(user)
-        loadFromDBupdateProfilData(currentUserID)
-        loadImageFromDBIntoDrawerHeader()
+        repository.insertUser(user)
+        getSavedUser(currentUserID)
+        getSavedUser()
     }
 
 
-    fun loadFromDBupdateProfilData(currentUserID: String) {
+    private fun getSavedUser(currentUserID: String) {
         repository
-            .getSavedUsers()
+            .getAuthUserDB()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -137,9 +137,9 @@ class MyProfileFragment : BaseFragment() {
             )
     }
 
-    private fun loadImageFromDBIntoDrawerHeader() {
+    private fun getSavedUser() {
         repository
-            .getSavedUsers()
+            .getAuthUserDB()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

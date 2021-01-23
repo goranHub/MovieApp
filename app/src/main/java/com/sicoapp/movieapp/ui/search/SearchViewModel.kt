@@ -29,16 +29,16 @@ class SearchViewModel @ViewModelInject constructor(
     }
 
     fun loadRemoteData(query: String) {
-        loadData(query, 1)
+        getMulti(query, 1)
     }
 
     fun loadMoreRemoteData(query: String) {
-        loadData(query, currentPageId)
+        getMulti(query, currentPageId)
     }
 
-    private fun loadData(query: String, pageId: Long) {
+    private fun getMulti(query: String, pageId: Long) {
         repository
-            .fetchSearchMulti(query, pageId)
+            .getMulti(query, pageId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

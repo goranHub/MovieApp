@@ -17,9 +17,9 @@ class CrewViewModel @ViewModelInject constructor(
 
     val adapter = CrewAdapter()
 
-    fun loadRemoteDataCrew(movieId: Long) {
+    fun getCrewByMovieId(movieId: Long) {
         repository
-            .fetchCrew(movieId)
+            .getCrewByMovieId(movieId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

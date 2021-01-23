@@ -8,7 +8,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.sicoapp.movieapp.EntryActivity
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.FragmentMoviePopularBinding
 import com.sicoapp.movieapp.ui.BaseFragment
@@ -67,7 +66,7 @@ class PopularMovieFragment : BaseFragment() {
                 super.onScrollStateChanged(recyclerView, newState)
 
                 if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    viewModel.loadRemoteData()
+                    viewModel.getPopular()
                 }
             }
         })

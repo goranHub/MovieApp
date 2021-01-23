@@ -3,7 +3,6 @@ package com.sicoapp.movieapp.data.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 
 /**
  * @author ll4
@@ -11,8 +10,8 @@ import com.google.gson.annotations.SerializedName
  */
 
 @Entity(tableName = "UserFromFirebase")
-data class UserEntity (
-    @PrimaryKey
+data class UserEntity(
+    @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id")
     val id: String,
     @ColumnInfo(name = "name")
@@ -26,5 +25,10 @@ data class UserEntity (
     @ColumnInfo(name = "movieRating")
     var movieRating: String?,
     @ColumnInfo(name = "fcmToken")
-    var fcmToken: String?
+    var fcmToken: String?,
+    @ColumnInfo(name = "itemId")
+    var itemId: Int?,
+    @ColumnInfo(name = "rating")
+    var rating: Int?
 )
+

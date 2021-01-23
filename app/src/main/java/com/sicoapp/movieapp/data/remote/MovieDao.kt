@@ -13,41 +13,41 @@ import retrofit2.http.Query
  * @author ll4
  * @date 1/7/2021
  */
-interface MovieServis {
+interface MovieDao {
 
     @GET("movie/top_rated")
-    fun loadTopRated(
+    fun getTopRated(
         @Query("api_key") apiKey: String?,
         @Query("page") page: String?
     ): Single<MovieResponse>
 
     @GET("movie/popular")
-    fun loadPopular(
+    fun getPopular(
         @Query("api_key") apiKey: String?,
         @Query("page") page: String?
     ): Single<MovieResponse>
 
     @GET("search/multi?")
-    fun searchMulti(
+    fun getMulti(
         @Query(value = "api_key") apiKey: String,
         @Query(value = "query") searchTitle: String,
         @Query(value = "page") pageIndex: Long
     ) : Single<Multi>
 
     @GET("movie/{id}?&append_to_response=credits")
-    fun loadCrewBy(
+    fun getCrewByMovieId(
         @Path("id") id: Long,
         @Query("api_key") apiKey: String
     ): Single<Movie>
 
     @GET("tv/{id}")
-    fun getByTvID(
+    fun getTvShowById(
         @Path("id") id: Long,
         @Query("api_key") apiKey: String
     ): Single<TvResponse>
 
     @GET("movie/{id}")
-    fun getByMovieID(
+    fun getMovieByID(
         @Path("id") id: Long,
         @Query("api_key") apiKey: String
     ): Single<Movie>

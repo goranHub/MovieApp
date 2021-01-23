@@ -2,6 +2,8 @@ package com.sicoapp.movieapp.domain
 
 import com.sicoapp.movieapp.data.database.DataBaseDataSource
 import com.sicoapp.movieapp.data.database.SmileyRatingEntity
+import com.sicoapp.movieapp.data.database.UserRatingCrossRef
+import com.sicoapp.movieapp.data.database.UserWithRatings
 import com.sicoapp.movieapp.data.remote.NetworkDataSource
 import com.sicoapp.movieapp.data.remote.firebase.model.User
 import com.sicoapp.movieapp.data.remote.response.movie.Movie
@@ -21,82 +23,90 @@ class Repository(
     private val databaseDataSource: DataBaseDataSource
 ) {
 
-    fun fetchTopRatedMovies(pageId: Long): Observable<MovieResponse> {
+    fun getTopRated(pageId: Long): Observable<MovieResponse> {
         return networkDataSource
-            .fetchTopRatedMovies(pageId)
+            .getTopRated(pageId)
             .toObservable()
             .map { movieResponse ->
                 movieResponse.mapToMovieResponse()
             }
     }
 
-    fun fetchCrew(movieId: Long): Observable<Movie> {
+    fun getCrewByMovieId(movieId: Long): Observable<Movie> {
         return networkDataSource
-            .fetchCrew(movieId)
+            .getCrewByMovieId(movieId)
             .toObservable()
             .map { movie ->
                 movie.mapToMovie()
             }
     }
 
-    fun fetchDetailsMovie(movieId: Long): Observable<Movie> {
+    fun getMovieByID(movieId: Long): Observable<Movie> {
         return networkDataSource
-            .fetchDetailsMovie(movieId)
+            .getMovieByID(movieId)
             .toObservable()
             .map { movie ->
                 movie.mapToMovie()
             }
     }
 
-    fun fetchPopularMovies(pageId: Long): Observable<MovieResponse> {
+    fun getPopular(pageId: Long): Observable<MovieResponse> {
         return networkDataSource
-            .fetchPopularMovies(pageId)
+            .getPopular(pageId)
             .toObservable()
             .map { movieResponse ->
                 movieResponse.mapToMovieResponse()
             }
     }
 
-    fun fetchSearchMulti(query: String, pageId: Long): Observable<Multi> {
+    fun getMulti(query: String, pageId: Long): Observable<Multi> {
         return networkDataSource
-            .fetchDetailsMovie(query, pageId)
+            .getMulti(query, pageId)
             .toObservable()
             .map { multi ->
                 multi.mapToMulti()
             }
     }
 
-    fun fetchSearchMultiTv(movieId: Long): Observable<TvResponse> {
+    fun getTvShowById(movieId: Long): Observable<TvResponse> {
         return networkDataSource
-            .fetchSearchMultiTv(movieId)
+            .getTvShowById(movieId)
             .toObservable()
             .map { tvResponse ->
                 tvResponse.mapToTvResponse()
             }
     }
 
-    fun insertDataUser(user: User) {
-        databaseDataSource.insertDataUser(user)
+    fun insertUser(user: User) {
+        databaseDataSource.insertUser(user)
     }
 
-    fun getSavedUsers(): Single<List<User>> {
-        return databaseDataSource.getSavedUsers()
+    fun getAuthUserDB(): Single<List<User>> {
+        return databaseDataSource.getAuthUserDB()
     }
 
-    fun insertData(itemId: Int, rating: Int) {
-        databaseDataSource.insertData(itemId, rating)
+/*    fun insertSmiley(itemId: Int, rating: Int) {
+        databaseDataSource.insertSmiley(itemId, rating)
+    }  */
+
+    fun insertUserMovieRatingCrossRef(itemId: Int, id: String, rating: Int) {
+        databaseDataSource.insertUserMovieRatingCrossRef(itemId, id, rating)
     }
 
-    fun getSaved(): Single<List<SmileyRatingEntity>> {
+  /*  fun getSavedSmiley(): Single<List<SmileyRatingEntity>> {
         return databaseDataSource.getSavedSmileys()
+    } */
+
+    suspend fun getRatingsOfUser():  List<UserWithRatings>  {
+        return databaseDataSource.getRatingsOfUser()
     }
 
-    fun getMovieRatingDetails(itemId: Int): Single<SmileyRatingEntity> {
-        return databaseDataSource.getMovieRatingDetails(itemId)
+    fun getSmileyByMovieId(itemId: Int): Single<SmileyRatingEntity> {
+        return databaseDataSource.getSmileyByMovieId(itemId)
     }
 
-    fun removeDataForThatItem(itemId: Int) {
-        databaseDataSource.removeDataForThatItem(itemId)
+    fun deleteSmileyByMovieId(itemId: Int) {
+        databaseDataSource.deleteSmileyByMovieId(itemId)
     }
 
 }

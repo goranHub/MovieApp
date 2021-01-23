@@ -41,6 +41,6 @@ class CrewMovieFragment : Fragment() {
     }
 
     private fun updateUI(crewId :Long){
-        viewModel.loadRemoteDataCrew(crewId)
+        viewModel.getCrewByMovieId(crewId)
     }
 }

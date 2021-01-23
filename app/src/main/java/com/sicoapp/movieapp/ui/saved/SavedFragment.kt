@@ -1,20 +1,15 @@
 package com.sicoapp.movieapp.ui.saved
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import com.sicoapp.movieapp.data.database.SmileyRatingEntity
 import com.sicoapp.movieapp.databinding.FragmentSavedListBinding
 import com.sicoapp.movieapp.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.SingleObserver
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.runBlocking
 
 
 @AndroidEntryPoint
@@ -31,8 +26,9 @@ class SavedFragment : BaseFragment() {
         binding = FragmentSavedListBinding.inflate(inflater)
         binding.listMovieSaved.layoutManager = GridLayoutManager(context, 2)
 
-            viewModel
-            .singleSavedList()
+/*
+  viewModel
+            .getSavedSmiley()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -42,14 +38,22 @@ class SavedFragment : BaseFragment() {
 
                     override fun onSuccess(list: List<SmileyRatingEntity>) {
                        val listSmiley = list.distinctBy { it.itemId }
-                        viewModel.loadRemoteData(listSmiley)
+                        viewModel.getByMovieID(listSmiley)
                     }
 
                     override fun onError(e: Throwable) {
                         Log.d("error", "${e.stackTrace}")
                     }
                 }
-            )
+            )*/
+
+        runBlocking {
+            var listOfRatings = viewModel.getRatingsOfUser()
+
+            viewModel.getByMovieID(listOfRatings)
+
+        }
+
 
         binding.listMovieSaved.adapter = viewModel.adapter
         return binding.root

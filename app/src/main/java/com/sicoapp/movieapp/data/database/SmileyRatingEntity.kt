@@ -11,12 +11,9 @@ import androidx.room.PrimaryKey
  */
 @Entity(tableName = "MovieRating")
 class SmileyRatingEntity(
+    @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "itemId")
     var itemId: Int?,
     @ColumnInfo(name = "rating")
     var rating: Int
-) {
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    var Id: Int? = null
-}
+)

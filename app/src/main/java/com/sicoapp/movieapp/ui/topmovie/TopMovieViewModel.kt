@@ -25,12 +25,12 @@ class TopMovieViewModel @ViewModelInject constructor(
     val adapter = TopMovieAdapter()
 
     init {
-        loadRemoteData()
+        getTopRated()
     }
 
-    fun loadRemoteData() {
+    fun getTopRated() {
         repository
-            .fetchTopRatedMovies(pageId)
+            .getTopRated(pageId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
