@@ -4,7 +4,7 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.sicoapp.movieapp.data.remote.firebase.model.User
+import com.sicoapp.movieapp.data.remote.firebase.model.UserFirebase
 import com.sicoapp.movieapp.ui.profil.MyProfileFragment
 import com.sicoapp.movieapp.ui.login.SignInFragment
 import com.sicoapp.movieapp.ui.login.SignUpFragment
@@ -15,7 +15,7 @@ class FireStoreClass  @Inject constructor() {
 
     private val fireBase = FirebaseFirestore.getInstance()
 
-    fun registerUser(activity: SignUpFragment, userInfo: User) {
+    fun registerUser(activity: SignUpFragment, userInfo: UserFirebase) {
         fireBase.collection(USERS)
             .document(currentUserID())
             .set(userInfo, SetOptions.merge())
@@ -35,7 +35,7 @@ class FireStoreClass  @Inject constructor() {
                 Log.e(
                     fragment.javaClass.simpleName, document.toString()
                 )
-                val loggedInUser = document.toObject(User::class.java)!!
+                val loggedInUser = document.toObject(UserFirebase::class.java)!!
                 fragment.signInSuccess(loggedInUser)
             }
             .addOnFailureListener { e ->
@@ -45,6 +45,7 @@ class FireStoreClass  @Inject constructor() {
 
     fun currentUserID(): String {
         val currentUser = FirebaseAuth.getInstance().currentUser
+        Log.i("currentUser", "${currentUser?.uid}")
         var currentUserID = ""
         if (currentUser != null) {
             currentUserID = currentUser.uid
@@ -57,7 +58,7 @@ class FireStoreClass  @Inject constructor() {
             .document(currentUserID())
             .get()
             .addOnSuccessListener { document ->
-                val loggedInUser = document.toObject(User::class.java)!!
+                val loggedInUser = document.toObject(UserFirebase::class.java)!!
                 myProfileFragment.loadFromRemote(loggedInUser)
             }
             .addOnFailureListener {

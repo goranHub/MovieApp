@@ -8,10 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.sicoapp.movieapp.EntryActivity
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.remote.firebase.FireStoreClass
-import com.sicoapp.movieapp.data.remote.firebase.model.User
+import com.sicoapp.movieapp.data.remote.firebase.model.UserFirebase
 import com.sicoapp.movieapp.databinding.FragmentSignInBinding
 import com.sicoapp.movieapp.ui.BaseFragment
 
@@ -69,7 +68,7 @@ class SignInFragment : BaseFragment() {
         }
     }
 
-    fun signInSuccess(user: User) {
+    fun signInSuccess(user: UserFirebase) {
         hideProgressDialog()
         findNavController().navigate(
             R.id.action_signInFragment_to_topMovieFragment)

@@ -1,19 +1,22 @@
 package com.sicoapp.movieapp.data.database
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
 /**
  * @author ll4
  * @date 1/22/2021
  */
 
-@Entity(tableName = "UserFromFirebase")
-data class UserEntity(
+@Entity
+@Parcelize
+data class User(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id")
-    val id: String,
+    var id: String,
     @ColumnInfo(name = "name")
     var name: String?,
     @ColumnInfo(name = "email")
@@ -25,10 +28,6 @@ data class UserEntity(
     @ColumnInfo(name = "movieRating")
     var movieRating: String?,
     @ColumnInfo(name = "fcmToken")
-    var fcmToken: String?,
-    @ColumnInfo(name = "itemId")
-    var itemId: Int?,
-    @ColumnInfo(name = "rating")
-    var rating: Int?
-)
+    var fcmToken: String?
+) : Parcelable
 

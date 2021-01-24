@@ -32,11 +32,9 @@ class EntryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     @Inject
     lateinit var repository: Repository
 
-
     lateinit var navController: NavController
     lateinit var bottomNav: BottomNavigationView
     lateinit var binding: ActivityEntryBinding
-    lateinit var bindingDrawerHeader: DrawerHeaderBinding
     lateinit var drawerLayout: DrawerLayout
     lateinit var toolbar: Toolbar
 

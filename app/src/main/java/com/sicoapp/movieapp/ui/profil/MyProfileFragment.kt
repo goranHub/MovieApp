@@ -21,23 +21,21 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.sicoapp.movieapp.EntryActivity
 import com.sicoapp.movieapp.R
+import com.sicoapp.movieapp.data.database.User
 import com.sicoapp.movieapp.data.remote.firebase.FireStoreClass
-import com.sicoapp.movieapp.data.remote.firebase.model.User
+import com.sicoapp.movieapp.data.remote.firebase.model.UserFirebase
+import com.sicoapp.movieapp.data.remote.response.user.UserModel
 import com.sicoapp.movieapp.databinding.DrawerHeaderBinding
 import com.sicoapp.movieapp.databinding.FragmentMyProfileBinding
 import com.sicoapp.movieapp.domain.Repository
 import com.sicoapp.movieapp.ui.BaseFragment
-import com.sicoapp.movieapp.utils.PICK_IMAGE_REQUEST_CODE
-import com.sicoapp.movieapp.utils.READ_STORAGE_PERMISSION_CODE
-import com.sicoapp.movieapp.utils.USER_IMAGE
-import com.sicoapp.movieapp.utils.USER_NAME
+import com.sicoapp.movieapp.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_entry.*
-import kotlinx.android.synthetic.main.fragment_my_profile.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -48,7 +46,7 @@ class MyProfileFragment : BaseFragment() {
 
     var selectedImageUri: Uri? = null
     private var profileImageURL: String = ""
-    private lateinit var userRemote: User
+    private lateinit var userModel: UserModel
     private lateinit var binding: FragmentMyProfileBinding
     private lateinit var drawerBinding: DrawerHeaderBinding
     private lateinit var headerProfilImageView: View
@@ -102,8 +100,11 @@ class MyProfileFragment : BaseFragment() {
         return binding.root
     }
 
-    fun loadFromRemote(user: User) {
-        userRemote = user
+    fun loadFromRemote(userFirebase: UserFirebase) {
+
+        var user = userFirebase.mapToUserEntity()
+        userModel= userFirebase.mapToUserModel()
+
         repository.insertUser(user)
         getSavedUser(currentUserID)
         getSavedUser()
@@ -173,7 +174,6 @@ class MyProfileFragment : BaseFragment() {
             )
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
         if (resultCode == Activity.RESULT_OK
@@ -208,7 +208,6 @@ class MyProfileFragment : BaseFragment() {
         }
     }
 
-
     private fun uploadUserImage() {
         showProgressDialog(resources.getString(R.string.please_wait))
         if (selectedImageUri != null) {
@@ -238,11 +237,14 @@ class MyProfileFragment : BaseFragment() {
 
     private fun updateUserProfile() {
         val userHashMap = HashMap<String, Any>()
-        if (profileImageURL.isNotEmpty() && profileImageURL != userRemote.image) {
+        if (profileImageURL.isNotEmpty() && profileImageURL != userModel.image) {
             userHashMap[USER_IMAGE] = profileImageURL
         }
-        if (binding.etName.text.toString() != userRemote.name) {
+        if (binding.etName.text.toString() != userModel.name) {
             userHashMap[USER_NAME] = binding.etName.text.toString()
+        }
+        if (binding.etEmail.text.toString() != userModel.email) {
+            userHashMap[USER_EMAIL] = binding.etEmail.text.toString()
         }
         // Update the database
         FireStoreClass()

@@ -17,3 +17,4 @@ const val READ_STORAGE_PERMISSION_CODE = 1
 const val PICK_IMAGE_REQUEST_CODE = 2
 const val USER_NAME: String = "name"
 const val USER_IMAGE: String = "image"
+const val USER_EMAIL: String = "email"

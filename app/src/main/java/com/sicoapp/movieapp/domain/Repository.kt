@@ -1,15 +1,15 @@
 package com.sicoapp.movieapp.domain
 
-import com.sicoapp.movieapp.data.database.DataBaseDataSource
-import com.sicoapp.movieapp.data.database.SmileyRatingEntity
-import com.sicoapp.movieapp.data.database.UserRatingCrossRef
-import com.sicoapp.movieapp.data.database.UserWithRatings
+import com.sicoapp.movieapp.data.database.*
 import com.sicoapp.movieapp.data.remote.NetworkDataSource
-import com.sicoapp.movieapp.data.remote.firebase.model.User
 import com.sicoapp.movieapp.data.remote.response.movie.Movie
 import com.sicoapp.movieapp.data.remote.response.movie.MovieResponse
 import com.sicoapp.movieapp.data.remote.response.multi.Multi
 import com.sicoapp.movieapp.data.remote.response.tvShow.TvResponse
+import com.sicoapp.movieapp.utils.mapToMovie
+import com.sicoapp.movieapp.utils.mapToMovieResponse
+import com.sicoapp.movieapp.utils.mapToMulti
+import com.sicoapp.movieapp.utils.mapToTvResponse
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -85,23 +85,15 @@ class Repository(
         return databaseDataSource.getAuthUserDB()
     }
 
-/*    fun insertSmiley(itemId: Int, rating: Int) {
+    fun insertSmiley(itemId: Int, rating: Int) {
         databaseDataSource.insertSmiley(itemId, rating)
-    }  */
-
-    fun insertUserMovieRatingCrossRef(itemId: Int, id: String, rating: Int) {
-        databaseDataSource.insertUserMovieRatingCrossRef(itemId, id, rating)
     }
 
-  /*  fun getSavedSmiley(): Single<List<SmileyRatingEntity>> {
-        return databaseDataSource.getSavedSmileys()
-    } */
-
-    suspend fun getRatingsOfUser():  List<UserWithRatings>  {
-        return databaseDataSource.getRatingsOfUser()
+    suspend fun getRatingsOfUser(curenntUSer : String):  List<UserWithRatings>  {
+        return databaseDataSource.getRatingsOfUser(curenntUSer)
     }
 
-    fun getSmileyByMovieId(itemId: Int): Single<SmileyRatingEntity> {
+    fun getSmileyByMovieId(itemId: Int): Single<Rating> {
         return databaseDataSource.getSmileyByMovieId(itemId)
     }
 
@@ -109,4 +101,7 @@ class Repository(
         databaseDataSource.deleteSmileyByMovieId(itemId)
     }
 
+    suspend fun insertUserMovieRatingCrossRef(crossRef: UserRatingsCrossRef){
+        databaseDataSource.insertStudentSubjectCrossRef(crossRef)
+    }
 }

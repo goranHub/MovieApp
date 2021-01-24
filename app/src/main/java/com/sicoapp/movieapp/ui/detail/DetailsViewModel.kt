@@ -3,7 +3,8 @@ package com.sicoapp.movieapp.ui.detail
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
-import com.sicoapp.movieapp.data.database.SmileyRatingEntity
+import com.sicoapp.movieapp.data.database.Rating
+import com.sicoapp.movieapp.data.database.UserRatingsCrossRef
 import com.sicoapp.movieapp.data.remote.response.movie.Movie
 import com.sicoapp.movieapp.data.remote.response.tvShow.TvResponse
 import com.sicoapp.movieapp.domain.Repository
@@ -25,17 +26,17 @@ class DetailsViewModel @ViewModelInject constructor(
 
     var bindDetails = BindDetails()
 
-  /*  fun insertSmiley(itemID: Int, rating: Int) {
+    fun insertSmiley(itemID: Int, rating: Int) {
         repository.insertSmiley(itemID, rating)
-    }*/
+    }
 
-    fun insertUserMovieRatingCrossRef(itemID: Int, id: String, rating: Int) {
-        repository.insertUserMovieRatingCrossRef(itemID, id, rating)
+    suspend fun insertUserMovieRatingCrossRef(crossRef: UserRatingsCrossRef) {
+        repository.insertUserMovieRatingCrossRef(crossRef)
     }
 
     fun getSmileyByMovieId(
         itemId: Int
-    ): Single<SmileyRatingEntity> {
+    ): Single<Rating> {
         return repository.getSmileyByMovieId(itemId)
     }
 

@@ -11,7 +11,7 @@ import com.sicoapp.movieapp.ui.topmovie.adapter.TopMovieAdapter
  * @author ll4
  * @date 1/11/2021
  */
-object BindingAdapters {
+object CallbackBindingAdapters {
     @JvmStatic
     @BindingAdapter("setCallback")
     fun setCallback(view: RecyclerView, callback: TopMovieCallback) {

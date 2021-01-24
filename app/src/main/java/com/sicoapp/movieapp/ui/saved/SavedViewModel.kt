@@ -3,6 +3,7 @@ package com.sicoapp.movieapp.ui.saved
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
+import com.sicoapp.movieapp.data.database.DatabaseDao
 import com.sicoapp.movieapp.data.database.UserWithRatings
 import com.sicoapp.movieapp.data.remote.response.movie.Movie
 import com.sicoapp.movieapp.domain.Repository
@@ -10,6 +11,7 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 /**
  * @author ll4
@@ -22,54 +24,20 @@ class SavedViewModel @ViewModelInject constructor(
     val adapter = SavedAdapter()
     var allElement = mutableListOf<Movie>()
 
-    /*   fun getSavedSmiley() : Single<List<SmileyRatingEntity>>{
-           return repository.getSavedSmiley()
-       }*/
-
-    suspend fun getRatingsOfUser(): List<UserWithRatings> {
-        return repository.getRatingsOfUser()
+    suspend fun getRatingsOfUser(curenntUSer :String): List<UserWithRatings> {
+        return repository.getRatingsOfUser(curenntUSer)
     }
-
-/*    fun getByMovieID(valuesList: List<SmileyRatingEntity>) {
-        for (element in valuesList) {
-            val singleMovie =
-                repository
-                    .getMovieByID(element.itemId.let { it!!.toLong() })
-
-            singleMovie
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    object : Observer<Movie> {
-                        override fun onSubscribe(d: Disposable) {
-                        }
-
-                        override fun onNext(response: Movie) {
-                            allElement.add(response)
-                            adapter.addMovieWithRating(allElement, valuesList)
-                        }
-
-                        override fun onError(e: Throwable) {
-                            Log.d("error", "${e.stackTrace}")
-                        }
-
-                        override fun onComplete() {
-                        }
-                    }
-                )
-        }
-    }*/
-
+    
     fun getByMovieID(list: List<UserWithRatings>) {
 
         list.map {
-            var valuesList = it.rating
 
+            val listOfRatingsForCurrentUserFromDB = it.rating
 
-            for (element in valuesList) {
+            for (element in listOfRatingsForCurrentUserFromDB) {
                 val singleMovie =
                     repository
-                        .getMovieByID(element.itemId.let { it!!.toLong() })
+                        .getMovieByID(element.itemId.toLong())
 
                 singleMovie
                     .subscribeOn(Schedulers.io())
@@ -81,7 +49,7 @@ class SavedViewModel @ViewModelInject constructor(
 
                             override fun onNext(response: Movie) {
                                 allElement.add(response)
-                                adapter.addMovieWithRating(allElement, valuesList)
+                                adapter.addMovieWithRating(allElement, listOfRatingsForCurrentUserFromDB)
                             }
 
                             override fun onError(e: Throwable) {

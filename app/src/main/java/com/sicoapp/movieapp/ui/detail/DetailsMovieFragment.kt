@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.hsalf.smileyrating.SmileyRating
-import com.sicoapp.movieapp.data.database.SmileyRatingEntity
+import com.sicoapp.movieapp.data.database.Rating
+import com.sicoapp.movieapp.data.database.UserRatingsCrossRef
 import com.sicoapp.movieapp.data.remote.firebase.FireStoreClass
 import com.sicoapp.movieapp.databinding.FragmentMovieDetailsBinding
 import com.sicoapp.movieapp.utils.ITEM_ID
@@ -18,6 +20,7 @@ import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -55,7 +58,7 @@ class DetailsMovieFragment : Fragment() {
 
         binding.data = viewModel.bindDetails
 
-        insertUserMovieRatingCrossRef()
+        insertSmiley()
 
         getSmileyByMovieId()
 
@@ -65,21 +68,20 @@ class DetailsMovieFragment : Fragment() {
         return binding.root
     }
 
-    private fun deleteSmileyByMovieId() {
-        viewModel.deleteSmileyByMovieId(movieId.toInt())
-    }
 
-/*    private fun insertSmiley() {
+    private fun insertSmiley() {
         binding.smiley.setSmileySelectedListener {
             viewModel.insertSmiley(movieId.toInt(), it.rating)
+            lifecycleScope.launch {
+                val currentUserID = FireStoreClass().currentUserID()
+                val crossRef = UserRatingsCrossRef(currentUserID, movieId.toString())
+                viewModel.insertUserMovieRatingCrossRef(crossRef)
+            }
         }
-    }*/
+    }
 
-
-    private fun insertUserMovieRatingCrossRef() {
-        binding.smiley.setSmileySelectedListener {
-            viewModel.insertUserMovieRatingCrossRef(movieId.toInt(), FireStoreClass().currentUserID(),it.rating)
-        }
+    private fun deleteSmileyByMovieId() {
+        viewModel.deleteSmileyByMovieId(movieId.toInt())
     }
 
 
@@ -89,15 +91,13 @@ class DetailsMovieFragment : Fragment() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                object : SingleObserver<SmileyRatingEntity> {
+                object : SingleObserver<Rating> {
                     override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onSuccess(response: SmileyRatingEntity) {
-                        if (response != null) {
-                            val rating = response.rating
-                            setFaceBackgroundColor(rating)
-                        }
+                    override fun onSuccess(response: Rating) {
+                        val rating = response.rating
+                        setFaceBackgroundColor(rating)
                     }
 
                     override fun onError(e: Throwable) {
@@ -108,7 +108,7 @@ class DetailsMovieFragment : Fragment() {
 
 
     private fun setFaceBackgroundColor(
-        rating: Int
+        rating: Int?
     ) {
         lateinit var type: SmileyRating.Type
         val color = Color.YELLOW

@@ -1,9 +1,8 @@
 package com.sicoapp.movieapp.data.database
 
 import androidx.room.Embedded
-import androidx.room.Relation
 import androidx.room.Junction
-
+import androidx.room.Relation
 
 
 /**
@@ -14,16 +13,16 @@ import androidx.room.Junction
 
 data class UserWithRatings(
 
-    @Embedded val user: UserEntity,
+    @Embedded val user: User,
 
     @Relation(
 
         parentColumn = "id",
         entityColumn = "itemId",
-        associateBy = Junction(UserRatingCrossRef::class)
+        associateBy = Junction(UserRatingsCrossRef::class)
 
     )
 
-    val rating: List<SmileyRatingEntity>
+    val rating: List<Rating>
 
 )

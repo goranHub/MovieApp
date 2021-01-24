@@ -27,8 +27,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:loadImageDetails="@{data}"
-            />
+            app:loadImageDetails="@{data}"/>
 
         <TextView
             android:id="@+id/tv_username"

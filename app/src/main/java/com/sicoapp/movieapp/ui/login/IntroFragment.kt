@@ -29,6 +29,7 @@ class IntroFragment : Fragment() {
             findNavController().navigate(
                 R.id.action_introFragment_to_signUpFragment)
         }
+
         return binding.root
     }
 }
