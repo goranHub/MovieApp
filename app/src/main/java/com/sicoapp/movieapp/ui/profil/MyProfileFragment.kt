@@ -10,18 +10,16 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.MimeTypeMap
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
+import com.bumptech.glide.Glide
 import com.sicoapp.movieapp.EntryActivity
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.remote.firebase.FireStoreClass
-import com.sicoapp.movieapp.databinding.DrawerHeaderBinding
 import com.sicoapp.movieapp.databinding.FragmentMyProfileBinding
 import com.sicoapp.movieapp.ui.BaseFragment
 import com.sicoapp.movieapp.utils.*
@@ -32,11 +30,9 @@ import kotlinx.android.synthetic.main.activity_entry.*
 class MyProfileFragment : BaseFragment() {
 
     var selectedImageUri: Uri? = null
-    private var profileImageURL: String = ""
+    private val viewModel by viewModels<MyProfileViewModel>()
     private lateinit var binding: FragmentMyProfileBinding
-    private lateinit var drawerBinding: DrawerHeaderBinding
-    private val viewModel: MyProfileViewModel by viewModels()
-    private lateinit var headerProfilImageView: View
+    private lateinit var callbackUpdateCollection: MyProfileViewModel.CallbackUpdateCollection
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,10 +46,9 @@ class MyProfileFragment : BaseFragment() {
 
         binding = FragmentMyProfileBinding.inflate(inflater)
 
-        hideProgressDialogUpdateSuccess()
+        binding.data = viewModel.bindMyProfile
 
         binding.ivProfileUserImage.setOnClickListener {
-
             if (context?.let { context ->
                     ContextCompat.checkSelfPermission(
                         context,
@@ -74,24 +69,25 @@ class MyProfileFragment : BaseFragment() {
         }
 
         binding.btnUpdate.setOnClickListener {
-            if (selectedImageUri != null) {
-                uploadImageToFireStorage()
-            } else {
-                showProgressDialog(resources.getString(R.string.please_wait))
-                updateProfileToFireCollection()
-            }
-        }
 
+            callbackUpdateCollection = object :
+                MyProfileViewModel.CallbackUpdateCollection {
+                override fun updateCollection(profileImageURL: String) {
+                    updateProfileToFireCollection(profileImageURL)
+                }
+            }
+            viewModel.uploadImageToFireStorage(selectedImageUri, callbackUpdateCollection)
+            hideProgressDialog()
+        }
 
         viewModel.statusProfileUpdateSuccess.observe(viewLifecycleOwner, Observer { status ->
             status?.let {
+                // showProgressDialog(resources.getString(R.string.please_wait))
                 viewModel.statusProfileUpdateSuccess.value = null
-                Toast.makeText(context, "Profile updated successfully!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "profile updated successfully!", Toast.LENGTH_SHORT).show()
                 hideProgressDialog()
             }
         })
-
-        drawerBinding = DrawerHeaderBinding.inflate(inflater)
 
         return binding.root
     }
@@ -117,49 +113,18 @@ class MyProfileFragment : BaseFragment() {
         }
     }
 
-    fun hideProgressDialogUpdateSuccess() {
-        viewModel.hideProgressDialog.observe(viewLifecycleOwner, { it ->
+    private fun hideProgressDialogUpdateSuccess() {
+        viewModel.hideProgressDialogVM.observe(viewLifecycleOwner, { it ->
             if (it == true) {
                 dialog.dismiss()
-                viewModel.hideProgressDialog.value = null
+                viewModel.hideProgressDialogVM.value = null
             } else {
-                viewModel.hideProgressDialog.value = null
+                viewModel.hideProgressDialogVM.value = null
             }
-        }
-        )
+        })
     }
 
-
-
-    fun uploadImageToFireStorage() {
-        showProgressDialog(resources.getString(R.string.please_wait))
-        if (selectedImageUri != null) {
-            val storageReference: StorageReference = FirebaseStorage.getInstance().reference.child(
-                "USER_IMAGE" + System.currentTimeMillis() + "."
-                        + fileExtension(selectedImageUri)
-            )
-            storageReference.putFile(selectedImageUri!!)
-                .addOnSuccessListener { snapshot ->
-                    // Get the downloadable url from the snapshot
-                    snapshot.metadata!!.reference!!.downloadUrl
-                        .addOnSuccessListener { uri ->
-                            profileImageURL = uri.toString()
-                            updateProfileToFireCollection()
-                        }
-                }
-                .addOnFailureListener { exception ->
-                    Toast.makeText(
-                        context,
-                        exception.message,
-                        Toast.LENGTH_LONG
-                    ).show()
-                    hideProgressDialog()
-                }
-        }
-    }
-
-
-    fun updateProfileToFireCollection() {
+    fun updateProfileToFireCollection(profileImageURL: String) {
 
         val userHashMap = HashMap<String, Any>()
 
@@ -177,7 +142,6 @@ class MyProfileFragment : BaseFragment() {
             .updateUserProfileData(viewModel, userHashMap)
     }
 
-
     /*
         this.startActivityForResult put the image in
         intent.data off onActivityResultwith the same PICK_IMAGE_REQUEST_CODE
@@ -192,7 +156,6 @@ class MyProfileFragment : BaseFragment() {
         this.startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST_CODE)
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
         if (resultCode == Activity.RESULT_OK
@@ -202,12 +165,23 @@ class MyProfileFragment : BaseFragment() {
             selectedImageUri = intent.data!!
             //from device to xml layout
             binding.image = selectedImageUri.toString()
+
+
+            //set into drawer header
+            val headerProfilImageView =
+                (activity as EntryActivity).navigation_view.getHeaderView(0)
+                    .findViewById(R.id.header_imageView) as ImageView
+
+            context?.let {
+                    context ->
+                Glide
+                    .with(context)
+                    .load(selectedImageUri.toString())
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_baseline_local_movies_24)
+                    .into(headerProfilImageView)
+            }
+            viewModel.bindMyProfile.image = selectedImageUri.toString()
         }
     }
-
-    private fun fileExtension(uri: Uri?): String? {
-        return MimeTypeMap.getSingleton()
-            .getExtensionFromMimeType(activity?.contentResolver?.getType(uri!!))
-    }
-
 }

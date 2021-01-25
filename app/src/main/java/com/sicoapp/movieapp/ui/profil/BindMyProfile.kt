@@ -20,7 +20,7 @@ class BindMyProfile() : BaseObservable() {
     var name by Delegates.observable("TEST name") { _, _, _ -> notifyPropertyChanged(BR.name) }
 
     @get:Bindable
-    var email by Delegates.observable("TEST popularity") { _, _, _ -> notifyPropertyChanged(BR.email) }
+    var email by Delegates.observable("TEST email") { _, _, _ -> notifyPropertyChanged(BR.email) }
 
 
 }

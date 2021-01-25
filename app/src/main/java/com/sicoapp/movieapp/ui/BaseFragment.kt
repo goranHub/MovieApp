@@ -37,6 +37,7 @@ open class BaseFragment : Fragment() {
     }
 
     open fun hideProgressDialog() {
+        dialog = Dialog(requireContext())
         dialog.dismiss()
     }
 
