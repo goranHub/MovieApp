@@ -81,8 +81,8 @@ class Repository(
         databaseDataSource.insertUser(user)
     }
 
-    fun getAuthUserDB(): Single<List<User>> {
-        return databaseDataSource.getAuthUserDB()
+    fun getAuthUserDB(): Observable<List<User>> {
+        return databaseDataSource.getAuthUserDB().toObservable()
     }
 
     fun insertSmiley(itemId: Int, rating: Int) {

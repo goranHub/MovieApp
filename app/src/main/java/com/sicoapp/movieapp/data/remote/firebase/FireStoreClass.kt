@@ -1,6 +1,7 @@
 package com.sicoapp.movieapp.data.remote.firebase
 
 import android.util.Log
+import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -8,6 +9,7 @@ import com.sicoapp.movieapp.data.remote.firebase.model.UserFirebase
 import com.sicoapp.movieapp.ui.profil.MyProfileFragment
 import com.sicoapp.movieapp.ui.login.SignInFragment
 import com.sicoapp.movieapp.ui.login.SignUpFragment
+import com.sicoapp.movieapp.ui.profil.MyProfileViewModel
 import com.sicoapp.movieapp.utils.USERS
 import javax.inject.Inject
 
@@ -21,6 +23,11 @@ class FireStoreClass  @Inject constructor() {
             .set(userInfo, SetOptions.merge())
             .addOnSuccessListener {
                 activity.userRegisteredSuccess()
+
+                fireBase
+                    .collection(USERS)
+                    .document(currentUserID())
+                    .get()
             }
             .addOnFailureListener { e ->
                 Log.e(activity.javaClass.simpleName, "Error writing document", e)
@@ -45,7 +52,6 @@ class FireStoreClass  @Inject constructor() {
 
     fun currentUserID(): String {
         val currentUser = FirebaseAuth.getInstance().currentUser
-        Log.i("currentUser", "${currentUser?.uid}")
         var currentUserID = ""
         if (currentUser != null) {
             currentUserID = currentUser.uid
@@ -53,34 +59,34 @@ class FireStoreClass  @Inject constructor() {
         return currentUserID
     }
 
-    fun loadUserDataMyProfile(myProfileFragment: MyProfileFragment) {
+    fun loadUserDataMyProfile(viewModel: MyProfileViewModel) {
         fireBase.collection(USERS)
             .document(currentUserID())
             .get()
             .addOnSuccessListener { document ->
                 val loggedInUser = document.toObject(UserFirebase::class.java)!!
-                myProfileFragment.loadFromRemote(loggedInUser)
+                viewModel.loadFromRemote(loggedInUser)
             }
             .addOnFailureListener {
-                myProfileFragment.hideProgressDialog()
+                viewModel.hideProgressDialogFaliure()
             }
     }
 
     fun updateUserProfileData(
-        myProfileFragment: MyProfileFragment,
+        viewModel: MyProfileViewModel,
         userHashMap: HashMap<String, Any>
     ) {
         fireBase.collection(USERS)
             .document(currentUserID())
             .update(userHashMap)
             .addOnSuccessListener {
-                Log.e(myProfileFragment.javaClass.simpleName, "updated was successfully")
-                myProfileFragment.profileUpdateSuccess()
+                Log.e(viewModel.javaClass.simpleName, "updated was successfully")
+                viewModel.profileUpdateSuccess()
             }
             .addOnFailureListener { msg ->
-                myProfileFragment.hideProgressDialog()
+                viewModel.hideProgressDialogFaliure()
                 Log.e(
-                    myProfileFragment.javaClass.simpleName,
+                    viewModel.javaClass.simpleName,
                     "Error while updating user", msg
                 )
             }

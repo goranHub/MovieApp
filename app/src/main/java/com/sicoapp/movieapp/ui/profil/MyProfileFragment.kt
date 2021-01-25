@@ -7,55 +7,40 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.MimeTypeMap
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.bumptech.glide.Glide
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.sicoapp.movieapp.EntryActivity
 import com.sicoapp.movieapp.R
-import com.sicoapp.movieapp.data.database.User
 import com.sicoapp.movieapp.data.remote.firebase.FireStoreClass
-import com.sicoapp.movieapp.data.remote.firebase.model.UserFirebase
-import com.sicoapp.movieapp.data.remote.response.user.UserModel
 import com.sicoapp.movieapp.databinding.DrawerHeaderBinding
 import com.sicoapp.movieapp.databinding.FragmentMyProfileBinding
-import com.sicoapp.movieapp.domain.Repository
 import com.sicoapp.movieapp.ui.BaseFragment
 import com.sicoapp.movieapp.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.SingleObserver
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_entry.*
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MyProfileFragment : BaseFragment() {
 
-    @Inject
-    lateinit var repository: Repository
-
     var selectedImageUri: Uri? = null
     private var profileImageURL: String = ""
-    private lateinit var userModel: UserModel
     private lateinit var binding: FragmentMyProfileBinding
     private lateinit var drawerBinding: DrawerHeaderBinding
+    private val viewModel: MyProfileViewModel by viewModels()
     private lateinit var headerProfilImageView: View
-
-    private val currentUserID = FireStoreClass().currentUserID()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FireStoreClass().loadUserDataMyProfile(this)
+        FireStoreClass().loadUserDataMyProfile(viewModel)
     }
 
     override fun onCreateView(
@@ -64,6 +49,8 @@ class MyProfileFragment : BaseFragment() {
     ): View {
 
         binding = FragmentMyProfileBinding.inflate(inflater)
+
+        hideProgressDialogUpdateSuccess()
 
         binding.ivProfileUserImage.setOnClickListener {
 
@@ -88,103 +75,25 @@ class MyProfileFragment : BaseFragment() {
 
         binding.btnUpdate.setOnClickListener {
             if (selectedImageUri != null) {
-                uploadUserImage()
+                uploadImageToFireStorage()
             } else {
                 showProgressDialog(resources.getString(R.string.please_wait))
-                updateUserProfile()
+                updateProfileToFireCollection()
             }
         }
+
+
+        viewModel.statusProfileUpdateSuccess.observe(viewLifecycleOwner, Observer { status ->
+            status?.let {
+                viewModel.statusProfileUpdateSuccess.value = null
+                Toast.makeText(context, "Profile updated successfully!", Toast.LENGTH_SHORT).show()
+                hideProgressDialog()
+            }
+        })
 
         drawerBinding = DrawerHeaderBinding.inflate(inflater)
 
         return binding.root
-    }
-
-    fun loadFromRemote(userFirebase: UserFirebase) {
-
-        var user = userFirebase.mapToUserEntity()
-        userModel= userFirebase.mapToUserModel()
-
-        repository.insertUser(user)
-        getSavedUser(currentUserID)
-        getSavedUser()
-    }
-
-
-    private fun getSavedUser(currentUserID: String) {
-        repository
-            .getAuthUserDB()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                object : SingleObserver<List<User>> {
-                    override fun onSubscribe(d: Disposable) {
-                    }
-
-                    override fun onSuccess(response: List<User>) {
-                        response.map {
-                            if (it.id == currentUserID) {
-                                binding.data = it.image
-                                binding.etName.setText(it.name)
-                                binding.etEmail.setText(it.email)
-                            }
-                        }
-                    }
-
-                    override fun onError(e: Throwable) {
-                        Log.d("error", "${e.stackTrace}")
-                    }
-                }
-            )
-    }
-
-    private fun getSavedUser() {
-        repository
-            .getAuthUserDB()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                object : SingleObserver<List<User>> {
-                    override fun onSubscribe(d: Disposable) {
-                    }
-                    override fun onSuccess(response: List<User>) {
-                        response.map {
-                            if (it.id == currentUserID) {
-
-                                //drawerBinding.data = it.image
-
-                                headerProfilImageView =
-                                    (activity as EntryActivity).navigation_view.getHeaderView(0)
-
-                                context?.let { context ->
-                                    Glide
-                                        .with(context)
-                                        .load(it.image)
-                                        .centerCrop()
-                                        .placeholder(R.drawable.ic_baseline_local_movies_24)
-                                        .into(headerProfilImageView.findViewById(R.id.header_imageView) as ImageView)
-                                }
-                            }
-                        }
-                    }
-                    override fun onError(e: Throwable) {
-                        Log.d("error", "${e.stackTrace}")
-                    }
-                }
-            )
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
-        super.onActivityResult(requestCode, resultCode, intent)
-        if (resultCode == Activity.RESULT_OK
-            && requestCode == PICK_IMAGE_REQUEST_CODE
-            && intent!!.data != null
-        ) {
-            selectedImageUri = intent.data!!
-            //from device
-            binding.data = selectedImageUri.toString()
-
-        }
     }
 
     override fun onRequestPermissionsResult(
@@ -208,7 +117,21 @@ class MyProfileFragment : BaseFragment() {
         }
     }
 
-    private fun uploadUserImage() {
+    fun hideProgressDialogUpdateSuccess() {
+        viewModel.hideProgressDialog.observe(viewLifecycleOwner, { it ->
+            if (it == true) {
+                dialog.dismiss()
+                viewModel.hideProgressDialog.value = null
+            } else {
+                viewModel.hideProgressDialog.value = null
+            }
+        }
+        )
+    }
+
+
+
+    fun uploadImageToFireStorage() {
         showProgressDialog(resources.getString(R.string.please_wait))
         if (selectedImageUri != null) {
             val storageReference: StorageReference = FirebaseStorage.getInstance().reference.child(
@@ -221,7 +144,7 @@ class MyProfileFragment : BaseFragment() {
                     snapshot.metadata!!.reference!!.downloadUrl
                         .addOnSuccessListener { uri ->
                             profileImageURL = uri.toString()
-                            updateUserProfile()
+                            updateProfileToFireCollection()
                         }
                 }
                 .addOnFailureListener { exception ->
@@ -235,27 +158,30 @@ class MyProfileFragment : BaseFragment() {
         }
     }
 
-    private fun updateUserProfile() {
+
+    fun updateProfileToFireCollection() {
+
         val userHashMap = HashMap<String, Any>()
-        if (profileImageURL.isNotEmpty() && profileImageURL != userModel.image) {
+
+        if (profileImageURL.isNotEmpty() && profileImageURL != viewModel.userModel.value?.image ?: return) {
             userHashMap[USER_IMAGE] = profileImageURL
         }
-        if (binding.etName.text.toString() != userModel.name) {
+        if (binding.etName.text.toString() != viewModel.userModel.value?.name) {
             userHashMap[USER_NAME] = binding.etName.text.toString()
         }
-        if (binding.etEmail.text.toString() != userModel.email) {
+        if (binding.etEmail.text.toString() != viewModel.userModel.value?.email) {
             userHashMap[USER_EMAIL] = binding.etEmail.text.toString()
         }
         // Update the database
         FireStoreClass()
-            .updateUserProfileData(this@MyProfileFragment, userHashMap)
+            .updateUserProfileData(viewModel, userHashMap)
     }
 
-    fun profileUpdateSuccess() {
-        hideProgressDialog()
-        Toast.makeText(context, "Profile updated successfully!", Toast.LENGTH_SHORT).show()
-    }
 
+    /*
+        this.startActivityForResult put the image in
+        intent.data off onActivityResultwith the same PICK_IMAGE_REQUEST_CODE
+     */
     private fun imageChooser() {
         //select image of phone storage
         val galleryIntent = Intent(
@@ -266,8 +192,22 @@ class MyProfileFragment : BaseFragment() {
         this.startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST_CODE)
     }
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        super.onActivityResult(requestCode, resultCode, intent)
+        if (resultCode == Activity.RESULT_OK
+            && requestCode == PICK_IMAGE_REQUEST_CODE
+            && intent!!.data != null
+        ) {
+            selectedImageUri = intent.data!!
+            //from device to xml layout
+            binding.image = selectedImageUri.toString()
+        }
+    }
+
     private fun fileExtension(uri: Uri?): String? {
         return MimeTypeMap.getSingleton()
             .getExtensionFromMimeType(activity?.contentResolver?.getType(uri!!))
     }
+
 }

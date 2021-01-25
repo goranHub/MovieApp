@@ -16,7 +16,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.sicoapp.movieapp.databinding.ActivityEntryBinding
-import com.sicoapp.movieapp.databinding.DrawerHeaderBinding
 import com.sicoapp.movieapp.domain.Repository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -95,7 +94,8 @@ class EntryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
     private fun setupNav() {
-        navController.addOnDestinationChangedListener { _, destination, _ ->
+        navController.addOnDestinationChangedListener {
+                _, destination, _ ->
             when (destination.id) {
                 R.id.topMovieFragment -> showBottomNav()
                 R.id.popularMovieFragment -> showBottomNav()

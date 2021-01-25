@@ -98,7 +98,6 @@ class SignUpFragment : BaseFragment() {
             Toast.LENGTH_SHORT
         ).show()
         hideProgressDialog()
-        FirebaseAuth.getInstance().signOut()
         findNavController().navigate(
             R.id.action_signUpFragment_to_topMovieFragment)
     }

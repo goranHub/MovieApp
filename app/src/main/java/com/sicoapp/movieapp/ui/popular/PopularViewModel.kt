@@ -16,7 +16,7 @@ import io.reactivex.schedulers.Schedulers
  * @date 12/6/2020
  */
 class PopularViewModel @ViewModelInject constructor(
-    private val remoteRepository: Repository
+    private val repository: Repository
 ) : ViewModel() {
 
     var pageId = 1L
@@ -27,7 +27,7 @@ class PopularViewModel @ViewModelInject constructor(
     }
 
      fun getPopular() {
-        remoteRepository
+        repository
             .getPopular(pageId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

@@ -22,9 +22,8 @@ class DataBaseDataSource @Inject constructor(
         }
     }
 
-
-    suspend fun getRatingsOfUser(curenntUSer : String): List<UserWithRatings> {
-        return dao.getRatingsOfUser(curenntUSer)
+    suspend fun getRatingsOfUser(currentUser : String): List<UserWithRatings> {
+        return dao.getRatingsOfUser(currentUser)
     }
 
     fun insertUser(
