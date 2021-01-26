@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.ui.login
+package com.sicoapp.movieapp.ui.login.signIn
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -56,17 +56,6 @@ class SignInFragment : BaseFragment() {
         }
     }
 
-    private fun validateForm(email: String, password: String): Boolean {
-        return if (TextUtils.isEmpty(email)) {
-            showErrorSnackBar("Please enter email.")
-            false
-        } else if (TextUtils.isEmpty(password)) {
-            showErrorSnackBar("Please enter password.")
-            false
-        } else {
-            true
-        }
-    }
 
     fun signInSuccess(user: UserFirebase) {
         hideProgressDialog()

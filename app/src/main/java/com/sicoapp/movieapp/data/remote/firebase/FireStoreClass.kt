@@ -5,8 +5,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.sicoapp.movieapp.data.remote.firebase.model.UserFirebase
-import com.sicoapp.movieapp.ui.login.SignInFragment
-import com.sicoapp.movieapp.ui.login.SignUpFragment
+import com.sicoapp.movieapp.ui.login.signIn.SignInFragment
+import com.sicoapp.movieapp.ui.login.signup.SignUpFragment
 import com.sicoapp.movieapp.ui.profil.MyProfileViewModel
 import com.sicoapp.movieapp.utils.USERS
 import javax.inject.Inject

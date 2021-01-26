@@ -1,10 +1,10 @@
 package com.sicoapp.movieapp.ui
 
 import android.app.Dialog
+import android.text.TextUtils
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
 import com.sicoapp.movieapp.R
 import kotlinx.android.synthetic.main.dialog_progress.*
 
@@ -37,7 +37,18 @@ open class BaseFragment : Fragment() {
     }
 
     open fun hideProgressDialog() {
-        dialog = Dialog(requireContext())
         dialog.dismiss()
+    }
+
+    fun validateForm(email: String, password: String): Boolean {
+        return if (TextUtils.isEmpty(email)) {
+            showErrorSnackBar("Please enter email.")
+            false
+        } else if (TextUtils.isEmpty(password)) {
+            showErrorSnackBar("Please enter password.")
+            false
+        } else {
+            true
+        }
     }
 }

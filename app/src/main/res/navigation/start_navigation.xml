@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.sicoapp.movieapp.ui.login.SplashFragment"
+        android:name="com.sicoapp.movieapp.ui.login.splash.SplashFragment"
         android:label="Entry"
         tools:layout="@layout/fragment_entry">
         <action
@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/introFragment"
-        android:name="com.sicoapp.movieapp.ui.login.IntroFragment"
+        android:name="com.sicoapp.movieapp.ui.login.intro.IntroFragment"
         android:label="Intro"
         tools:layout="@layout/fragment_intro">
         <action
@@ -35,7 +35,7 @@
 
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.sicoapp.movieapp.ui.login.SignInFragment"
+        android:name="com.sicoapp.movieapp.ui.login.signIn.SignInFragment"
         android:label="Sign In"
         tools:layout="@layout/fragment_sign_in">
         <action
@@ -45,7 +45,7 @@
 
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.sicoapp.movieapp.ui.login.SignUpFragment"
+        android:name="com.sicoapp.movieapp.ui.login.signup.SignUpFragment"
         android:label="Sign Up"
         tools:layout="@layout/fragment_sign_up">
         <action
