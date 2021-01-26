@@ -1,7 +1,6 @@
 package com.sicoapp.movieapp.ui.login.signIn
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +31,6 @@ class SignInFragment : BaseFragment() {
         return binding.root
     }
 
-
     private fun signInRegisteredUser() {
         val email: String = binding.etEmail.text.toString().trim { it <= ' ' }
         val password: String = binding.etPassword.text.toString().trim { it <= ' ' }
@@ -55,7 +53,6 @@ class SignInFragment : BaseFragment() {
                 }
         }
     }
-
 
     fun signInSuccess(user: UserFirebase) {
         hideProgressDialog()

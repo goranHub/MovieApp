@@ -13,10 +13,11 @@ import kotlinx.android.parcel.Parcelize
  */
 
 @Entity
-class Rating(
+@Parcelize
+class Rating (
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "itemId")
     var itemId: String,
     @ColumnInfo(name = "rating")
     var rating: Int
-)
+) : Parcelable

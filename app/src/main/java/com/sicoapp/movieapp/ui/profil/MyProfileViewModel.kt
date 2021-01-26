@@ -10,7 +10,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.storage.FirebaseStorage
 import com.sicoapp.movieapp.data.database.User
-import com.sicoapp.movieapp.data.remote.firebase.FireStoreClass
 import com.sicoapp.movieapp.data.remote.firebase.model.UserFirebase
 import com.sicoapp.movieapp.data.remote.response.user.UserModel
 import com.sicoapp.movieapp.domain.Repository
@@ -33,7 +32,6 @@ class MyProfileViewModel @ViewModelInject constructor(
     @ApplicationContext val appContext: Context,
     private val repository: Repository
 ) : ViewModel() {
-
 
     var bindMyProfile = BindMyProfile()
     var statusProfileUpdateSuccess = MutableLiveData<Boolean?>()
@@ -58,9 +56,7 @@ class MyProfileViewModel @ViewModelInject constructor(
 
         insertIntoDB(user)
     }
-
-
-    private fun insertIntoDB(user:User){
+       private fun insertIntoDB(user:User){
         repository.insertUser(user)
     }
 

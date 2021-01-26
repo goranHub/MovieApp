@@ -35,14 +35,11 @@ class MyProfileFragment : BaseFragment() {
     private val viewModel by viewModels<MyProfileViewModel>()
     private lateinit var binding: FragmentMyProfileBinding
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         FireStoreClass().loadFromRemoteFC(viewModel)
-
         val currentUserID = FireStoreClass().currentUserID()
-
         viewModel.getUserFromDbAndBind(currentUserID)
     }
 
@@ -79,17 +76,14 @@ class MyProfileFragment : BaseFragment() {
         send to firestorage and to firestore(collection, document)
          */
         binding.btnUpdate.setOnClickListener {
-
             val callbackUpdateCollection = object : MyProfileViewModel.CallbackUpdateCollection {
                 override fun updateCollection(profileImageURL: String) {
                     updateProfileToFireCollection(profileImageURL)
                 }
             }
-
             viewModel.uploadImageToFireStorage(selectedImageUri, callbackUpdateCollection)
             viewModel.bindMyProfile.image = selectedImageUri.toString()
         }
-
 
         viewModel.statusProfileUpdateSuccess.observe(viewLifecycleOwner, Observer { status ->
             status?.let {
@@ -163,21 +157,19 @@ class MyProfileFragment : BaseFragment() {
             selectedImageUri = intent.data!!
             //from device to xml layout
             binding.image = selectedImageUri.toString()
-
             setDrawerHeaderImage(selectedImageUri.toString())
-
             viewModel.bindMyProfile.image = selectedImageUri.toString()
         }
     }
 
     private fun setDrawerHeaderProfilName(image: String?) {
+
         val headerProfilName =
             (activity as EntryActivity).navigation_view.getHeaderView(0)
                 .findViewById(R.id.tv_username) as TextView
 
         headerProfilName.text = image
     }
-
 
     private fun setDrawerHeaderImage(image: String?) {
         //set into drawer header

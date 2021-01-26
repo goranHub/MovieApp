@@ -38,7 +38,6 @@ fun Multi.mapToMulti() : Multi {
         total_results = this.total_results)
 }
 
-
 fun TvResponse.mapToTvResponse() : TvResponse{
     return TvResponse(
         first_air_date = this.first_air_date,
@@ -46,7 +45,6 @@ fun TvResponse.mapToTvResponse() : TvResponse{
         popularity = this.popularity,
         posterPath = this.posterPath)
 }
-
 
 fun UserFirebase.mapToUserEntity() : User {
     return  User(
@@ -59,8 +57,6 @@ fun UserFirebase.mapToUserEntity() : User {
         fcmToken = this.fcmToken
     )
 }
-
-
 
 fun UserFirebase.mapToUserModel() : UserModel {
     return  UserModel(
