@@ -7,10 +7,12 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -32,11 +34,16 @@ class MyProfileFragment : BaseFragment() {
     var selectedImageUri: Uri? = null
     private val viewModel by viewModels<MyProfileViewModel>()
     private lateinit var binding: FragmentMyProfileBinding
-    private lateinit var callbackUpdateCollection: MyProfileViewModel.CallbackUpdateCollection
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FireStoreClass().loadUserDataMyProfile(viewModel)
+
+        FireStoreClass().loadFromRemoteFC(viewModel)
+
+        val currentUserID = FireStoreClass().currentUserID()
+
+        viewModel.getUserFromDbAndBind(currentUserID)
     }
 
     override fun onCreateView(
@@ -68,24 +75,26 @@ class MyProfileFragment : BaseFragment() {
             }
         }
 
+        /*
+        send to firestorage and to firestore(collection, document)
+         */
         binding.btnUpdate.setOnClickListener {
 
-            callbackUpdateCollection = object :
-                MyProfileViewModel.CallbackUpdateCollection {
+            val callbackUpdateCollection = object : MyProfileViewModel.CallbackUpdateCollection {
                 override fun updateCollection(profileImageURL: String) {
                     updateProfileToFireCollection(profileImageURL)
                 }
             }
+
             viewModel.uploadImageToFireStorage(selectedImageUri, callbackUpdateCollection)
-            hideProgressDialog()
+            viewModel.bindMyProfile.image = selectedImageUri.toString()
         }
+
 
         viewModel.statusProfileUpdateSuccess.observe(viewLifecycleOwner, Observer { status ->
             status?.let {
-                // showProgressDialog(resources.getString(R.string.please_wait))
                 viewModel.statusProfileUpdateSuccess.value = null
                 Toast.makeText(context, "profile updated successfully!", Toast.LENGTH_SHORT).show()
-                hideProgressDialog()
             }
         })
 
@@ -113,28 +122,17 @@ class MyProfileFragment : BaseFragment() {
         }
     }
 
-    private fun hideProgressDialogUpdateSuccess() {
-        viewModel.hideProgressDialogVM.observe(viewLifecycleOwner, { it ->
-            if (it == true) {
-                dialog.dismiss()
-                viewModel.hideProgressDialogVM.value = null
-            } else {
-                viewModel.hideProgressDialogVM.value = null
-            }
-        })
-    }
-
     fun updateProfileToFireCollection(profileImageURL: String) {
 
         val userHashMap = HashMap<String, Any>()
 
-        if (profileImageURL.isNotEmpty() && profileImageURL != viewModel.userModel.value?.image ?: return) {
+        if (profileImageURL.isNotEmpty() && profileImageURL != viewModel.userRemote.value?.image ?: return) {
             userHashMap[USER_IMAGE] = profileImageURL
         }
-        if (binding.etName.text.toString() != viewModel.userModel.value?.name) {
+        if (binding.etName.text.toString() != viewModel.userRemote.value?.name) {
             userHashMap[USER_NAME] = binding.etName.text.toString()
         }
-        if (binding.etEmail.text.toString() != viewModel.userModel.value?.email) {
+        if (binding.etEmail.text.toString() != viewModel.userRemote.value?.email) {
             userHashMap[USER_EMAIL] = binding.etEmail.text.toString()
         }
         // Update the database
@@ -166,22 +164,34 @@ class MyProfileFragment : BaseFragment() {
             //from device to xml layout
             binding.image = selectedImageUri.toString()
 
+            setDrawerHeaderImage(selectedImageUri.toString())
 
-            //set into drawer header
-            val headerProfilImageView =
-                (activity as EntryActivity).navigation_view.getHeaderView(0)
-                    .findViewById(R.id.header_imageView) as ImageView
-
-            context?.let {
-                    context ->
-                Glide
-                    .with(context)
-                    .load(selectedImageUri.toString())
-                    .centerCrop()
-                    .placeholder(R.drawable.ic_baseline_local_movies_24)
-                    .into(headerProfilImageView)
-            }
             viewModel.bindMyProfile.image = selectedImageUri.toString()
+        }
+    }
+
+    private fun setDrawerHeaderProfilName(image: String?) {
+        val headerProfilName =
+            (activity as EntryActivity).navigation_view.getHeaderView(0)
+                .findViewById(R.id.tv_username) as TextView
+
+        headerProfilName.text = image
+    }
+
+
+    private fun setDrawerHeaderImage(image: String?) {
+        //set into drawer header
+        val headerProfilImageView =
+            (activity as EntryActivity).navigation_view.getHeaderView(0)
+                .findViewById(R.id.header_imageView) as ImageView
+
+        context?.let { context ->
+            Glide
+                .with(context)
+                .load(image)
+                .centerCrop()
+                .placeholder(R.drawable.ic_baseline_local_movies_24)
+                .into(headerProfilImageView)
         }
     }
 }

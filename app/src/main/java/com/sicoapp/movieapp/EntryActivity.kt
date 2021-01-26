@@ -1,23 +1,31 @@
 package com.sicoapp.movieapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.sicoapp.movieapp.databinding.ActivityEntryBinding
 import com.sicoapp.movieapp.domain.Repository
+import com.sicoapp.movieapp.ui.profil.MyProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_entry.*
 import javax.inject.Inject
 
 
@@ -30,6 +38,8 @@ class EntryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
     @Inject
     lateinit var repository: Repository
+
+    private val myProfileViewModel by viewModels<MyProfileViewModel>()
 
     lateinit var navController: NavController
     lateinit var bottomNav: BottomNavigationView
@@ -68,6 +78,23 @@ class EntryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         setupNavigation()
 
+
+        //upload myProfil and drawer from DB
+        myProfileViewModel.userFromDB.observe(this, {
+            val image = it?.image
+            val name = it?.name
+
+            if (image != null) {
+                Log.e("simpleName", "2")
+                myProfileViewModel.bindMyProfile.image = image
+                setDrawerHeaderImage(image)
+            }
+
+            if (it?.name != null) {
+                myProfileViewModel.bindMyProfile.name = name
+                setDrawerHeaderProfilName(name)
+            }
+        })
     }
 
     private fun setupNavigation() {
@@ -102,6 +129,31 @@ class EntryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 R.id.searchFragment -> showBottomNav()
                 else -> hideBottomNav()
             }
+        }
+    }
+
+    private fun setDrawerHeaderProfilName(image: String?) {
+        val headerProfilName =
+            this.navigation_view.getHeaderView(0)
+                .findViewById(R.id.tv_username) as TextView
+
+        headerProfilName.text = image
+    }
+
+
+    private fun setDrawerHeaderImage(image: String?) {
+        //set into drawer header
+        val headerProfilImageView =
+            this.navigation_view.getHeaderView(0)
+                .findViewById(R.id.header_imageView) as ImageView
+
+        this.let { context ->
+            Glide
+                .with(context)
+                .load(image)
+                .centerCrop()
+                .placeholder(R.drawable.ic_baseline_local_movies_24)
+                .into(headerProfilImageView)
         }
     }
 

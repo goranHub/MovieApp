@@ -17,10 +17,10 @@ class BindMyProfile() : BaseObservable() {
     var image :String? by Delegates.observable("TEST image") { _, _, _ -> notifyPropertyChanged(BR.image) }
 
     @get:Bindable
-    var name by Delegates.observable("TEST name") { _, _, _ -> notifyPropertyChanged(BR.name) }
+    var name :String? by Delegates.observable("TEST name") { _, _, _ -> notifyPropertyChanged(BR.name) }
 
     @get:Bindable
-    var email by Delegates.observable("TEST email") { _, _, _ -> notifyPropertyChanged(BR.email) }
+    var email :String? by Delegates.observable("TEST email") { _, _, _ -> notifyPropertyChanged(BR.email) }
 
 
 }

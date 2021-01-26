@@ -37,37 +37,31 @@ class MyProfileViewModel @ViewModelInject constructor(
 
     var bindMyProfile = BindMyProfile()
     var statusProfileUpdateSuccess = MutableLiveData<Boolean?>()
-    var hideProgressDialogVM = MutableLiveData<Boolean?>()
-    var userModel = MutableLiveData<UserModel?>()
-    private val currentUserID = FireStoreClass().currentUserID()
+    var userRemote = MutableLiveData<UserModel?>()
+    var userFromDB = MutableLiveData<User?>()
     private var profileImageURL: String = ""
-    lateinit var callback: CallbackShowProgressDialog
-
-
-    interface CallbackShowProgressDialog {
-        fun showProgressDialog()
-    }
 
     interface CallbackUpdateCollection {
         fun updateCollection(profileImageURL : String)
     }
-
-    fun loadFromRemote(userFirebase: UserFirebase) {
-
-        val user = userFirebase.mapToUserEntity()
-        userModel.value = userFirebase.mapToUserModel()
-
-        //insert into DB
-        repository.insertUser(user)
-    }
-
     // called in FireStoreClass updateUserProfileData
     fun profileUpdateSuccess() {
         statusProfileUpdateSuccess.value = true
     }
 
-    fun hideProgressDialogFaliure() {
-        hideProgressDialogVM.value = null
+    fun loadFromRemoteVM(userFirebase: UserFirebase) {
+
+        userRemote.value = userFirebase.mapToUserModel()
+
+        //insert into DB
+        val user = userFirebase.mapToUserEntity()
+
+        insertIntoDB(user)
+    }
+
+
+    private fun insertIntoDB(user:User){
+        repository.insertUser(user)
     }
 
     fun getUserFromDbAndBind(currentUserID: String) {
@@ -88,6 +82,11 @@ class MyProfileViewModel @ViewModelInject constructor(
                     override fun onNext(response: List<User>) {
                         response.map {
                             if (it.id == currentUserID) {
+
+                                userFromDB.value?.image = it.image
+                                userFromDB.value?.name = it.name
+                                userFromDB.value?.email = it.email
+
                                 bindMyProfile.image = it.image.toString()
                                 bindMyProfile.name = it.name.toString()
                                 bindMyProfile.email = it.email.toString()
@@ -102,6 +101,8 @@ class MyProfileViewModel @ViewModelInject constructor(
 
     fun uploadImageToFireStorage(selectedImageUri: Uri?, callbackUpdateCollection : CallbackUpdateCollection) {
         if (selectedImageUri != null) {
+
+            //get the storage reference
             val storageReference =
                 FirebaseStorage
                     .getInstance()
@@ -109,6 +110,7 @@ class MyProfileViewModel @ViewModelInject constructor(
                     .child("USER_IMAGE" + System.currentTimeMillis() + "."
                         + fileExtension(selectedImageUri))
 
+            //put image to fire storage
             storageReference
                 .putFile(selectedImageUri)
                 .addOnSuccessListener { snapshot ->
@@ -117,9 +119,14 @@ class MyProfileViewModel @ViewModelInject constructor(
                         .metadata!!
                         .reference!!
                         .downloadUrl
+                            // take the url and upadate collection
                         .addOnSuccessListener { uri ->
                             profileImageURL = uri.toString()
+                            /*
+                            updateCollection are in fragment
+                             */
                             callbackUpdateCollection.updateCollection(profileImageURL)
+
                         }
                 }
                 .addOnFailureListener { exception ->
@@ -132,7 +139,5 @@ class MyProfileViewModel @ViewModelInject constructor(
         return MimeTypeMap.getSingleton()
             .getExtensionFromMimeType(cr.getType(uri!!))
     }
-
-
 }
 

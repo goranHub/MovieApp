@@ -57,16 +57,16 @@ class FireStoreClass  @Inject constructor() {
         return currentUserID
     }
 
-    fun loadUserDataMyProfile(viewModel: MyProfileViewModel) {
+    fun loadFromRemoteFC(viewModel: MyProfileViewModel) {
         fireBase.collection(USERS)
             .document(currentUserID())
             .get()
             .addOnSuccessListener { document ->
                 val loggedInUser = document.toObject(UserFirebase::class.java)!!
-                viewModel.loadFromRemote(loggedInUser)
+                viewModel.loadFromRemoteVM(loggedInUser)
             }
             .addOnFailureListener {
-                viewModel.hideProgressDialogFaliure()
+
             }
     }
 
@@ -78,11 +78,11 @@ class FireStoreClass  @Inject constructor() {
             .document(currentUserID())
             .update(userHashMap)
             .addOnSuccessListener {
+
                 Log.e(viewModel.javaClass.simpleName, "updated was successfully")
                 viewModel.profileUpdateSuccess()
             }
             .addOnFailureListener { msg ->
-                viewModel.hideProgressDialogFaliure()
                 Log.e(
                     viewModel.javaClass.simpleName,
                     "Error while updating user", msg

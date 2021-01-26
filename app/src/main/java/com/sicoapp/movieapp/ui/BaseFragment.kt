@@ -40,5 +40,4 @@ open class BaseFragment : Fragment() {
         dialog = Dialog(requireContext())
         dialog.dismiss()
     }
-
 }
