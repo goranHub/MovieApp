@@ -6,10 +6,6 @@ import com.sicoapp.movieapp.data.remote.response.movie.Movie
 import com.sicoapp.movieapp.data.remote.response.movie.MovieResponse
 import com.sicoapp.movieapp.data.remote.response.multi.Multi
 import com.sicoapp.movieapp.data.remote.response.tvShow.TvResponse
-import com.sicoapp.movieapp.utils.mapToMovie
-import com.sicoapp.movieapp.utils.mapToMovieResponse
-import com.sicoapp.movieapp.utils.mapToMulti
-import com.sicoapp.movieapp.utils.mapToTvResponse
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -27,54 +23,36 @@ class Repository(
         return networkDataSource
             .getTopRated(pageId)
             .toObservable()
-            .map { movieResponse ->
-                movieResponse.mapToMovieResponse()
-            }
     }
 
     fun getCrewByMovieId(movieId: Long): Observable<Movie> {
         return networkDataSource
             .getCrewByMovieId(movieId)
             .toObservable()
-            .map { movie ->
-                movie.mapToMovie()
-            }
     }
 
     fun getMovieByID(movieId: Long): Observable<Movie> {
         return networkDataSource
             .getMovieByID(movieId)
             .toObservable()
-            .map { movie ->
-                movie.mapToMovie()
-            }
     }
 
     fun getPopular(pageId: Long): Observable<MovieResponse> {
         return networkDataSource
             .getPopular(pageId)
             .toObservable()
-            .map { movieResponse ->
-                movieResponse.mapToMovieResponse()
-            }
     }
 
     fun getMulti(query: String, pageId: Long): Observable<Multi> {
         return networkDataSource
             .getMulti(query, pageId)
             .toObservable()
-            .map { multi ->
-                multi.mapToMulti()
-            }
     }
 
     fun getTvShowById(movieId: Long): Observable<TvResponse> {
         return networkDataSource
             .getTvShowById(movieId)
             .toObservable()
-            .map { tvResponse ->
-                tvResponse.mapToTvResponse()
-            }
     }
 
     fun insertUser(user: User) {

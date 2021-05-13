@@ -54,9 +54,9 @@ class SearchFragment : BaseFragment(){
 
         binding = FragmentMovieSearchBinding.inflate(inflater)
 
-        binding.data = viewModel
+        viewModel.adapter.callback = callback
 
-        binding.callback = callback
+        binding.data = viewModel
 
         setupSearchView()
 

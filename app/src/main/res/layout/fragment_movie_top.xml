@@ -3,9 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="callback"
-            type="com.sicoapp.movieapp.ui.topmovie.TopMovieCallback" />
-        <variable
             name="data"
             type="com.sicoapp.movieapp.ui.topmovie.TopMovieViewModel" />
     </data>
@@ -30,7 +27,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:setAdapter="@{data.adapter}"
-            app:setCallback="@{callback}"
             tools:itemCount="20"
             tools:listitem="@layout/item_movie" />
 

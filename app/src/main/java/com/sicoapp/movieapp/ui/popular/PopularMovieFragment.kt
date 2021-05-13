@@ -51,8 +51,10 @@ class PopularMovieFragment : BaseFragment() {
     ): View {
 
         binding = FragmentMoviePopularBinding.inflate(inflater)
+
+        viewModel.adapter.callback = callback
+
         binding.data = viewModel
-        binding.callback = callback
 
         scrollRecyclerView()
 

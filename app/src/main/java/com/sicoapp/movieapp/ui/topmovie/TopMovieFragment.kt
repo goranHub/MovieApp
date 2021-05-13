@@ -49,9 +49,11 @@ class TopMovieFragment : BaseFragment() {
 
         binding = FragmentMovieTopBinding.inflate(inflater)
 
+        viewModel.adapter.callback = callback
+
         binding.data = viewModel
 
-        binding.callback = callback
+       // binding.callback = callback
 
         scrollRecyclerView()
 

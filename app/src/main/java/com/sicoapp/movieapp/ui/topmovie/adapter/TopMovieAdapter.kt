@@ -20,11 +20,11 @@ class TopMovieAdapter : RecyclerView.Adapter<ViewHolder>() {
 
     var list = mutableListOf<BindMovie>()
 
-    lateinit var binding : ItemMovieBinding
+    lateinit var binding: ItemMovieBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
             : ViewHolder {
-         binding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             R.layout.item_movie,
             parent,
@@ -41,15 +41,13 @@ class TopMovieAdapter : RecyclerView.Adapter<ViewHolder>() {
         //pass the clicked id to the openDetails callback
         binding.itemClickListener = object : ItemClickListener {
             override fun openItem(itemId: Long) {
-                itemId.let {
-                    callback.openDetails(it)
-                }
+                callback.openDetails(itemId)
             }
         }
 
         binding.itemCrewClickListener = object : ItemClickListener {
             override fun openItem(itemId: Long) {
-                itemId.let { callback.openCrew(it) }
+                callback.openCrew(itemId)
             }
         }
     }

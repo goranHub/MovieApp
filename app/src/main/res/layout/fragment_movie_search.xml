@@ -6,11 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <variable
-            name="callback"
-            type="com.sicoapp.movieapp.ui.search.SearchCallback" />
-
         <variable
             name="data"
             type="com.sicoapp.movieapp.ui.search.SearchViewModel" />
@@ -50,7 +45,6 @@
             app:layout_constraintTop_toBottomOf="@+id/searchView"
             app:layout_constraintVertical_bias="0.86"
             app:setAdapter="@{data.adapter}"
-            app:setCallbackSearch="@{callback}"
             app:spanCount="2"
             tools:itemCount="10"
             tools:listitem="@layout/item_movie_search" />
