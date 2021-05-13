@@ -53,8 +53,6 @@ class TopMovieFragment : BaseFragment() {
 
         binding.data = viewModel
 
-       // binding.callback = callback
-
         scrollRecyclerView()
 
         return binding.root
