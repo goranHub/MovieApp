@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.FragmentMovieTopBinding
 import com.sicoapp.movieapp.ui.BaseFragment
+import com.sicoapp.movieapp.ui.topmovie.adapter.TopMovieAdapter
 import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +24,7 @@ class TopMovieFragment : BaseFragment() {
     private lateinit var binding: FragmentMovieTopBinding
 
 
-    val callback = object : TopMovieCallback {
+    val callback = object : TopMovieAdapter.OnClickListener{
         override fun openDetails(movieId: Long) {
             val bundleItemId = bundleOf(ITEM_ID to movieId)
             findNavController().navigate(
@@ -49,7 +50,7 @@ class TopMovieFragment : BaseFragment() {
 
         binding = FragmentMovieTopBinding.inflate(inflater)
 
-        viewModel.adapter.callback = callback
+        viewModel.adapter.setOnClickListener(callback)
 
         binding.data = viewModel
 

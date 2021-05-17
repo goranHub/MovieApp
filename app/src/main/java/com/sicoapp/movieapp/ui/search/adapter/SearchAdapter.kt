@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.databinding.ItemMovieSearchBinding
 import com.sicoapp.movieapp.ui.search.BindMulti
-import com.sicoapp.movieapp.ui.search.SearchCallback
 
 /**
  * @author ll4
@@ -14,13 +13,9 @@ import com.sicoapp.movieapp.ui.search.SearchCallback
 class SearchAdapter : RecyclerView.Adapter<ViewHolder>() {
 
     private var searchItems = mutableListOf<BindMulti>()
-
-    lateinit var mediaTyp: String
-
-    lateinit var callback: SearchCallback
-
+    private var onClickListener: OnClickListener? = null
     lateinit var binding : ItemMovieSearchBinding
-
+    lateinit var mediaTyp: String
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -37,7 +32,7 @@ class SearchAdapter : RecyclerView.Adapter<ViewHolder>() {
         binding.cardItemLayout.setOnClickListener {
             mediaTyp = holder.binding.data?.movie?.media_type.toString()
             holder.binding.data?.movie?.id?.let { movieId->
-                callback.openDetails(movieId, mediaTyp)
+                onClickListener?.openDetails(movieId, mediaTyp)
             }
         }
     }
@@ -52,6 +47,14 @@ class SearchAdapter : RecyclerView.Adapter<ViewHolder>() {
     fun clearItems() {
         searchItems.clear()
         notifyDataSetChanged()
+    }
+
+    fun setOnClickListener(onClickListener: OnClickListener) {
+        this.onClickListener = onClickListener
+    }
+
+    interface OnClickListener {
+        fun openDetails(movieId: Long, mediaTyp: String)
     }
 }
 

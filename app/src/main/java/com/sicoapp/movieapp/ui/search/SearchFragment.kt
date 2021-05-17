@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.FragmentMovieSearchBinding
 import com.sicoapp.movieapp.ui.BaseFragment
+import com.sicoapp.movieapp.ui.search.adapter.SearchAdapter
 import com.sicoapp.movieapp.utils.ITEM_ID
 import com.sicoapp.movieapp.utils.MEDIATYP
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,7 +38,7 @@ class SearchFragment : BaseFragment(){
 
     lateinit var binding: FragmentMovieSearchBinding
 
-    var callback = object : SearchCallback {
+    var callback = object : SearchAdapter.OnClickListener {
         override fun openDetails(movieId: Long, mediaTyp: String) {
             val bundlePostIdAndMediaTyp = bundleOf(ITEM_ID to movieId, MEDIATYP to mediaTyp)
             findNavController().navigate(
@@ -54,7 +55,7 @@ class SearchFragment : BaseFragment(){
 
         binding = FragmentMovieSearchBinding.inflate(inflater)
 
-        viewModel.adapter.callback = callback
+        viewModel.adapter.setOnClickListener(callback)
 
         binding.data = viewModel
 
