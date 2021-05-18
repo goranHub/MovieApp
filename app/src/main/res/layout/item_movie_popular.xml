@@ -10,12 +10,9 @@
             type="com.sicoapp.movieapp.ui.popular.BindMovie" />
 
         <variable
-            name="itemClickListener"
-            type="com.sicoapp.movieapp.ui.topmovie.adapter.ItemClickListener" />
+            name="popularMovieFragment"
+            type="com.sicoapp.movieapp.ui.popular.PopularMovieFragment" />
 
-        <variable
-            name="itemCrewClickListener"
-            type="com.sicoapp.movieapp.ui.topmovie.adapter.ItemClickListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -49,7 +46,7 @@
                 android:layout_width="107dp"
                 android:layout_height="147dp"
                 android:layout_marginStart="8dp"
-                android:onClick="@{() -> itemClickListener.openItem(data.movie.id)}"
+                android:onClick="@{() -> popularMovieFragment.openItem(data.movie.id)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +79,7 @@
                 android:layout_width="126dp"
                 android:layout_height="41dp"
                 android:layout_marginBottom="28dp"
-                android:onClick="@{() -> itemCrewClickListener.openItem(data.movie.id)}"
+                android:onClick="@{() -> popularMovieFragment.openCrew(data.movie.id)}"
                 android:text="@string/crew"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

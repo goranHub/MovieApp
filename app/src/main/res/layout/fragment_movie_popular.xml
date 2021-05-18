@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="data"
+            name="viewModel"
             type="com.sicoapp.movieapp.ui.popular.PopularViewModel" />
     </data>
 
@@ -28,9 +28,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:setAdapter="@{data.adapter}"
+            app:setAdapter="@{viewModel.adapter}"
             tools:itemCount="20"
-            tools:listitem="@layout/item_movie" />
+            tools:listitem="@layout/item_movie_top" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.FragmentMoviePopularBinding
 import com.sicoapp.movieapp.ui.BaseFragment
-import com.sicoapp.movieapp.ui.topmovie.adapter.TopMovieAdapter
 import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,24 +26,6 @@ class PopularMovieFragment : BaseFragment() {
 
     private val viewModel: PopularViewModel by viewModels()
 
-    val callback = object : TopMovieAdapter.OnClickListener {
-        override fun openDetails(movieId: Long) {
-            val bundleItemId = bundleOf(ITEM_ID to movieId)
-            findNavController().navigate(
-                R.id.action_popularMovieFragment_to_movieDetailsFragment,
-                bundleItemId
-            )
-        }
-
-        override fun openCrew(crewId: Long) {
-            val bundleCrewId = bundleOf(CREW_ID to crewId)
-            findNavController().navigate(
-                R.id.action_popularMovieFragment_to_crewMovieFragment,
-                bundleCrewId
-            )
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,15 +33,36 @@ class PopularMovieFragment : BaseFragment() {
 
         binding = FragmentMoviePopularBinding.inflate(inflater)
 
-        //viewModel.adapter.callback = callback
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = this@PopularMovieFragment.viewModel
+        }
 
-        viewModel.adapter.setOnClickListener(callback)
+        viewModel.adapter.binding?.apply {
+            popularMovieFragment = this@PopularMovieFragment
+        }
 
-        binding.data = viewModel
 
         scrollRecyclerView()
 
         return binding.root
+    }
+
+
+    fun openItem(movieId :Long){
+        val bundleItemId = bundleOf(ITEM_ID to movieId)
+        findNavController().navigate(
+            R.id.action_movieListFragment_to_movieDetailsFragment,
+            bundleItemId
+        )
+    }
+
+    fun openCrew(crewId :Long){
+        val bundleCrewId = bundleOf(CREW_ID to crewId)
+        findNavController().navigate(
+            R.id.action_movieListFragment_to_crewMovieFragment,
+            bundleCrewId
+        )
     }
 
     private fun scrollRecyclerView() {
