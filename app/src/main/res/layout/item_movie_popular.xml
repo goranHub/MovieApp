@@ -12,7 +12,6 @@
         <variable
             name="popularMovieFragment"
             type="com.sicoapp.movieapp.ui.popular.PopularMovieFragment" />
-
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -55,8 +54,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0"
                 app:loadImage="@{data.imageUrl}"
-                tools:srcCompat="@tools:sample/avatars"
-                android:contentDescription="TODO" />
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/original_title"

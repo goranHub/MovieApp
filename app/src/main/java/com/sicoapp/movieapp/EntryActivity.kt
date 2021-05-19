@@ -36,11 +36,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class EntryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    @Inject
-    lateinit var repository: Repository
-
     private val myProfileViewModel by viewModels<MyProfileViewModel>()
-
     lateinit var navController: NavController
     lateinit var bottomNav: BottomNavigationView
     lateinit var binding: ActivityEntryBinding

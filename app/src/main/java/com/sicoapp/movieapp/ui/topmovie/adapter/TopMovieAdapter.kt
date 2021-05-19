@@ -9,28 +9,35 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.sicoapp.movieapp.BR
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.ItemMovieTopBinding
 import com.sicoapp.movieapp.ui.popular.BindMovie
 
 
-class TopMovieAdapter : RecyclerView.Adapter<ViewHolder>() {
+class TopMovieAdapter : RecyclerView.Adapter<TopMovieAdapter.TopViewHolder>() {
 
     var list = mutableListOf<BindMovie>()
-    var binding: ItemMovieTopBinding? = null
+    lateinit var binding: ItemMovieTopBinding
+    lateinit var listenerCall: ListenerCall
+
+    interface ListenerCall {
+        fun callback(binding: ItemMovieTopBinding)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
-            : ViewHolder {
+            : TopViewHolder {
         binding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             R.layout.item_movie_top,
             parent,
             false
         )
-        return ViewHolder(binding!!)
+        listenerCall.callback(binding)
+        return TopViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TopViewHolder, position: Int) {
         val dataModel = list[position]
         holder.bind(dataModel)
     }
@@ -41,5 +48,13 @@ class TopMovieAdapter : RecyclerView.Adapter<ViewHolder>() {
     fun addMovies(listItems: List<BindMovie>) {
         list.addAll(listItems)
         notifyDataSetChanged()
+    }
+
+    class TopViewHolder(val binding: ItemMovieTopBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(obj: Any?) {
+            binding.setVariable(BR.data, obj)
+            binding.executePendingBindings()
+        }
     }
 }

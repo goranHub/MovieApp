@@ -10,7 +10,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.FragmentMovieTopBinding
+import com.sicoapp.movieapp.databinding.ItemMovieTopBinding
 import com.sicoapp.movieapp.ui.BaseFragment
+import com.sicoapp.movieapp.ui.topmovie.adapter.TopMovieAdapter
 import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,8 +36,12 @@ class TopMovieFragment : BaseFragment() {
             viewModel = this@TopMovieFragment.viewModel
         }
 
-        viewModel.adapter.binding?.apply {
-            topMovieFragment = this@TopMovieFragment
+        viewModel.adapter.listenerCall = object : TopMovieAdapter.ListenerCall{
+            override fun callback(binding: ItemMovieTopBinding) {
+                binding.apply {
+                    topMovieFragment = this@TopMovieFragment
+                }
+            }
         }
 
         scrollRecyclerView()

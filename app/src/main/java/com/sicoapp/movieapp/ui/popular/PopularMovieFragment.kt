@@ -10,7 +10,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.FragmentMoviePopularBinding
+import com.sicoapp.movieapp.databinding.ItemMoviePopularBinding
 import com.sicoapp.movieapp.ui.BaseFragment
+import com.sicoapp.movieapp.ui.popular.adapter.PopularMovieAdapter
 import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,10 +40,13 @@ class PopularMovieFragment : BaseFragment() {
             viewModel = this@PopularMovieFragment.viewModel
         }
 
-        viewModel.adapter.binding?.apply {
-            popularMovieFragment = this@PopularMovieFragment
+        viewModel.adapter.listenerCall = object : PopularMovieAdapter.ListenerCall{
+            override fun callback(binding: ItemMoviePopularBinding) {
+                binding.apply {
+                    popularMovieFragment = this@PopularMovieFragment
+                }
+            }
         }
-
 
         scrollRecyclerView()
 
@@ -52,7 +57,7 @@ class PopularMovieFragment : BaseFragment() {
     fun openItem(movieId :Long){
         val bundleItemId = bundleOf(ITEM_ID to movieId)
         findNavController().navigate(
-            R.id.action_movieListFragment_to_movieDetailsFragment,
+            R.id.action_popularMovieFragment_to_movieDetailsFragment,
             bundleItemId
         )
     }
@@ -60,7 +65,7 @@ class PopularMovieFragment : BaseFragment() {
     fun openCrew(crewId :Long){
         val bundleCrewId = bundleOf(CREW_ID to crewId)
         findNavController().navigate(
-            R.id.action_movieListFragment_to_crewMovieFragment,
+            R.id.action_popularMovieFragment_to_crewMovieFragment,
             bundleCrewId
         )
     }
@@ -77,4 +82,5 @@ class PopularMovieFragment : BaseFragment() {
             }
         })
     }
+
 }
