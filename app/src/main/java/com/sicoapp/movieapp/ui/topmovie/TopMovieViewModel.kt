@@ -22,37 +22,8 @@ class TopMovieViewModel @ViewModelInject constructor(
 
     var pageId = 1L
 
-    val adapter = TopMovieAdapter()
+    fun getTopRated(pageId :Long) = repository.getTopRated(pageId)
 
-    init {
-        getTopRated()
-    }
-
-    fun getTopRated() {
-        repository
-            .getTopRated(pageId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                object : Observer<MovieResponse> {
-                    override fun onSubscribe(d: Disposable) {
-                    }
-
-                    override fun onNext(response: MovieResponse) {
-                        val movieItemsList = response.results.map { BindMovie(it) }
-                        adapter.addMovies(movieItemsList)
-                        pageId++
-                    }
-
-                    override fun onError(e: Throwable) {
-                        Log.d("errorTopMovie", "${e.stackTrace}")
-                    }
-
-                    override fun onComplete() {
-                    }
-                }
-            )
-    }
 }
 
 

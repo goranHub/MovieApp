@@ -24,41 +24,9 @@ class PopularViewModel @ViewModelInject constructor (
 
     lateinit var callback : (ItemMoviePopularBinding) -> Unit
 
-    val adapter = PopularMovieAdapter()
+     fun getPopular(pageId :Long) = repository.getPopular(pageId)
 
 
-    init {
-        getPopular()
-    }
-
-     fun getPopular() {
-        repository
-            .getPopular(pageId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                object : Observer<MovieResponse> {
-                    override fun onSubscribe(d: Disposable) {
-                    }
-
-                    override fun onNext(response: MovieResponse) {
-                        val movieItemsList =
-                            response
-                                .results
-                                .map { BindMovie(it) }
-                        adapter.addMovies(movieItemsList)
-                        pageId++
-                    }
-
-                    override fun onError(e: Throwable) {
-                        Log.d("error", "${e.stackTrace}")
-                    }
-
-                    override fun onComplete() {
-                    }
-                }
-            )
-    }
 }
 
 

@@ -13,9 +13,10 @@ import com.sicoapp.movieapp.BR
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.ItemMoviePopularBinding
 import com.sicoapp.movieapp.ui.popular.BindMovie
+import javax.inject.Inject
 
 
-class PopularMovieAdapter() : RecyclerView.Adapter<PopularMovieAdapter.PopularViewHolder>() {
+class PopularMovieAdapter @Inject constructor() : RecyclerView.Adapter<PopularMovieAdapter.PopularViewHolder>() {
 
     var list = mutableListOf<BindMovie>()
     lateinit var binding: ItemMoviePopularBinding
@@ -51,8 +52,6 @@ class PopularMovieAdapter() : RecyclerView.Adapter<PopularMovieAdapter.PopularVi
             binding.executePendingBindings()
         }
     }
-
-
 
     fun addMovies(listItems: List<BindMovie>) {
         list.addAll(listItems)

@@ -13,9 +13,10 @@ import com.sicoapp.movieapp.BR
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.ItemMovieTopBinding
 import com.sicoapp.movieapp.ui.popular.BindMovie
+import javax.inject.Inject
 
 
-class TopMovieAdapter : RecyclerView.Adapter<TopMovieAdapter.TopViewHolder>() {
+class TopMovieAdapter @Inject constructor(): RecyclerView.Adapter<TopMovieAdapter.TopViewHolder>() {
 
     var list = mutableListOf<BindMovie>()
     lateinit var binding: ItemMovieTopBinding

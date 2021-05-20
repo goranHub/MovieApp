@@ -24,6 +24,7 @@ import com.google.android.material.navigation.NavigationView
 import com.sicoapp.movieapp.databinding.ActivityEntryBinding
 import com.sicoapp.movieapp.domain.Repository
 import com.sicoapp.movieapp.ui.profil.MyProfileViewModel
+import com.sicoapp.movieapp.utils.MovieFragmentFactory
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_entry.*
 import javax.inject.Inject
@@ -43,6 +44,9 @@ class EntryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     lateinit var drawerLayout: DrawerLayout
     lateinit var toolbar: Toolbar
 
+    @Inject
+    lateinit var fragmentFactory: MovieFragmentFactory
+
     private val appBarConfiguration by lazy {
         AppBarConfiguration(
             setOf(
@@ -57,6 +61,8 @@ class EntryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        supportFragmentManager.fragmentFactory = fragmentFactory
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_entry)
 
