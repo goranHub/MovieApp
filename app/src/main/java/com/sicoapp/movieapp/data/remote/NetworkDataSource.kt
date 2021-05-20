@@ -25,8 +25,8 @@ class NetworkDataSource @Inject constructor(
         return movieService.getPopular(API_KEY, pageId.toString())
     }
 
-    fun getMulti(query: String, pageId: Long): Single<Multi> {
-        return movieService.getMulti(API_KEY, query, pageId)
+    fun getMulti(query: String): Single<Multi> {
+        return movieService.getMulti(API_KEY, query)
     }
 
     fun getMovieByID(movieId: Long): Single<Movie> {

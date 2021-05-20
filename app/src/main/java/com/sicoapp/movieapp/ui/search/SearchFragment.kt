@@ -1,29 +1,32 @@
 package com.sicoapp.movieapp.ui.search
 
-import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
-import androidx.fragment.app.viewModels
+import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.GridLayoutManager
 import com.sicoapp.movieapp.R
-import com.sicoapp.movieapp.databinding.FragmentMovieSearchBinding
-import com.sicoapp.movieapp.ui.BaseFragment
+import com.sicoapp.movieapp.data.remote.response.multi.Multi
 import com.sicoapp.movieapp.ui.search.adapter.SearchAdapter
 import com.sicoapp.movieapp.utils.ITEM_ID
 import com.sicoapp.movieapp.utils.MEDIATYP
+import com.sicoapp.movieapp.utils.SEARCH_TIME_DELAY
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.Observable
+import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.activity_entry.*
-import java.util.concurrent.TimeUnit
+import kotlinx.android.synthetic.main.fragment_movie_search.*
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 /**
@@ -32,11 +35,39 @@ import java.util.concurrent.TimeUnit
  */
 
 @AndroidEntryPoint
-class SearchFragment : BaseFragment(){
+class SearchFragment @Inject constructor(
+    val adapter: SearchAdapter,
+    var viewModel: SearchViewModel? = null
+) : Fragment(R.layout.fragment_movie_search) {
 
-    private val viewModel: SearchViewModel by viewModels()
 
-    lateinit var binding: FragmentMovieSearchBinding
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel =
+            viewModel ?: ViewModelProvider(requireActivity()).get(SearchViewModel::class.java)
+
+        rvMovies.apply {
+            adapter = this@SearchFragment.adapter
+            layoutManager = GridLayoutManager(requireContext(), 2)
+        }
+
+        adapter.setOnClickListener(callback)
+
+        var job: Job? = null
+        etSearch.addTextChangedListener { editable: Editable? ->
+            job?.cancel()
+            job = lifecycleScope.launch {
+                delay(SEARCH_TIME_DELAY)
+                editable?.let {
+                    if (editable.toString().isNotEmpty()) {
+                        subscribeToObservers(editable.toString())
+                    } else {
+                        adapter.clearItems()
+                    }
+                }
+            }
+        }
+    }
 
     var callback = object : SearchAdapter.OnClickListener {
         override fun openDetails(movieId: Long, mediaTyp: String) {
@@ -48,69 +79,34 @@ class SearchFragment : BaseFragment(){
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    private fun subscribeToObservers(query: String) {
 
-        binding = FragmentMovieSearchBinding.inflate(inflater)
+        val searchForImage = viewModel?.searchForImage(query)
 
-        viewModel.adapter.setOnClickListener(callback)
+        searchForImage?.subscribeOn(Schedulers.io())
+            ?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribe(
+                object : Observer<Multi> {
+                    override fun onSubscribe(d: Disposable) {
+                    }
 
-        binding.data = viewModel
+                    override fun onNext(response: Multi) {
+                        val movieResponse =
+                            response
+                                .results
+                                .filter { !it.poster_path.isNullOrBlank() }
+                                .distinctBy { it.poster_path }
+                                .map { BindMulti(it) }
+                        adapter.updateItems(movieResponse)
+                    }
 
-        setupSearchView()
+                    override fun onError(e: Throwable) {
+                        Log.d("error", "${e.stackTrace}")
+                    }
 
-        return binding.root
-    }
-
-
-    @SuppressLint("CheckResult")
-    private fun setupSearchView() {
-
-        fromView()
-            .filter{
-                if (it.isEmpty()){
-                    viewModel.clear()
-                    Log.d("emptyString", "emptyString")
+                    override fun onComplete() {
+                    }
                 }
-                return@filter true}
-            .debounce(700, TimeUnit.MILLISECONDS)
-            .distinctUntilChanged()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                //znaci sa pageId ==1
-                viewModel.loadRemoteData(it)
-                scrollRecyclerView(it)
-            }
-    }
-
-    private fun scrollRecyclerView(query: String) {
-        binding.recyclerView.addOnScrollListener(object :
-            RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    //znaci sa pageId koji nije 1
-                    viewModel.loadMoreRemoteData(query)
-                }
-            }
-        })
-    }
-
-    private fun fromView(): Observable<String> {
-        val subject = PublishSubject.create<String>()
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(s: String?): Boolean {
-                subject.onComplete()
-                return true
-            }
-
-            override fun onQueryTextChange(text: String): Boolean {
-                subject.onNext(text)
-                return true
-            }
-        })
-        return subject
+            )
     }
 }

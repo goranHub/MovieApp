@@ -43,9 +43,9 @@ class Repository(
             .toObservable()
     }
 
-    fun getMulti(query: String, pageId: Long): Observable<Multi> {
+    fun getMulti(query: String): Observable<Multi> {
         return networkDataSource
-            .getMulti(query, pageId)
+            .getMulti(query)
             .toObservable()
     }
 

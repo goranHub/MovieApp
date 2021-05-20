@@ -30,8 +30,7 @@ interface MovieDao {
     @GET("search/multi?")
     fun getMulti(
         @Query(value = "api_key") apiKey: String,
-        @Query(value = "query") searchTitle: String,
-        @Query(value = "page") pageIndex: Long
+        @Query(value = "query") searchTitle: String
     ) : Single<Multi>
 
     @GET("movie/{id}?&append_to_response=credits")

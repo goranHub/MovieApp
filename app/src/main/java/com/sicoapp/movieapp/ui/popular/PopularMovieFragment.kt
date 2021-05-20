@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +15,6 @@ import com.sicoapp.movieapp.databinding.FragmentMoviePopularBinding
 import com.sicoapp.movieapp.databinding.ItemMoviePopularBinding
 import com.sicoapp.movieapp.ui.BaseFragment
 import com.sicoapp.movieapp.ui.popular.adapter.PopularMovieAdapter
-import com.sicoapp.movieapp.ui.topmovie.TopMovieViewModel
 import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
 import dagger.hilt.android.AndroidEntryPoint

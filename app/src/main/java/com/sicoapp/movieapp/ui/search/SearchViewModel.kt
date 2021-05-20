@@ -19,52 +19,6 @@ class SearchViewModel @ViewModelInject constructor(
     private val repository: Repository
 ) : ViewModel() {
 
-    val adapter = SearchAdapter()
+    fun searchForImage(query: String) = repository.getMulti(query)
 
-    var currentPageId = 1L
-
-    fun clear() {
-        currentPageId = 1
-        adapter.clearItems()
-    }
-
-    fun loadRemoteData(query: String) {
-        getMulti(query, 1)
-    }
-
-    fun loadMoreRemoteData(query: String) {
-        getMulti(query, currentPageId)
-    }
-
-    private fun getMulti(query: String, pageId: Long) {
-        repository
-            .getMulti(query, pageId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                object : Observer<Multi> {
-                    override fun onSubscribe(d: Disposable) {
-                    }
-
-                    override fun onNext(response: Multi) {
-                        val movieResponse =
-                            response
-                                .results
-                                .filter { !it.poster_path.isNullOrBlank() }
-                                .distinctBy { it.poster_path }
-                                .map { BindMulti(it) }
-
-                        adapter.updateItems(movieResponse)
-                        currentPageId++
-                    }
-
-                    override fun onError(e: Throwable) {
-                        Log.d("error", "${e.stackTrace}")
-                    }
-
-                    override fun onComplete() {
-                    }
-                }
-            )
-    }
 }

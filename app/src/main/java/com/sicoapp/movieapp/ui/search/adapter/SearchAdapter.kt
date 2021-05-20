@@ -5,12 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.databinding.ItemMovieSearchBinding
 import com.sicoapp.movieapp.ui.search.BindMulti
+import javax.inject.Inject
 
 /**
  * @author ll4
  * @date 1/4/2021
  */
-class SearchAdapter : RecyclerView.Adapter<ViewHolder>() {
+class SearchAdapter @Inject constructor() : RecyclerView.Adapter<ViewHolder>() {
 
     private var searchItems = mutableListOf<BindMulti>()
     private var onClickListener: OnClickListener? = null

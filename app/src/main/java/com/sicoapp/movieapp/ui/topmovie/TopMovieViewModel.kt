@@ -20,8 +20,6 @@ class TopMovieViewModel @ViewModelInject constructor(
     private var repository: Repository
 ) : ViewModel() {
 
-    var pageId = 1L
-
     fun getTopRated(pageId :Long) = repository.getTopRated(pageId)
 
 }
