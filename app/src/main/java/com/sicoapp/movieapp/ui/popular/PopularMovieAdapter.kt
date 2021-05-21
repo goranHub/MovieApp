@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.ui.popular.adapter
+package com.sicoapp.movieapp.ui.popular
 
 /**
  * @author ll4
@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.BR
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.ItemMoviePopularBinding
-import com.sicoapp.movieapp.ui.popular.BindMovie
 import javax.inject.Inject
 
 

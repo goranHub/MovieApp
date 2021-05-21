@@ -3,11 +3,11 @@ package com.sicoapp.movieapp.utils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import com.sicoapp.movieapp.ui.popular.PopularMovieFragment
-import com.sicoapp.movieapp.ui.popular.adapter.PopularMovieAdapter
+import com.sicoapp.movieapp.ui.popular.PopularMovieAdapter
 import com.sicoapp.movieapp.ui.search.SearchFragment
-import com.sicoapp.movieapp.ui.search.adapter.SearchAdapter
+import com.sicoapp.movieapp.ui.search.SearchAdapter
 import com.sicoapp.movieapp.ui.topmovie.TopMovieFragment
-import com.sicoapp.movieapp.ui.topmovie.adapter.TopMovieAdapter
+import com.sicoapp.movieapp.ui.topmovie.TopMovieAdapter
 import javax.inject.Inject
 
 class MovieFragmentFactory @Inject constructor(

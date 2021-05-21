@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.data.remote.response.multi.Multi
-import com.sicoapp.movieapp.ui.search.adapter.SearchAdapter
+import com.sicoapp.movieapp.databinding.ItemMovieSearchBinding
 import com.sicoapp.movieapp.utils.ITEM_ID
 import com.sicoapp.movieapp.utils.MEDIATYP
 import com.sicoapp.movieapp.utils.SEARCH_TIME_DELAY
@@ -51,7 +51,13 @@ class SearchFragment @Inject constructor(
             layoutManager = GridLayoutManager(requireContext(), 2)
         }
 
-        adapter.setOnClickListener(callback)
+        adapter.listenerCall = object : SearchAdapter.ListenerCall {
+            override fun callback(binding: ItemMovieSearchBinding) {
+                binding.apply {
+                    searchFragment = this@SearchFragment
+                }
+            }
+        }
 
         var job: Job? = null
         etSearch.addTextChangedListener { editable: Editable? ->
@@ -69,15 +75,15 @@ class SearchFragment @Inject constructor(
         }
     }
 
-    var callback = object : SearchAdapter.OnClickListener {
-        override fun openDetails(movieId: Long, mediaTyp: String) {
-            val bundlePostIdAndMediaTyp = bundleOf(ITEM_ID to movieId, MEDIATYP to mediaTyp)
-            findNavController().navigate(
-                R.id.action_searchFragment_to_movieDetailsFragment,
-                bundlePostIdAndMediaTyp
-            )
-        }
+
+    fun openDetails(movieId: Long, mediaTyp: String) {
+        val bundlePostIdAndMediaTyp = bundleOf(ITEM_ID to movieId, MEDIATYP to mediaTyp)
+        findNavController().navigate(
+            R.id.action_searchFragment_to_movieDetailsFragment,
+            bundlePostIdAndMediaTyp
+        )
     }
+
 
     private fun subscribeToObservers(query: String) {
 
@@ -110,3 +116,4 @@ class SearchFragment @Inject constructor(
             )
     }
 }
+

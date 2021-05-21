@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.ui.topmovie.adapter
+package com.sicoapp.movieapp.ui.topmovie
 
 /**
  * @author ll4

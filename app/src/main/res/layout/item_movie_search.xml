@@ -9,6 +9,10 @@
             name="data"
             type="com.sicoapp.movieapp.ui.search.BindMulti" />
 
+        <variable
+            name="searchFragment"
+            type="com.sicoapp.movieapp.ui.search.SearchFragment" />
+
     </data>
 
 <com.google.android.material.card.MaterialCardView
@@ -16,6 +20,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    android:onClick="@{()-> searchFragment.openDetails(data.movie.id, data.movie.media_type.toString())}"
     app:cardCornerRadius="18dp"
     android:elevation="0dp"
     app:strokeColor="@color/colorPrimary"

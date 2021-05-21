@@ -14,7 +14,6 @@ import com.sicoapp.movieapp.data.remote.response.movie.MovieResponse
 import com.sicoapp.movieapp.databinding.FragmentMoviePopularBinding
 import com.sicoapp.movieapp.databinding.ItemMoviePopularBinding
 import com.sicoapp.movieapp.ui.BaseFragment
-import com.sicoapp.movieapp.ui.popular.adapter.PopularMovieAdapter
 import com.sicoapp.movieapp.utils.CREW_ID
 import com.sicoapp.movieapp.utils.ITEM_ID
 import dagger.hilt.android.AndroidEntryPoint

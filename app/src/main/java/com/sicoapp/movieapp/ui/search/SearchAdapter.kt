@@ -1,40 +1,51 @@
-package com.sicoapp.movieapp.ui.search.adapter
+package com.sicoapp.movieapp.ui.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.sicoapp.movieapp.BR
 import com.sicoapp.movieapp.databinding.ItemMovieSearchBinding
-import com.sicoapp.movieapp.ui.search.BindMulti
+import com.sicoapp.movieapp.databinding.ItemMovieTopBinding
+import com.sicoapp.movieapp.ui.topmovie.TopMovieAdapter
 import javax.inject.Inject
 
 /**
  * @author ll4
  * @date 1/4/2021
  */
-class SearchAdapter @Inject constructor() : RecyclerView.Adapter<ViewHolder>() {
+class SearchAdapter @Inject constructor() : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
 
     private var searchItems = mutableListOf<BindMulti>()
     private var onClickListener: OnClickListener? = null
     lateinit var binding : ItemMovieSearchBinding
     lateinit var mediaTyp: String
+    lateinit var listenerCall: ListenerCall
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    interface ListenerCall {
+        fun callback(binding: ItemMovieSearchBinding)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         binding = ItemMovieSearchBinding.inflate(
             layoutInflater, parent, false
         )
-        return ViewHolder(binding)
+        listenerCall.callback(binding)
+        return SearchViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
         val dataModel = searchItems[position]
         holder.bind(dataModel)
 
-        binding.cardItemLayout.setOnClickListener {
-            mediaTyp = holder.binding.data?.movie?.media_type.toString()
-            holder.binding.data?.movie?.id?.let { movieId->
-                onClickListener?.openDetails(movieId, mediaTyp)
-            }
+    }
+
+    class SearchViewHolder(val binding: ItemMovieSearchBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(obj: Any?) {
+            binding.setVariable(BR.data, obj)
+            binding.executePendingBindings()
         }
     }
 
