@@ -1,4 +1,4 @@
-package com.sicoapp.movieapp.ui.crew.adapter
+package com.sicoapp.movieapp.ui.crew
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sicoapp.movieapp.BR
 import com.sicoapp.movieapp.R
 import com.sicoapp.movieapp.databinding.ItemCreditsBinding
-import com.sicoapp.movieapp.ui.crew.CrewObservable
 
 /**
  * @author ll4

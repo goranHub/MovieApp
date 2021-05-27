@@ -16,6 +16,8 @@ import com.sicoapp.movieapp.databinding.FragmentMovieDetailsBinding
 import com.sicoapp.movieapp.utils.ITEM_ID
 import com.sicoapp.movieapp.utils.MEDIATYP
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.Observable
+import io.reactivex.Observer
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -91,17 +93,21 @@ class DetailsMovieFragment : Fragment() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                object : SingleObserver<Rating> {
+                object : Observer<Rating> {
                     override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onSuccess(response: Rating) {
+                    override fun onNext(response: Rating) {
                         val rating = response.rating
                         setFaceBackgroundColor(rating)
                     }
 
                     override fun onError(e: Throwable) {
                     }
+
+                    override fun onComplete() {
+                    }
+
                 }
             )
     }

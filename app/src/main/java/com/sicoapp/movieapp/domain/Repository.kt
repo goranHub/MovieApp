@@ -22,37 +22,31 @@ class Repository(
     fun getTopRated(pageId: Long): Observable<MovieResponse> {
         return networkDataSource
             .getTopRated(pageId)
-            .toObservable()
     }
 
     fun getCrewByMovieId(movieId: Long): Observable<Movie> {
         return networkDataSource
             .getCrewByMovieId(movieId)
-            .toObservable()
     }
 
     fun getMovieByID(movieId: Long): Observable<Movie> {
         return networkDataSource
             .getMovieByID(movieId)
-            .toObservable()
     }
 
     fun getPopular(pageId: Long): Observable<MovieResponse> {
         return networkDataSource
             .getPopular(pageId)
-            .toObservable()
     }
 
     fun getMulti(query: String): Observable<Multi> {
         return networkDataSource
             .getMulti(query)
-            .toObservable()
     }
 
     fun getTvShowById(movieId: Long): Observable<TvResponse> {
         return networkDataSource
             .getTvShowById(movieId)
-            .toObservable()
     }
 
     fun insertUser(user: User) {
@@ -60,7 +54,7 @@ class Repository(
     }
 
     fun getAuthUserDB(): Observable<List<User>> {
-        return databaseDataSource.getAuthUserDB().toObservable()
+        return databaseDataSource.getAuthUserDB()
     }
 
     fun insertSmiley(itemId: Int, rating: Int) {
@@ -71,7 +65,7 @@ class Repository(
         return databaseDataSource.getRatingsOfUser(curenntUSer)
     }
 
-    fun getSmileyByMovieId(itemId: Int): Single<Rating> {
+    fun getSmileyByMovieId(itemId: Int): Observable<Rating> {
         return databaseDataSource.getSmileyByMovieId(itemId)
     }
 

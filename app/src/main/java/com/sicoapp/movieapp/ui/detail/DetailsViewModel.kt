@@ -9,6 +9,7 @@ import com.sicoapp.movieapp.data.remote.response.movie.Movie
 import com.sicoapp.movieapp.data.remote.response.tvShow.TvResponse
 import com.sicoapp.movieapp.domain.Repository
 import com.sicoapp.movieapp.utils.URL_IMAGE
+import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -36,7 +37,7 @@ class DetailsViewModel @ViewModelInject constructor(
 
     fun getSmileyByMovieId(
         itemId: Int
-    ): Single<Rating> {
+    ): Observable<Rating> {
         return repository.getSmileyByMovieId(itemId)
     }
 

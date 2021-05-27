@@ -1,5 +1,6 @@
 package com.sicoapp.movieapp.data.database
 
+import io.reactivex.Observable
 import io.reactivex.Single
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,11 +37,11 @@ class DataBaseDataSource @Inject constructor(
         }
     }
 
-    fun getAuthUserDB(): Single<List<User>> {
+    fun getAuthUserDB(): Observable<List<User>> {
         return dao.getAuthUserDB()
     }
 
-    fun getSmileyByMovieId(itemId: Int): Single<Rating> {
+    fun getSmileyByMovieId(itemId: Int): Observable<Rating> {
         return dao.getSmileyByMovieId(itemId)
     }
 

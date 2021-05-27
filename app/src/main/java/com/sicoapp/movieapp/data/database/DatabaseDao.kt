@@ -1,6 +1,7 @@
 package com.sicoapp.movieapp.data.database
 
 import androidx.room.*
+import io.reactivex.Observable
 import io.reactivex.Single
 
 @Dao
@@ -13,10 +14,10 @@ interface DatabaseDao {
     suspend fun insertUser(user: User)
 
     @Query("SELECT * FROM User")
-    fun getAuthUserDB(): Single<List<User>>
+    fun getAuthUserDB(): Observable<List<User>>
 
     @Query("SELECT * FROM Rating WHERE itemId =:itemId")
-    fun getSmileyByMovieId(itemId: Int): Single<Rating>
+    fun getSmileyByMovieId(itemId: Int): Observable<Rating>
 
     @Query("DELETE FROM Rating  WHERE itemId =:itemId")
     suspend fun deleteSmileyByMovieId(itemId: Int)
